@@ -8,6 +8,7 @@ public class PhotoContestApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(PhotoContestApplication.class, args);
+        System.out.println("Hello");
     }
 
 }
