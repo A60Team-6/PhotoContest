@@ -19,8 +19,9 @@ import java.util.UUID;
 public class Contest {
 
         @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "id", nullable = false, unique = true)
-        private String contestId = UUID.randomUUID().toString();
+        private UUID contestId;
 
         @Column(name = "title", nullable = false, unique = true, length = 50)
         private String title;

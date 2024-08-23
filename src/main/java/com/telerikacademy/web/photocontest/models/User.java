@@ -1,5 +1,6 @@
 package com.telerikacademy.web.photocontest.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -18,8 +20,9 @@ import java.util.UUID;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false, unique = true)
-    private String userId = UUID.randomUUID().toString();
+    private UUID userId;
 
     @Column(name = "username", nullable = false, unique = true, length = 50)
     private String username;
@@ -55,4 +58,8 @@ public class User {
 
     @Column(name = "is_active")
     private Boolean isActive;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private Set<Photo> photos;
 }

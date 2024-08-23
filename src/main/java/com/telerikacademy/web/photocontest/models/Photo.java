@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "photos")
@@ -17,8 +18,9 @@ import java.time.LocalDateTime;
 public class Photo {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true)
-    private String id;
+    private UUID id;
 
     @Column(name = "title", nullable = false, length = 100)
     private String title;

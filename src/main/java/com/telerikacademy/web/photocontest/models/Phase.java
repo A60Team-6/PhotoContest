@@ -1,9 +1,6 @@
 package com.telerikacademy.web.photocontest.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,8 +17,9 @@ import java.util.UUID;
 public class Phase {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true)
-    private String phaseId = UUID.randomUUID().toString();
+    private UUID phaseId;
 
     @Column(name = "name", nullable = false)
     private String name;

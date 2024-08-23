@@ -17,9 +17,10 @@ import java.util.UUID;
 public class Role {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true)
-    private String userId = UUID.randomUUID().toString();
+    private UUID roleId;
 
     @Column(name = "name", nullable = false, length = 36)
-    private String firstName;
+    private String name;
 }

@@ -20,8 +20,9 @@ import java.util.UUID;
 public class ContestParticipation {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true)
-    private String id = UUID.randomUUID().toString();
+    private UUID id;
 
 
     @ManyToOne

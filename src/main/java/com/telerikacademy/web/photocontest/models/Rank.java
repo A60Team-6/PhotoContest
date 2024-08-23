@@ -17,9 +17,10 @@ import java.util.UUID;
 public class Rank {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true)
-    private String userId = UUID.randomUUID().toString();
+    private UUID rankId;
 
     @Column(name = "name", nullable = false, length = 36)
-    private String firstName;
+    private String name;
 }
