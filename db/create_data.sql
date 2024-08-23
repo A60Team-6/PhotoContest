@@ -95,7 +95,7 @@ CREATE TABLE contests_participation
     user_id            CHAR(36) NOT NULL,
     participation_date TIMESTAMP,
     photo_uploaded     BOOLEAN,
-    isActive           BOOLEAN,
+    is_active           BOOLEAN,
     score              INT, -- Крайната оценка след журиране
     FOREIGN KEY (contest_id) REFERENCES contests (id),
     FOREIGN KEY (user_id) REFERENCES users (user_id)

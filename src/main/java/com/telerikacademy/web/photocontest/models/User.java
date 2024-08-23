@@ -48,7 +48,7 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name = "ranking_id", nullable = false)
-    private Ranking ranking;
+    private Rank rank;
 
     @Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt = LocalDateTime.now();
