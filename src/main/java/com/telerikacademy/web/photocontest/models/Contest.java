@@ -29,10 +29,10 @@ public class Contest {
         private String category;
 
         @ManyToOne
-        @JoinColumn(name = "id", nullable = false)
+        @JoinColumn(name = "phase_id", nullable = false)
         private Phase phase;
 
-        @Column(name = "category", nullable = false, length = 255)
+        @Column(name = "cover_photo_url", nullable = false, length = 255)
         private String photoUrl;
 
         @ManyToOne
