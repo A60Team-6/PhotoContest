@@ -2,6 +2,7 @@ package com.telerikacademy.web.photocontest.sercices;
 
 import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import com.telerikacademy.web.photocontest.helpers.PermissionHelper;
+import com.telerikacademy.web.photocontest.models.Photo;
 import com.telerikacademy.web.photocontest.models.User;
 import com.telerikacademy.web.photocontest.repositories.UserRepository;
 import com.telerikacademy.web.photocontest.sercices.contracts.UserService;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -61,7 +63,10 @@ public class UserServiceImpl implements UserService {
     public void deactivateUser(UUID userId, User user) {
         PermissionHelper.isSameUser(user, userRepository.findByUsernameAndIsActiveTrue(user.getUsername()), "You can deactivate only yourself!");
         User existingUser = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-
+        Set<Photo> photos = existingUser.getPhotos();
+        for(Photo photo : photos) {
+            photo.setIsActive(false);
+        }
         existingUser.setIsActive(false);
         userRepository.save(existingUser);
     }

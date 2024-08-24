@@ -11,4 +11,10 @@ public class PermissionHelper {
             throw new UnauthorizedOperationException(message);
         }
     }
+
+    public static void isOrganizer(User user, String message) {
+        if(!user.getRole().getName().equals("Organizer")){
+            throw new UnauthorizedOperationException(message);
+        }
+    }
 }

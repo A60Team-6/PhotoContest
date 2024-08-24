@@ -1,13 +1,7 @@
 package com.telerikacademy.web.photocontest.helpers;
 
-import com.telerikacademy.web.photocontest.models.Photo;
-import com.telerikacademy.web.photocontest.models.Rank;
-import com.telerikacademy.web.photocontest.models.Role;
-import com.telerikacademy.web.photocontest.models.User;
-import com.telerikacademy.web.photocontest.models.dtos.PhotoInputDto;
-import com.telerikacademy.web.photocontest.models.dtos.UserInputDto;
-import com.telerikacademy.web.photocontest.models.dtos.UserOutputDto;
-import com.telerikacademy.web.photocontest.models.dtos.UserUpdateDto;
+import com.telerikacademy.web.photocontest.models.*;
+import com.telerikacademy.web.photocontest.models.dtos.*;
 import com.telerikacademy.web.photocontest.repositories.UserRepository;
 import com.telerikacademy.web.photocontest.sercices.contracts.UserService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +16,7 @@ public class MapperHelper {
 
     private static final String RANG_JUNKIE_ID = "9162fbf0-6190-11ef-97e5-50ebf6c3d3f0";
     private static final String ROLE_USER_ID = "91607ef9-6190-11ef-97e5-50ebf6c3d3f0";
+    public static final String UUID = "24bda80f-623c-11ef-97e5-50ebf6c3d3f0";
     private final UserService userService;
     private final UserRepository userRepository;
 
@@ -35,10 +30,10 @@ public class MapperHelper {
         user.setPassword(userInputDto.getPassword());
         user.setProfilePhoto(userInputDto.getProfilePicture());
         user.setPoints(0);
-        UUID rankId = UUID.fromString(RANG_JUNKIE_ID);
+        UUID rankId = java.util.UUID.fromString(RANG_JUNKIE_ID);
         Rank rank = new Rank(rankId, "Junkie");
         user.setRank(rank);
-        UUID roleId = UUID.fromString(ROLE_USER_ID);
+        UUID roleId = java.util.UUID.fromString(ROLE_USER_ID);
         Role role = new Role(roleId, "User");
         user.setRole(role);
         user.setCreatedAt(LocalDateTime.now());
@@ -74,5 +69,29 @@ public class MapperHelper {
         photo.setCreatedAt(LocalDateTime.now());
         photo.setIsActive(true);
         return photo;
+    }
+
+    public ContestOutputDto changeFromContestToContestOutDto(Contest contest) {
+        ContestOutputDto contestOutputDto = new ContestOutputDto();
+        contestOutputDto.setTitle(contest.getTitle());
+        contestOutputDto.setCategory(contest.getCategory());
+        contestOutputDto.setPhase(contest.getPhase());
+        return contestOutputDto;
+    }
+
+    public Contest createContestFromContestInputDto(ContestInputDto contestInputDto, User user){
+        Contest contest = new Contest();
+        contest.setTitle(contestInputDto.getTitle());
+        contest.setCategory(contestInputDto.getCategory());
+        contest.setPhotoUrl(contestInputDto.getCoverPhotoUrl());
+        contest.setOrganizer(user);
+        LocalDateTime createdAt = LocalDateTime.now();
+        contest.setCreatedAt(createdAt);
+        contest.setChangePhaseTime(createdAt.plusHours(2));;
+        UUID phaseUUIDID = java.util.UUID.fromString(UUID);
+        Phase phase = new Phase(phaseUUIDID, "Phase 1");
+        contest.setPhase(phase);
+        contest.setIsActive(true);
+        return contest;
     }
 }
