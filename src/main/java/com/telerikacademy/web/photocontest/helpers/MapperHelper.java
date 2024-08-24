@@ -1,8 +1,10 @@
 package com.telerikacademy.web.photocontest.helpers;
 
+import com.telerikacademy.web.photocontest.models.Photo;
 import com.telerikacademy.web.photocontest.models.Rank;
 import com.telerikacademy.web.photocontest.models.Role;
 import com.telerikacademy.web.photocontest.models.User;
+import com.telerikacademy.web.photocontest.models.dtos.PhotoInputDto;
 import com.telerikacademy.web.photocontest.models.dtos.UserInputDto;
 import com.telerikacademy.web.photocontest.models.dtos.UserOutputDto;
 import com.telerikacademy.web.photocontest.models.dtos.UserUpdateDto;
@@ -18,6 +20,8 @@ import java.util.UUID;
 @Component
 public class MapperHelper {
 
+    private static final String RANG_JUNKIE_ID = "9162fbf0-6190-11ef-97e5-50ebf6c3d3f0";
+    private static final String ROLE_USER_ID = "91607ef9-6190-11ef-97e5-50ebf6c3d3f0";
     private final UserService userService;
     private final UserRepository userRepository;
 
@@ -31,12 +35,10 @@ public class MapperHelper {
         user.setPassword(userInputDto.getPassword());
         user.setProfilePhoto(userInputDto.getProfilePicture());
         user.setPoints(0);
-        String uuidString = "9162fbf0-6190-11ef-97e5-50ebf6c3d3f0";
-        UUID rankId = UUID.fromString(uuidString);
+        UUID rankId = UUID.fromString(RANG_JUNKIE_ID);
         Rank rank = new Rank(rankId, "Junkie");
         user.setRank(rank);
-        String uuidStringRole = "91607ef9-6190-11ef-97e5-50ebf6c3d3f0";
-        UUID roleId = UUID.fromString(uuidStringRole);
+        UUID roleId = UUID.fromString(ROLE_USER_ID);
         Role role = new Role(roleId, "User");
         user.setRole(role);
         user.setCreatedAt(LocalDateTime.now());
@@ -62,5 +64,15 @@ public class MapperHelper {
         userOutputDto.setEmail(user.getEmail());
         userOutputDto.setProfilePicture(user.getProfilePhoto());
         return userOutputDto;
+    }
+
+    public Photo createPhotoFromPhotoInputDto(PhotoInputDto photoInputDto) {
+        Photo photo = new Photo();
+        photo.setTitle(photoInputDto.getTitle());
+        photo.setStory(photoInputDto.getStory());
+        photo.setPhotoUrl(photoInputDto.getPhotoUrl());
+        photo.setCreatedAt(LocalDateTime.now());
+        photo.setIsActive(true);
+        return photo;
     }
 }

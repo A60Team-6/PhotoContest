@@ -37,7 +37,7 @@ public class Contest {
         private String photoUrl;
 
         @ManyToOne
-        @JoinColumn(name = "organizer_id", nullable = false)
+        @JoinColumn(name = "user_id", nullable = false)
         private User organizer;
 
         @Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

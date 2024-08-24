@@ -31,7 +31,7 @@ VALUES (UUID(), 'Phase 1'),
        (UUID(), 'Finished');
 
 -- Вмъкване на данни в таблицата contests
-INSERT INTO contests (id, title, category, phase_id, cover_photo_url, organizer_id, created_at, change_phase_time,
+INSERT INTO contests (id, title, category, phase_id, cover_photo_url, user_id, created_at, change_phase_time,
                       is_active)
 VALUES (UUID(), 'Nature Photography', 'Nature', (SELECT id FROM phases WHERE name = 'Phase 1'),
         'https://example.com/covers/nature.jpg', (SELECT user_id FROM users WHERE username = 'jane_smith'), NOW(),
