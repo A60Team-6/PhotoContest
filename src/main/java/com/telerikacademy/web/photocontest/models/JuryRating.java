@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "jury_ratings")
+@Table(name = "jury_photo_ratings")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,7 +27,7 @@ public class JuryRating {
     private Photo photo;
 
     @ManyToOne
-    @JoinColumn(name = "jury_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User jury;
 
     @Column(name = "score", nullable = false)

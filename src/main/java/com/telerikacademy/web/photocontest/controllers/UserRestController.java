@@ -6,6 +6,7 @@ import com.telerikacademy.web.photocontest.helpers.MapperHelper;
 import com.telerikacademy.web.photocontest.models.User;
 import com.telerikacademy.web.photocontest.models.dtos.UserInputDto;
 import com.telerikacademy.web.photocontest.models.dtos.UserOutputDto;
+import com.telerikacademy.web.photocontest.models.dtos.UserUpdateDto;
 import com.telerikacademy.web.photocontest.sercices.contracts.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -59,10 +60,10 @@ public class UserRestController {
     }
 
     @PutMapping
-    public ResponseEntity<?> editUser(@RequestHeader HttpHeaders headers, @Valid @RequestBody UserInputDto userInputDto) {
+    public ResponseEntity<?> editUser(@RequestHeader HttpHeaders headers, @Valid @RequestBody UserUpdateDto userUpdateDto) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            User userToEdit = mapperHelper.createUserFromUserInputDto(userInputDto);
+            User userToEdit = mapperHelper.updateUserFromUserInputDto(userUpdateDto);
             userService.editUser(user, userToEdit);
             return ResponseEntity.ok("User edited successfully!");
         } catch (EntityNotFoundException e) {

@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(User user) {
-        User existingUser = userRepository.findByUsernameAndIsActiveTrue(user.getUsername());
+        User existingUser = userRepository.findByUsername(user.getUsername());
 
         if (existingUser != null) {
             throw new DuplicateEntityException("User", "username", user.getUsername());
@@ -44,12 +44,10 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-
     @Override
     public void editUser(User user, User userToEdit) {
-        PermissionHelper.isSameUser(user, userRepository.findByUsernameAndIsActiveTrue(userToEdit.getUsername()), "You can edit only your profile!");
+       // PermissionHelper.isSameUser(user, userRepository.findByUsernameAndIsActiveTrue(userToEdit.getUsername()), "You can edit only your profile!");
 
-        user.setUsername(userToEdit.getUsername());
         user.setFirstName(userToEdit.getFirstName());
         user.setLastName(userToEdit.getLastName());
         user.setEmail(userToEdit.getEmail());

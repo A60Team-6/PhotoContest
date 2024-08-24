@@ -5,6 +5,7 @@ import com.telerikacademy.web.photocontest.models.Role;
 import com.telerikacademy.web.photocontest.models.User;
 import com.telerikacademy.web.photocontest.models.dtos.UserInputDto;
 import com.telerikacademy.web.photocontest.models.dtos.UserOutputDto;
+import com.telerikacademy.web.photocontest.models.dtos.UserUpdateDto;
 import com.telerikacademy.web.photocontest.repositories.UserRepository;
 import com.telerikacademy.web.photocontest.sercices.contracts.UserService;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +41,16 @@ public class MapperHelper {
         user.setRole(role);
         user.setCreatedAt(LocalDateTime.now());
         user.setIsActive(true);
+        return user;
+    }
+
+    public User updateUserFromUserInputDto(UserUpdateDto userUpdateDto) {
+        User user = new User();
+        user.setFirstName(userUpdateDto.getFirstName());
+        user.setLastName(userUpdateDto.getLastName());
+        user.setEmail(userUpdateDto.getEmail());
+        user.setPassword(userUpdateDto.getPassword());
+        user.setProfilePhoto(userUpdateDto.getProfilePicture());
         return user;
     }
 

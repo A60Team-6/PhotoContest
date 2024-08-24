@@ -24,7 +24,7 @@ CREATE TABLE users
     last_name     VARCHAR(50)        NOT NULL,
     email         VARCHAR(50) UNIQUE NOT NULL,
     password      VARCHAR(255)       NOT NULL,
-    profile_photo VARCHAR(256)       NOT NULL,
+    profile_photo VARCHAR(256)       ,
     points        INT,
     role_id       CHAR(36)           NOT NULL,
     ranking_id    CHAR(36)           NOT NULL,
@@ -49,11 +49,11 @@ CREATE TABLE contests
     category          VARCHAR(100)        NOT NULL,
     phase_id          CHAR(36)            NOT NULL,
     cover_photo_url   VARCHAR(255),
-    organizer_id      CHAR(36)            NOT NULL,
+    user_id      CHAR(36)            NOT NULL,
     created_at        TIMESTAMP,
     change_phase_time TIMESTAMP,
     is_active         BOOLEAN,
-    FOREIGN KEY (organizer_id) REFERENCES users (user_id),
+    FOREIGN KEY (user_id) REFERENCES users (user_id),
     FOREIGN KEY (phase_id) REFERENCES phases (id)
 );
 
@@ -73,18 +73,18 @@ CREATE TABLE photos
 );
 
 -- Таблица за оценки от журито (JuryRatings)
-CREATE TABLE jury_ratings
+CREATE TABLE jury_photo_ratings
 (
     id             CHAR(36) DEFAULT UUID() PRIMARY KEY,
     photo_id       CHAR(36) NOT NULL,
-    jury_id        CHAR(36) NOT NULL,
+    user_id        CHAR(36) NOT NULL,
     score          INT      NOT NULL,
     comment        TEXT     NOT NULL,
     category_match BOOLEAN,
     review_date    TIMESTAMP,
     is_active      BOOLEAN,
     FOREIGN KEY (photo_id) REFERENCES photos (id),
-    FOREIGN KEY (jury_id) REFERENCES users (user_id)
+    FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
 
 -- Таблица за участия в конкурси (ContestParticipation)
