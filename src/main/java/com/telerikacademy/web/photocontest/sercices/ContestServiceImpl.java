@@ -6,6 +6,7 @@ import com.telerikacademy.web.photocontest.models.Contest;
 import com.telerikacademy.web.photocontest.models.User;
 import com.telerikacademy.web.photocontest.repositories.ContestRepository;
 import com.telerikacademy.web.photocontest.sercices.contracts.ContestService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +46,19 @@ public class ContestServiceImpl implements ContestService {
         }
 
         contestRepository.save(contest);
+    }
+
+    @Override
+    public void deactivateContest(UUID contestId, User user) {
+        PermissionHelper.isOrganizer(user, "You are not permitted for this action!");
+        Contest existingContest = contestRepository.findByContestIdAndIsActiveTrue(contestId);
+
+        if (existingContest == null) {
+            throw new EntityNotFoundException("This contest does not exist");
+        }
+
+        existingContest.setIsActive(false);
+        contestRepository.save(existingContest);
     }
 
 }

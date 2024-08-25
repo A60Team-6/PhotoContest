@@ -14,4 +14,6 @@ public interface ContestService {
     Contest findContestByTitle(String title);
 
     void createContest(Contest contest, User user);
+
+    void deactivateContest(UUID contestId, User user);
 }
