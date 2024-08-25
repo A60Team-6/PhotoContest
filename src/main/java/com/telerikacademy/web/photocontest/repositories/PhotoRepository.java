@@ -13,4 +13,6 @@ public interface PhotoRepository extends JpaRepository<Photo, UUID> {
     Photo findByPhotoUrl(String url);
 
     List<Photo> findByTitle(String title);
+
+    List<Photo> findAllByIsActiveTrue();
 }

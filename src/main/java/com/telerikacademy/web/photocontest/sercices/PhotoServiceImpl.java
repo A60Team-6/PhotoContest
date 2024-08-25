@@ -8,11 +8,18 @@ import com.telerikacademy.web.photocontest.sercices.contracts.PhotoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class PhotoServiceImpl implements PhotoService {
 
     private final PhotoRepository photoRepository;
+
+    @Override
+    public List<Photo> getAll() {
+        return photoRepository.findAllByIsActiveTrue();
+    }
 
     @Override
     public Photo createPhoto(Photo photo, User user) {

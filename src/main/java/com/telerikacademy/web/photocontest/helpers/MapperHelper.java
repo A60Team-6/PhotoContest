@@ -71,6 +71,17 @@ public class MapperHelper {
         return photo;
     }
 
+    public PhotoOutputDto changeFromPhotoToPhotoOutDto(Photo photo) {
+        return PhotoOutputDto.builder()
+                .title(photo.getTitle())
+                .story(photo.getStory())
+                .photoUrl(photo.getPhotoUrl())
+                .contest(String.valueOf(photo.getContest()))
+                .user(photo.getUser().getUsername())
+                .createdAt(photo.getCreatedAt())
+                .build();
+    }
+
     public ContestOutputDto changeFromContestToContestOutDto(Contest contest) {
         ContestOutputDto contestOutputDto = new ContestOutputDto();
         contestOutputDto.setTitle(contest.getTitle());
