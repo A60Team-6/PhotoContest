@@ -3,13 +3,16 @@ package com.telerikacademy.web.photocontest.sercices;
 import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import com.telerikacademy.web.photocontest.helpers.PermissionHelper;
 import com.telerikacademy.web.photocontest.models.Contest;
+import com.telerikacademy.web.photocontest.models.Phase;
 import com.telerikacademy.web.photocontest.models.User;
 import com.telerikacademy.web.photocontest.repositories.ContestRepository;
 import com.telerikacademy.web.photocontest.sercices.contracts.ContestService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -59,6 +62,33 @@ public class ContestServiceImpl implements ContestService {
 
         existingContest.setIsActive(false);
         contestRepository.save(existingContest);
+    }
+
+    @Scheduled(fixedRate = 60000)
+    public void updateContestPhases() {
+        List<Contest> activeContests = contestRepository.findAllByIsActiveTrue();
+        for (Contest contest : activeContests) {
+            LocalDateTime now = LocalDateTime.now();
+            if (now.isAfter(contest.getChangePhaseTime())) {
+                changePhase(contest);
+            }
+        }
+    }
+
+    private void changePhase(Contest contest) {
+        String currentPhase = contest.getPhase().getName();
+        LocalDateTime now = LocalDateTime.now();
+
+        if ("Phase 1".equals(currentPhase)) {
+            contest.setPhase(new Phase(UUID.fromString("24bdacbf-623c-11ef-97e5-50ebf6c3d3f0"), "Phase 2"));
+            contest.setChangePhaseTime(now.plusHours(2));
+        } else if ("Phase 2".equals(currentPhase)) {
+            contest.setPhase(new Phase(UUID.fromString("24bdad85-623c-11ef-97e5-50ebf6c3d3f0"), "Finished"));
+            contest.setIsActive(false);
+        }
+
+        contest.setChangePhaseTime(now);
+        contestRepository.save(contest);
     }
 
 }
