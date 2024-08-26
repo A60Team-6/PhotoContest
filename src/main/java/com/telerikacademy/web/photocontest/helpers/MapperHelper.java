@@ -2,6 +2,7 @@ package com.telerikacademy.web.photocontest.helpers;
 
 import com.telerikacademy.web.photocontest.models.*;
 import com.telerikacademy.web.photocontest.models.dtos.*;
+import com.telerikacademy.web.photocontest.repositories.PhotoRepository;
 import com.telerikacademy.web.photocontest.repositories.UserRepository;
 import com.telerikacademy.web.photocontest.sercices.contracts.UserService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ public class MapperHelper {
     public static final String UUID = "24bda80f-623c-11ef-97e5-50ebf6c3d3f0";
     private final UserService userService;
     private final UserRepository userRepository;
+    private final PhotoRepository photoRepository;
 
 
     public User createUserFromUserInputDto(UserInputDto userInputDto) {
@@ -62,14 +64,23 @@ public class MapperHelper {
     }
 
     public Photo createPhotoFromPhotoInputDto(PhotoInputDto photoInputDto) {
-        Photo photo = new Photo();
+        return Photo.builder()
+                .title(photoInputDto.getTitle())
+                .story(photoInputDto.getStory())
+                .photoUrl(photoInputDto.getPhotoUrl())
+                .createdAt(LocalDateTime.now())
+                .isActive(true)
+                .build();
+    }
+
+    public Photo updatePhotoFromDto(PhotoInputDto photoInputDto, Photo photo) {
         photo.setTitle(photoInputDto.getTitle());
         photo.setStory(photoInputDto.getStory());
         photo.setPhotoUrl(photoInputDto.getPhotoUrl());
-        photo.setCreatedAt(LocalDateTime.now());
-        photo.setIsActive(true);
+
         return photo;
     }
+
 
     public PhotoOutputDto changeFromPhotoToPhotoOutDto(Photo photo) {
         return PhotoOutputDto.builder()
@@ -90,7 +101,7 @@ public class MapperHelper {
         return contestOutputDto;
     }
 
-    public Contest createContestFromContestInputDto(ContestInputDto contestInputDto, User user){
+    public Contest createContestFromContestInputDto(ContestInputDto contestInputDto, User user) {
         Contest contest = new Contest();
         contest.setTitle(contestInputDto.getTitle());
         contest.setCategory(contestInputDto.getCategory());
@@ -98,11 +109,37 @@ public class MapperHelper {
         contest.setOrganizer(user);
         LocalDateTime createdAt = LocalDateTime.now();
         contest.setCreatedAt(createdAt);
-        contest.setChangePhaseTime(createdAt.plusHours(2));;
+        contest.setChangePhaseTime(createdAt.plusHours(2));
+        ;
         UUID phaseUUIDID = java.util.UUID.fromString(UUID);
         Phase phase = new Phase(phaseUUIDID, "Phase 1");
         contest.setPhase(phase);
         contest.setIsActive(true);
         return contest;
     }
+
+//    public JuryPhotoRating toJuryPhotoRating(JuryPhotoRatingInputDto dto, Photo photo, User user) {
+//        return JuryPhotoRating.builder()
+//                .photo(photo)
+//                .user(user)
+//                .score(dto.getScore())
+//                .comment(dto.getComment())
+//                .categoryMatch(dto.getCategoryMatch())
+//                .reviewDate(LocalDateTime.now())
+//                .isActive(true)
+//                .build();
+//    }
+//
+//    public JuryPhotoRatingOutputDto toJuryPhotoRatingOutputDto(JuryPhotoRating juryPhotoRating) {
+//        return JuryPhotoRatingOutputDto.builder()
+//                .id(juryPhotoRating.getId())
+//                .photoId(juryPhotoRating.getPhoto().getId())
+//                .userId(juryPhotoRating.getUser().getUserId())
+//                .score(juryPhotoRating.getScore())
+//                .comment(juryPhotoRating.getComment())
+//                .categoryMatch(juryPhotoRating.getCategoryMatch())
+//                .reviewDate(juryPhotoRating.getReviewDate())
+//                .isActive(juryPhotoRating.getIsActive())
+//                .build();
+//    }
 }

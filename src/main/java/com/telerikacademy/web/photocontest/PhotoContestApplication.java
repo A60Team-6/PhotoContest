@@ -5,8 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-//@EnableJpaRepositories(basePackages = "com.telerikacademy.web.photocontest.config.user")
-//@EntityScan(basePackages = "com.telerikacademy.web.photocontest.config.user")
+
 @SpringBootApplication
 public class PhotoContestApplication {
 
