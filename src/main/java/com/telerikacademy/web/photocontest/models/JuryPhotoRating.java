@@ -15,7 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class JuryRating {
+public class JuryPhotoRating {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

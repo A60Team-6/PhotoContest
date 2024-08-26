@@ -118,28 +118,28 @@ public class MapperHelper {
         return contest;
     }
 
-//    public JuryPhotoRating toJuryPhotoRating(JuryPhotoRatingInputDto dto, Photo photo, User user) {
-//        return JuryPhotoRating.builder()
-//                .photo(photo)
-//                .user(user)
-//                .score(dto.getScore())
-//                .comment(dto.getComment())
-//                .categoryMatch(dto.getCategoryMatch())
-//                .reviewDate(LocalDateTime.now())
-//                .isActive(true)
-//                .build();
-//    }
-//
-//    public JuryPhotoRatingOutputDto toJuryPhotoRatingOutputDto(JuryPhotoRating juryPhotoRating) {
-//        return JuryPhotoRatingOutputDto.builder()
-//                .id(juryPhotoRating.getId())
-//                .photoId(juryPhotoRating.getPhoto().getId())
-//                .userId(juryPhotoRating.getUser().getUserId())
-//                .score(juryPhotoRating.getScore())
-//                .comment(juryPhotoRating.getComment())
-//                .categoryMatch(juryPhotoRating.getCategoryMatch())
-//                .reviewDate(juryPhotoRating.getReviewDate())
-//                .isActive(juryPhotoRating.getIsActive())
-//                .build();
-//    }
+    public JuryPhotoRating toJuryPhotoRating(JuryPhotoRatingInputDto dto, Photo photo, User user) {
+        return JuryPhotoRating.builder()
+                .photo(photo)
+                .jury(user)
+                .score(dto.getScore())
+                .comment(dto.getComment())
+                .categoryMatch(dto.getCategoryMatch())
+                .createdAt(LocalDateTime.now())
+                .isActive(true)
+                .build();
+    }
+
+    public JuryPhotoRatingOutputDto toJuryPhotoRatingOutputDto(JuryPhotoRating juryPhotoRating) {
+        return JuryPhotoRatingOutputDto.builder()
+                .id(juryPhotoRating.getId())
+                .photoId(juryPhotoRating.getPhoto().getId())
+                .userId(juryPhotoRating.getJury().getUserId())
+                .score(juryPhotoRating.getScore())
+                .comment(juryPhotoRating.getComment())
+                .categoryMatch(juryPhotoRating.getCategoryMatch())
+                .reviewDate(juryPhotoRating.getCreatedAt())
+                .isActive(juryPhotoRating.getIsActive())
+                .build();
+    }
 }
