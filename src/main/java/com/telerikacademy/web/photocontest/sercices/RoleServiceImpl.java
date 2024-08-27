@@ -1,6 +1,6 @@
 package com.telerikacademy.web.photocontest.sercices;
 
-import com.telerikacademy.web.photocontest.models.Role;
+import com.telerikacademy.web.photocontest.entities.Role;
 import com.telerikacademy.web.photocontest.repositories.RoleRepository;
 import com.telerikacademy.web.photocontest.sercices.contracts.RoleService;
 import lombok.RequiredArgsConstructor;

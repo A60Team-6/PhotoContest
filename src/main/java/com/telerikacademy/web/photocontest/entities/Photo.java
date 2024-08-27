@@ -1,4 +1,4 @@
-package com.telerikacademy.web.photocontest.models;
+package com.telerikacademy.web.photocontest.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -10,8 +10,8 @@ import java.util.UUID;
 @Table(name = "photos")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
+//@AllArgsConstructor
+//@Builder
 public class Photo {
 
     @Id
@@ -38,9 +38,22 @@ public class Photo {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @Column
+    private int total_score;
+
     @Column(name = "upload_date", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "is_active")
     private Boolean isActive;
+
+    @Builder
+    public Photo(String title, String story, String photoUrl, Contest contest) {
+        this.title = title;
+        this.story = story;
+        this.photoUrl = photoUrl;
+        this.isActive = true;
+        this.total_score = 0;
+
+    }
 }

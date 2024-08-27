@@ -1,6 +1,6 @@
 package com.telerikacademy.web.photocontest.repositories;
 
-import com.telerikacademy.web.photocontest.models.Role;
+import com.telerikacademy.web.photocontest.entities.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

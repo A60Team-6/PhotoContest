@@ -1,10 +1,10 @@
 package com.telerikacademy.web.photocontest.sercices;
 
 import com.telerikacademy.web.photocontest.helpers.UnauthorizedOperationException;
-import com.telerikacademy.web.photocontest.models.Contest;
-import com.telerikacademy.web.photocontest.models.ContestParticipation;
-import com.telerikacademy.web.photocontest.models.Photo;
-import com.telerikacademy.web.photocontest.models.User;
+import com.telerikacademy.web.photocontest.entities.Contest;
+import com.telerikacademy.web.photocontest.entities.ContestParticipation;
+import com.telerikacademy.web.photocontest.entities.Photo;
+import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.repositories.*;
 import com.telerikacademy.web.photocontest.sercices.contracts.ContestParticipationService;
 import jakarta.persistence.EntityNotFoundException;

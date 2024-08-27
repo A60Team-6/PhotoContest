@@ -1,4 +1,4 @@
-package com.telerikacademy.web.photocontest.models;
+package com.telerikacademy.web.photocontest.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,18 +9,18 @@ import lombok.NoArgsConstructor;
 import java.util.UUID;
 
 @Entity
-@Table(name = "roles")
+@Table(name = "phases")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Role {
+public class Phase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true)
-    private UUID roleId;
+    private UUID phaseId;
 
-    @Column(name = "name", nullable = false, length = 36)
+    @Column(name = "name", nullable = false)
     private String name;
 }

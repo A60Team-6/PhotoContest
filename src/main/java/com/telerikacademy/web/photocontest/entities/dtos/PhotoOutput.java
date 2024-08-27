@@ -1,4 +1,4 @@
-package com.telerikacademy.web.photocontest.models.dtos;
+package com.telerikacademy.web.photocontest.entities.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PhotoOutputDto {
+public class PhotoOutput {
 
     private String title;
     private String story;

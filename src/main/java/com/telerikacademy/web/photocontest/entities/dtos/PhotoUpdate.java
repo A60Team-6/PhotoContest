@@ -1,4 +1,4 @@
-package com.telerikacademy.web.photocontest.models.dtos;
+package com.telerikacademy.web.photocontest.entities.dtos;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PhotoUpdateDto {
+public class PhotoUpdate {
 
     @NotNull(message = "Title can not be empty!")
     @Size(max = 100, message = "Title must be less than 100 characters")

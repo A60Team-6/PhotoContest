@@ -1,4 +1,4 @@
-package com.telerikacademy.web.photocontest.models.dtos;
+package com.telerikacademy.web.photocontest.entities.dtos;
 
 
 import jakarta.validation.constraints.NotNull;

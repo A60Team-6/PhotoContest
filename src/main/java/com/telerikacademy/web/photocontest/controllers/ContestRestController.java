@@ -4,12 +4,10 @@ import com.telerikacademy.web.photocontest.exceptions.AuthorizationException;
 import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import com.telerikacademy.web.photocontest.helpers.AuthenticationHelper;
 import com.telerikacademy.web.photocontest.helpers.MapperHelper;
-import com.telerikacademy.web.photocontest.models.Contest;
-import com.telerikacademy.web.photocontest.models.User;
-import com.telerikacademy.web.photocontest.models.dtos.ContestInputDto;
-import com.telerikacademy.web.photocontest.models.dtos.ContestOutputDto;
-import com.telerikacademy.web.photocontest.models.dtos.UserInputDto;
-import com.telerikacademy.web.photocontest.models.dtos.UserOutputDto;
+import com.telerikacademy.web.photocontest.entities.Contest;
+import com.telerikacademy.web.photocontest.entities.User;
+import com.telerikacademy.web.photocontest.entities.dtos.ContestInputDto;
+import com.telerikacademy.web.photocontest.entities.dtos.ContestOutputDto;
 import com.telerikacademy.web.photocontest.sercices.contracts.ContestService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -20,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.naming.AuthenticationException;
 import java.util.List;
 import java.util.UUID;
 

@@ -1,8 +1,7 @@
 package com.telerikacademy.web.photocontest.controllers;
 
 import com.telerikacademy.web.photocontest.helpers.AuthenticationHelper;
-import com.telerikacademy.web.photocontest.models.Contest;
-import com.telerikacademy.web.photocontest.models.User;
+import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.sercices.contracts.ContestParticipationService;
 import com.telerikacademy.web.photocontest.sercices.contracts.ContestService;
 import com.telerikacademy.web.photocontest.sercices.contracts.UserService;

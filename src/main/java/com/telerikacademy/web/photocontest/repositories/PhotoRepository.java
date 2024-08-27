@@ -1,15 +1,10 @@
 package com.telerikacademy.web.photocontest.repositories;
 
-import com.telerikacademy.web.photocontest.models.Photo;
-import jakarta.transaction.Transactional;
+import com.telerikacademy.web.photocontest.entities.Photo;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Repository

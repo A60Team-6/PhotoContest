@@ -1,4 +1,4 @@
-package com.telerikacademy.web.photocontest.models;
+package com.telerikacademy.web.photocontest.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

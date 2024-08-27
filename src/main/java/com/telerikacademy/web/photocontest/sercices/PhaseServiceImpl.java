@@ -1,6 +1,6 @@
 package com.telerikacademy.web.photocontest.sercices;
 
-import com.telerikacademy.web.photocontest.models.Phase;
+import com.telerikacademy.web.photocontest.entities.Phase;
 import com.telerikacademy.web.photocontest.repositories.PhaseRepository;
 import com.telerikacademy.web.photocontest.sercices.contracts.PhaseService;
 import lombok.RequiredArgsConstructor;

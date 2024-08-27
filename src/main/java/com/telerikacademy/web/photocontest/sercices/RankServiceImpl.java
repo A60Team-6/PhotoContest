@@ -1,6 +1,6 @@
 package com.telerikacademy.web.photocontest.sercices;
 
-import com.telerikacademy.web.photocontest.models.Rank;
+import com.telerikacademy.web.photocontest.entities.Rank;
 import com.telerikacademy.web.photocontest.repositories.RankRepository;
 import com.telerikacademy.web.photocontest.sercices.contracts.RankService;
 import lombok.RequiredArgsConstructor;

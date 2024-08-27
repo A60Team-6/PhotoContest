@@ -2,9 +2,9 @@ package com.telerikacademy.web.photocontest.sercices;
 
 import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import com.telerikacademy.web.photocontest.helpers.PermissionHelper;
-import com.telerikacademy.web.photocontest.models.Contest;
-import com.telerikacademy.web.photocontest.models.Phase;
-import com.telerikacademy.web.photocontest.models.User;
+import com.telerikacademy.web.photocontest.entities.Contest;
+import com.telerikacademy.web.photocontest.entities.Phase;
+import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.repositories.ContestRepository;
 import com.telerikacademy.web.photocontest.sercices.contracts.ContestService;
 import jakarta.persistence.EntityNotFoundException;

@@ -1,8 +1,7 @@
 package com.telerikacademy.web.photocontest.sercices.contracts;
 
-import com.telerikacademy.web.photocontest.models.dtos.JuryPhotoRatingInputDto;
-import com.telerikacademy.web.photocontest.models.dtos.JuryPhotoRatingOutputDto;
-import org.springframework.data.domain.Page;
+import com.telerikacademy.web.photocontest.entities.dtos.JuryPhotoRatingInputDto;
+import com.telerikacademy.web.photocontest.entities.dtos.JuryPhotoRatingOutputDto;
 
 import java.util.List;
 import java.util.UUID;

@@ -1,6 +1,6 @@
 package com.telerikacademy.web.photocontest.sercices.contracts;
 
-import com.telerikacademy.web.photocontest.models.Rank;
+import com.telerikacademy.web.photocontest.entities.Rank;
 
 import java.util.UUID;
 

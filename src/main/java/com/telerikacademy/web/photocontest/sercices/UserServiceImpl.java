@@ -2,8 +2,8 @@ package com.telerikacademy.web.photocontest.sercices;
 
 import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import com.telerikacademy.web.photocontest.helpers.PermissionHelper;
-import com.telerikacademy.web.photocontest.models.Photo;
-import com.telerikacademy.web.photocontest.models.User;
+import com.telerikacademy.web.photocontest.entities.Photo;
+import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.repositories.UserRepository;
 import com.telerikacademy.web.photocontest.sercices.contracts.UserService;
 import lombok.RequiredArgsConstructor;

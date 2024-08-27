@@ -1,7 +1,7 @@
 package com.telerikacademy.web.photocontest.helpers;
 
 import com.telerikacademy.web.photocontest.exceptions.UnauthorizedOperationException;
-import com.telerikacademy.web.photocontest.models.User;
+import com.telerikacademy.web.photocontest.entities.User;
 
 public class PermissionHelper {
 

@@ -1,6 +1,6 @@
 package com.telerikacademy.web.photocontest.sercices.contracts;
 
-import com.telerikacademy.web.photocontest.models.User;
+import com.telerikacademy.web.photocontest.entities.User;
 
 import java.util.UUID;
 

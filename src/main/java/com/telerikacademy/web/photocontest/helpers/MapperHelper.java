@@ -1,7 +1,7 @@
 package com.telerikacademy.web.photocontest.helpers;
 
-import com.telerikacademy.web.photocontest.models.*;
-import com.telerikacademy.web.photocontest.models.dtos.*;
+import com.telerikacademy.web.photocontest.entities.*;
+import com.telerikacademy.web.photocontest.entities.dtos.*;
 import com.telerikacademy.web.photocontest.repositories.PhotoRepository;
 import com.telerikacademy.web.photocontest.repositories.UserRepository;
 import com.telerikacademy.web.photocontest.sercices.contracts.UserService;
@@ -63,17 +63,17 @@ public class MapperHelper {
         return userOutputDto;
     }
 
-    public Photo createPhotoFromPhotoInputDto(PhotoInputDto photoInputDto) {
-        return Photo.builder()
-                .title(photoInputDto.getTitle())
-                .story(photoInputDto.getStory())
-                .photoUrl(photoInputDto.getPhotoUrl())
-                .createdAt(LocalDateTime.now())
-                .isActive(true)
-                .build();
-    }
+//    public Photo createPhotoFromPhotoInputDto(PhotoInput photoInputDto) {
+//        return Photo.builder()
+//                .title(photoInputDto.getTitle())
+//                .story(photoInputDto.getStory())
+//                .photoUrl(photoInputDto.getPhotoUrl())
+//                .createdAt(LocalDateTime.now())
+//                .isActive(true)
+//                .build();
+//    }
 
-    public Photo updatePhotoFromDto(PhotoInputDto photoInputDto, Photo photo) {
+    public Photo updatePhotoFromDto(PhotoInput photoInputDto, Photo photo) {
         photo.setTitle(photoInputDto.getTitle());
         photo.setStory(photoInputDto.getStory());
         photo.setPhotoUrl(photoInputDto.getPhotoUrl());
@@ -82,8 +82,8 @@ public class MapperHelper {
     }
 
 
-    public PhotoOutputDto changeFromPhotoToPhotoOutDto(Photo photo) {
-        return PhotoOutputDto.builder()
+    public PhotoOutput changeFromPhotoToPhotoOutDto(Photo photo) {
+        return PhotoOutput.builder()
                 .title(photo.getTitle())
                 .story(photo.getStory())
                 .photoUrl(photo.getPhotoUrl())

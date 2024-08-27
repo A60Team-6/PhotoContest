@@ -1,8 +1,7 @@
-package com.telerikacademy.web.photocontest.models;
+package com.telerikacademy.web.photocontest.entities;
 
 
 import jakarta.persistence.*;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

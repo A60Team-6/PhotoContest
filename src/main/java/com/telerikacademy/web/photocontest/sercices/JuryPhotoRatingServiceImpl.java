@@ -1,11 +1,11 @@
 package com.telerikacademy.web.photocontest.sercices;
 
 import com.telerikacademy.web.photocontest.helpers.MapperHelper;
-import com.telerikacademy.web.photocontest.models.JuryPhotoRating;
-import com.telerikacademy.web.photocontest.models.Photo;
-import com.telerikacademy.web.photocontest.models.User;
-import com.telerikacademy.web.photocontest.models.dtos.JuryPhotoRatingInputDto;
-import com.telerikacademy.web.photocontest.models.dtos.JuryPhotoRatingOutputDto;
+import com.telerikacademy.web.photocontest.entities.JuryPhotoRating;
+import com.telerikacademy.web.photocontest.entities.Photo;
+import com.telerikacademy.web.photocontest.entities.User;
+import com.telerikacademy.web.photocontest.entities.dtos.JuryPhotoRatingInputDto;
+import com.telerikacademy.web.photocontest.entities.dtos.JuryPhotoRatingOutputDto;
 import com.telerikacademy.web.photocontest.repositories.JuryPhotoRatingRepository;
 import com.telerikacademy.web.photocontest.repositories.PhotoRepository;
 import com.telerikacademy.web.photocontest.repositories.UserRepository;

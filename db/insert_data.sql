@@ -41,13 +41,13 @@ VALUES (UUID(), 'Nature Photography', 'Nature', (SELECT id FROM phases WHERE nam
         NOW() + INTERVAL 1 MONTH, TRUE);
 
 -- Вмъкване на данни в таблицата photos
-INSERT INTO photos (id, title, story, photo_url, contest_id, user_id, upload_date, is_active)
+INSERT INTO photos (id, title, story, photo_url, contest_id, user_id, total_score, upload_date, is_active)
 VALUES (UUID(), 'Sunset in the mountains', 'A beautiful sunset in the mountains.',
         'https://example.com/photos/sunset.jpg', (SELECT id FROM contests WHERE title = 'Nature Photography'),
-        (SELECT user_id FROM users WHERE username = 'john_doe'), NOW(), TRUE),
+        (SELECT user_id FROM users WHERE username = 'john_doe'), null, NOW(), TRUE),
        (UUID(), 'City lights', 'The city comes alive at night.', 'https://example.com/photos/city_lights.jpg',
         (SELECT id FROM contests WHERE title = 'Urban Photography'),
-        (SELECT user_id FROM users WHERE username = 'john_doe'), NOW(), TRUE);
+        (SELECT user_id FROM users WHERE username = 'john_doe'), null, NOW(), TRUE);
 
 -- Вмъкване на данни в таблицата jury_photo_ratings
 INSERT INTO jury_photo_ratings (id, photo_id, user_id, score, comment, category_match, review_date, is_active)

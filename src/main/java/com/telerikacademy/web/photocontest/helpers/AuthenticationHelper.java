@@ -1,7 +1,7 @@
 package com.telerikacademy.web.photocontest.helpers;
 
 import com.telerikacademy.web.photocontest.exceptions.AuthorizationException;
-import com.telerikacademy.web.photocontest.models.User;
+import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.sercices.contracts.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;

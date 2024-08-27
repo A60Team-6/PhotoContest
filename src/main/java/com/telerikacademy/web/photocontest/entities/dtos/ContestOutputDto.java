@@ -1,6 +1,6 @@
-package com.telerikacademy.web.photocontest.models.dtos;
+package com.telerikacademy.web.photocontest.entities.dtos;
 
-import com.telerikacademy.web.photocontest.models.Phase;
+import com.telerikacademy.web.photocontest.entities.Phase;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
