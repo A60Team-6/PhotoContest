@@ -8,4 +8,6 @@ import java.util.UUID;
 
 @Repository
 public interface RankRepository extends JpaRepository<Rank, UUID> {
+
+    Rank findByName(String name);
 }

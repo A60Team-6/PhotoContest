@@ -18,4 +18,9 @@ public class RankServiceImpl implements RankService {
     public Rank getRankById(UUID id) {
         return rankRepository.getReferenceById(id);
     }
+
+    @Override
+    public Rank getRankByName(String name) {
+        return rankRepository.findByName(name);
+    }
 }

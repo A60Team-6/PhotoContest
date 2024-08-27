@@ -11,9 +11,9 @@ import java.util.UUID;
 public interface JuryPhotoRatingRepository extends JpaRepository<JuryPhotoRating, UUID> {
 
     List<JuryPhotoRating> findByPhotoIdAndIsActiveTrue(UUID photoId);
-
-    List<JuryPhotoRating> findByReviewerIdAndIsActiveTrue(UUID userId);
-
-
+//
+//    List<JuryPhotoRating> findByReviewerIdAndIsActiveTrue(UUID userId);
+//
+//
 
 }

@@ -1,6 +1,5 @@
 package com.telerikacademy.web.photocontest.entities.dtos;
 
-import com.telerikacademy.web.photocontest.entities.Phase;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,10 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ContestOutputDto {
+public class UserOutputIdDto {
 
-    private String title;
-    private String category;
-    private Phase phase;
-
+    private String userId;
 }

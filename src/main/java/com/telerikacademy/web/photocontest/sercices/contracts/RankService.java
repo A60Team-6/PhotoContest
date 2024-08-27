@@ -7,4 +7,6 @@ import java.util.UUID;
 public interface RankService {
 
     Rank getRankById(UUID id);
+
+    Rank getRankByName(String name);
 }

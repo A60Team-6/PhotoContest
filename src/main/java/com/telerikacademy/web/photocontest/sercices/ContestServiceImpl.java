@@ -1,14 +1,19 @@
 package com.telerikacademy.web.photocontest.sercices;
 
+import com.telerikacademy.web.photocontest.entities.dtos.ContestOutputDto;
+import com.telerikacademy.web.photocontest.entities.dtos.ContestOutputIdDto;
 import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import com.telerikacademy.web.photocontest.helpers.PermissionHelper;
 import com.telerikacademy.web.photocontest.entities.Contest;
 import com.telerikacademy.web.photocontest.entities.Phase;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.repositories.ContestRepository;
+import com.telerikacademy.web.photocontest.repositories.PhaseRepository;
 import com.telerikacademy.web.photocontest.sercices.contracts.ContestService;
+import com.telerikacademy.web.photocontest.sercices.contracts.PhaseService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +26,9 @@ import java.util.UUID;
 public class ContestServiceImpl implements ContestService {
 
 
+    private final ConversionService conversionService;
     private final ContestRepository contestRepository;
+    private final PhaseRepository phaseRepository;
 
 
     @Override
@@ -30,17 +37,22 @@ public class ContestServiceImpl implements ContestService {
     }
 
     @Override
-    public Contest findContestById(UUID contestId) {
-        return contestRepository.findByContestIdAndIsActiveTrue(contestId);
+    public ContestOutputDto findContestById(UUID contestId) {
+        Contest contest = contestRepository.findByContestIdAndIsActiveTrue(contestId);
+        if (contest == null) {
+            throw new EntityNotFoundException("Contest with ID " + contestId + " not found.");
+        }
+        return conversionService.convert(contest, ContestOutputDto.class);
     }
 
     @Override
-    public Contest findContestByTitle(String title) {
-        return contestRepository.findByTitleAndIsActiveTrue(title);
+    public ContestOutputDto findContestByTitle(String title) {
+        Contest contest = contestRepository.findByTitleAndIsActiveTrue(title);
+        return conversionService.convert(contest, ContestOutputDto.class);
     }
 
     @Override
-    public void createContest(Contest contest, User user) {
+    public ContestOutputIdDto createContest(Contest contest, User user) {
         PermissionHelper.isOrganizer(user, "You are not permitted for this action!");
         Contest existingContest = contestRepository.findByTitle(contest.getTitle());
 
@@ -49,6 +61,7 @@ public class ContestServiceImpl implements ContestService {
         }
 
         contestRepository.save(contest);
+        return conversionService.convert(contest, ContestOutputIdDto.class);
     }
 
     @Override
@@ -64,12 +77,17 @@ public class ContestServiceImpl implements ContestService {
         contestRepository.save(existingContest);
     }
 
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 1000)
     public void updateContestPhases() {
+        System.out.println("Scheduled task running");
         List<Contest> activeContests = contestRepository.findAllByIsActiveTrue();
+        if(activeContests.isEmpty()) {
+            System.out.println("No active contests found");
+        }
         for (Contest contest : activeContests) {
             LocalDateTime now = LocalDateTime.now();
             if (now.isAfter(contest.getChangePhaseTime())) {
+                System.out.println("Changing phase for contest: " + contest.getTitle());
                 changePhase(contest);
             }
         }
@@ -78,13 +96,19 @@ public class ContestServiceImpl implements ContestService {
     private void changePhase(Contest contest) {
         String currentPhase = contest.getPhase().getName();
         LocalDateTime now = LocalDateTime.now();
+        Phase phase2 = phaseRepository.findByName("Phase 2");
+        if (phase2 == null) {
+            throw new RuntimeException("Phase 2 not found in the database");
+        }
 
         if ("Phase 1".equals(currentPhase)) {
-            contest.setPhase(new Phase(UUID.fromString("24bdacbf-623c-11ef-97e5-50ebf6c3d3f0"), "Phase 2"));
-            contest.setChangePhaseTime(now.plusHours(2));
+            contest.setPhase(phase2);
+            contest.setChangePhaseTime(now.plusSeconds(10));
+            System.out.println("Contest moved to Phase 2");
         } else if ("Phase 2".equals(currentPhase)) {
-            contest.setPhase(new Phase(UUID.fromString("24bdad85-623c-11ef-97e5-50ebf6c3d3f0"), "Finished"));
+            contest.setPhase(phaseRepository.findByName("Finished"));
             contest.setIsActive(false);
+            System.out.println("Contest finished");
         }
 
         contest.setChangePhaseTime(now);

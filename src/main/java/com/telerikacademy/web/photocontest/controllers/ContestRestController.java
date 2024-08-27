@@ -1,5 +1,6 @@
 package com.telerikacademy.web.photocontest.controllers;
 
+import com.telerikacademy.web.photocontest.entities.dtos.ContestOutputIdDto;
 import com.telerikacademy.web.photocontest.exceptions.AuthorizationException;
 import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import com.telerikacademy.web.photocontest.helpers.AuthenticationHelper;
@@ -37,34 +38,31 @@ public class ContestRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ContestOutputDto> getContestById(@PathVariable UUID id) {
-        Contest contest = contestService.findContestById(id);
-        return ResponseEntity.ok(mapperHelper.changeFromContestToContestOutDto(contest));
+        return ResponseEntity.ok(contestService.findContestById(id));
     }
 
     @GetMapping("/title/{title}")
     public ResponseEntity<ContestOutputDto> getContestByTitle(@PathVariable String title) {
-        Contest contest = contestService.findContestByTitle(title);
-        return ResponseEntity.ok(mapperHelper.changeFromContestToContestOutDto(contest));
+        return ResponseEntity.ok(contestService.findContestByTitle(title));
     }
 
     @PostMapping
-    public ResponseEntity<Contest> createContest(@RequestHeader HttpHeaders headers, @Valid @RequestBody ContestInputDto contestInputDto) {
+    public ResponseEntity<ContestOutputIdDto> createContest(@RequestHeader HttpHeaders headers, @Valid @RequestBody ContestInputDto contestInputDto) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
             Contest contest = mapperHelper.createContestFromContestInputDto(contestInputDto, user);
-            contestService.createContest(contest, user);
-            return ResponseEntity.ok(contest);
+            return ResponseEntity.ok(contestService.createContest(contest, user));
         } catch (DuplicateEntityException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Contest> deleteContest(@PathVariable UUID id,@RequestHeader HttpHeaders headers) {
+    public ResponseEntity<String> deleteContest(@PathVariable UUID id,@RequestHeader HttpHeaders headers) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
             contestService.deactivateContest(id, user);
-            return ResponseEntity.ok(contestService.findContestById(id));
+            return ResponseEntity.ok("Deleted contest successfully");
         }catch (AuthorizationException e){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }catch (EntityNotFoundException e){

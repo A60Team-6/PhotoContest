@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -48,4 +49,13 @@ public class Contest {
 
         @Column(name = "is_active")
         private Boolean isActive;
+
+        @OneToMany(fetch = FetchType.LAZY, mappedBy = "contest")
+        private Set<Photo> firstPlace;
+
+        @OneToMany(fetch = FetchType.LAZY, mappedBy = "contest")
+        private Set<Photo> secondPlace;
+
+        @OneToMany(fetch = FetchType.LAZY, mappedBy = "contest")
+        private Set<Photo> thirdPlace;
 }

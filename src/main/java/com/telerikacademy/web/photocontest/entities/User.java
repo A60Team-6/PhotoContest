@@ -12,8 +12,6 @@ import java.util.UUID;
 @Table(name = "users")
 @Data // Генерира автоматично getters, setters, equals, hashCode, toString
 @NoArgsConstructor // Генерира празен конструктор
-@AllArgsConstructor // Генерира конструктор с всички полета
-@Builder // Генерира Builder pattern за създаване на обекти
 public class User {
 
     @Id
@@ -61,4 +59,18 @@ public class User {
     @EqualsAndHashCode.Exclude
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private Set<Photo> photos;
+
+    @Builder
+    User(String username, String firstName, String lastName, String email, String password, String profilePhoto, Integer points, Role role, Rank rank, Boolean isActive){
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.profilePhoto = profilePhoto;
+        this.points = points;
+        this.role = role;
+        this.rank = rank;
+        this.isActive = isActive;
+    }
 }

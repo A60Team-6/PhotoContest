@@ -8,4 +8,6 @@ import java.util.UUID;
 
 @Repository
 public interface PhaseRepository extends JpaRepository<Phase, UUID> {
+
+    Phase findByName(String name);
 }

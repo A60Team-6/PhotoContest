@@ -38,18 +38,18 @@ public class ContestParticipationRestController {
         }
     }
 
-    @PostMapping("/uploadPhoto/{contestId}")
-    public ResponseEntity<String> uploadPhotoToTheContestCompetition(@PathVariable UUID contestId, @RequestParam String photoUrl, @RequestHeader HttpHeaders headers){
-        try {
-            authenticationHelper.tryGetUser(headers);
-            contestParticipationService.uploadPhotoToTheContestCompetition(contestId, photoUrl);
-            return new ResponseEntity<>("This user uploaded a photo to the contest!", HttpStatus.OK);
-        }catch (EntityNotFoundException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }catch (UnsupportedOperationException e){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
-        }
-    }
+//    @PostMapping("/uploadPhoto/{contestId}")
+//    public ResponseEntity<String> uploadPhotoToTheContestCompetition(@PathVariable UUID contestId, @RequestParam String photoUrl, @RequestHeader HttpHeaders headers){
+//        try {
+//            authenticationHelper.tryGetUser(headers);
+//            contestParticipationService.uploadPhotoToTheContestCompetition(contestId, photoUrl);
+//            return new ResponseEntity<>("This user uploaded a photo to the contest!", HttpStatus.OK);
+//        }catch (EntityNotFoundException e){
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+//        }catch (UnsupportedOperationException e){
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+//        }
+//    }
 
 
 }
