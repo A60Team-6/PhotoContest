@@ -16,6 +16,8 @@ public interface UserService {
 
     UserOutput findUserById(UUID userId);
 
+    User findUserEntityById(UUID userId);
+
     UserOutput findUserByUsername(String username);
 
     User findUserByUsernameAuth(String username);

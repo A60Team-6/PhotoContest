@@ -9,6 +9,8 @@ import com.telerikacademy.web.photocontest.helpers.PermissionHelper;
 import com.telerikacademy.web.photocontest.entities.Photo;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.repositories.UserRepository;
+import com.telerikacademy.web.photocontest.sercices.contracts.RankService;
+import com.telerikacademy.web.photocontest.sercices.contracts.RoleService;
 import com.telerikacademy.web.photocontest.sercices.contracts.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final ConversionService conversionService;
+    private final RoleService roleService;
+    private final RankService rankService;
 
 
 
@@ -46,6 +50,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findUserEntityById(UUID userId) {
+        User user = userRepository.findByUserIdAndIsActiveTrue(userId);
+        if (user == null) {
+            throw new EntityNotFoundException("User with ID " + userId + " not found.");
+        }
+        return user;
+    }
+
+    @Override
     public UserOutput findUserByUsername(String username) {
         User user = userRepository.findByUsernameAndIsActiveTrue(username);
         return conversionService.convert(user, UserOutput.class);
@@ -58,7 +71,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserOutputId createUser(UserInput userInput) {
-        User user = conversionService.convert(userInput, User.class);
+        //User user = conversionService.convert(userInput, User.class);
+        User user = User.builder()
+                .username(userInput.getUsername())
+                .firstName(userInput.getFirstName())
+                .lastName(userInput.getLastName())
+                .email(userInput.getEmail())
+                .password(userInput.getPassword())
+                .profilePhoto(userInput.getProfilePicture())
+                .role(roleService.getRoleByName("User"))
+                .rank(rankService.getRankByName("Junkie"))
+                .points(0)
+                .isActive(true)
+                .build();
+
         User existingUser = userRepository.findByUsernameAndIsActiveTrue(user.getUsername());
 
         if (existingUser != null) {

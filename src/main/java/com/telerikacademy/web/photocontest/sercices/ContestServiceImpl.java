@@ -9,8 +9,8 @@ import com.telerikacademy.web.photocontest.entities.Contest;
 import com.telerikacademy.web.photocontest.entities.Phase;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.repositories.ContestRepository;
-import com.telerikacademy.web.photocontest.repositories.PhaseRepository;
 import com.telerikacademy.web.photocontest.sercices.contracts.ContestService;
+import com.telerikacademy.web.photocontest.sercices.contracts.PhaseService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
@@ -29,7 +29,7 @@ public class ContestServiceImpl implements ContestService {
 
     private final ConversionService conversionService;
     private final ContestRepository contestRepository;
-    private final PhaseRepository phaseRepository;
+    private final PhaseService phaseService;
 
 
     @Override
@@ -48,6 +48,15 @@ public class ContestServiceImpl implements ContestService {
     }
 
     @Override
+    public Contest findContestEntityById(UUID contestId){
+        Contest contest = contestRepository.findByContestIdAndIsActiveTrue(contestId);
+        if (contest == null) {
+            throw new EntityNotFoundException("Contest with ID " + contestId + " not found.");
+        }
+        return contest;
+    }
+
+    @Override
     public ContestOutput findContestByTitle(String title) {
         Contest contest = contestRepository.findByTitleAndIsActiveTrue(title);
         return conversionService.convert(contest, ContestOutput.class);
@@ -55,7 +64,16 @@ public class ContestServiceImpl implements ContestService {
 
     @Override
     public ContestOutputId createContest(ContestInput contestInput, User user) {
-        Contest contest = conversionService.convert(contestInput, Contest.class);
+       // Contest contest = conversionService.convert(contestInput, Contest.class);
+        Contest contest = Contest.builder()
+                .title(contestInput.getTitle())
+                .category(contestInput.getCategory())
+                .phase(phaseService.getPhaseByName("Phase 1"))
+                .createdAt(LocalDateTime.now())
+                .changePhaseTime(LocalDateTime.now())
+                .isActive(true)
+                .build();
+
         if (contest == null){
             throw new EntityNotFoundException("Contest not found");
         }
@@ -104,17 +122,17 @@ public class ContestServiceImpl implements ContestService {
     private void changePhase(Contest contest) {
         String currentPhase = contest.getPhase().getName();
         LocalDateTime now = LocalDateTime.now();
-        Phase phase2 = phaseRepository.findByName("Phase 2");
+        Phase phase2 = phaseService.getPhaseByName("Phase 2");
         if (phase2 == null) {
             throw new RuntimeException("Phase 2 not found in the database");
         }
 
         if ("Phase 1".equals(currentPhase)) {
             contest.setPhase(phase2);
-            contest.setChangePhaseTime(now.minusMinutes(40));
+            contest.setChangePhaseTime(now.plusMinutes(3));
             System.out.println("Contest moved to Phase 2");
         } else if ("Phase 2".equals(currentPhase)) {
-            contest.setPhase(phaseRepository.findByName("Finished"));
+            contest.setPhase(phaseService.getPhaseByName("Finished"));
             contest.setIsActive(false);
             System.out.println("Contest finished");
         }

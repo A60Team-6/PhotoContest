@@ -18,4 +18,9 @@ public class PhaseServiceImpl implements PhaseService {
     public Phase getPhaseById(UUID id) {
         return phaseRepository.getReferenceById(id);
     }
+
+    @Override
+    public Phase getPhaseByName(String name) {
+        return phaseRepository.findByName(name);
+    }
 }
