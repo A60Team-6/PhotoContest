@@ -13,11 +13,5 @@ import java.time.LocalDateTime;
 @Builder
 public class PhotoOutput {
 
-    private String title;
-    private String story;
-    private String photoUrl;
-    private String contest;
-    private String user;
-    private LocalDateTime createdAt;
-
+    private String id;
 }

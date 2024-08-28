@@ -1,6 +1,5 @@
 package com.telerikacademy.web.photocontest.entities.dtos;
 
-import com.telerikacademy.web.photocontest.entities.Contest;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -19,10 +18,6 @@ public class PhotoInput {
     @NotNull(message = "Story can not be empty!")
     private String story;
 
-    @NotNull(message = "Photo URL can not be empty!")
-    @Size(max = 255, message = "Picture is too big")
-    private String photoUrl;
-
-    private Contest contest;
-
+    @NotNull(message = "Contest cannot be empty")
+    private String contestId;
 }

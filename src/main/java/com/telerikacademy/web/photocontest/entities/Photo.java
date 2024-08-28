@@ -10,8 +10,6 @@ import java.util.UUID;
 @Table(name = "photos")
 @Data
 @NoArgsConstructor
-//@AllArgsConstructor
-//@Builder
 public class Photo {
 
     @Id
@@ -19,13 +17,13 @@ public class Photo {
     @Column(name = "id", nullable = false, unique = true)
     private UUID id;
 
-    @Column(name = "title", nullable = false, length = 100)
+    @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "story", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "story", nullable = false)
     private String story;
 
-    @Column(name = "photo_url", nullable = false, length = 255)
+    @Column(name = "photo_url")
     private String photoUrl;
 
     @ManyToOne
@@ -35,25 +33,25 @@ public class Photo {
     @ManyToOne
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Column
     private int total_score;
 
-    @Column(name = "upload_date", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @Column(name = "upload_date")
+    private LocalDateTime createdAt;
 
     @Column(name = "is_active")
     private Boolean isActive;
 
     @Builder
-    public Photo(String title, String story, String photoUrl, Contest contest) {
+    public Photo(String title, String story, Contest contest) {
         this.title = title;
         this.story = story;
-        this.photoUrl = photoUrl;
+        this.contest = contest;
+        this.createdAt = LocalDateTime.now();
         this.isActive = true;
         this.total_score = 0;
-
     }
 }

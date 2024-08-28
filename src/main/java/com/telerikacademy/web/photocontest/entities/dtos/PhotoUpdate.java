@@ -18,10 +18,7 @@ public class PhotoUpdate {
     private String title;
 
     @NotNull(message = "Story can not be empty!")
+    @Size(max = 500, message = "Story must be less than 500 characters")
     private String story;
-
-    @NotNull(message = "Photo URL can not be empty!")
-    @Size(max = 255, message = "Picture is too big")
-    private String photoUrl;
 
 }

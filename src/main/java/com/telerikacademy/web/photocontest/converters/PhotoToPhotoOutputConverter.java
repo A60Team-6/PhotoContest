@@ -10,12 +10,7 @@ public class PhotoToPhotoOutputConverter implements Converter<Photo, PhotoOutput
     @Override
     public PhotoOutput convert(Photo source) {
         return PhotoOutput.builder()
-                .title(source.getTitle())
-                .story(source.getStory())
-                .photoUrl(source.getPhotoUrl())
-                .contest(String.valueOf(source.getContest()))
-                .user(source.getUser().getUsername())
-                .createdAt(source.getCreatedAt())
+                .id(source.getId().toString())
                 .build();
     }
 }

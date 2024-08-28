@@ -63,7 +63,7 @@ CREATE TABLE photos
     id          CHAR(36) DEFAULT UUID() PRIMARY KEY,
     title       VARCHAR(100) NOT NULL,
     story       TEXT         NOT NULL,
-    photo_url   VARCHAR(255) NOT NULL,
+    photo_url   VARCHAR(255),
     contest_id  CHAR(36)     NOT NULL,
     user_id     CHAR(36)     NOT NULL,
     total_score INT,

@@ -16,8 +16,8 @@ public interface PhotoRepository extends JpaRepository<Photo, UUID> {
 
     Photo findByTitleAndIsActiveTrue(String title);
 
-    Photo getById(UUID id);
-
     List<Photo> findByTitleContainingIgnoreCase(String title);
 
+    boolean existsByTitleAndIsActiveTrue(String title);
 }
+
