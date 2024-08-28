@@ -6,7 +6,12 @@ import com.telerikacademy.web.photocontest.services.contracts.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 @RequiredArgsConstructor
 @Component
@@ -18,6 +23,7 @@ public class AuthenticationHelper {
     private static final String INVALID_AUTHENTICATION_ERROR = "Invalid authentication.";
 
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
 
     public User tryGetUser(HttpHeaders headers) {
@@ -31,8 +37,12 @@ public class AuthenticationHelper {
             String password = getPassword(userInfo);
             User user = userService.findUserByUsernameAuth(username);
 
-            if (!user.getPassword().equals(password)) {
-                throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
+//            if (!user.getPassword().equals(password)) {
+//                throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
+//            }
+            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            if(!passwordEncoder.matches(password, user.getPassword())) {
+                throw new AuthorizationException(WRONG_USERNAME_OR_PASSWORD);
             }
 
             return user;

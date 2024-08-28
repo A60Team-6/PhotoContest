@@ -24,7 +24,7 @@ public interface UserService {
 
     UserOutputId createUser(UserInput user);
 
-    UserUpdate editUser(User user, User userToEdit);
+    UserUpdate editUser(User user, UserUpdate userToEdit);
 
     void deactivateUser(UUID userId, User user);
 }

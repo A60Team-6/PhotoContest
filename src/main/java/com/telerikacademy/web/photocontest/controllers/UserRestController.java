@@ -54,39 +54,39 @@ public class UserRestController {
 
     @PostMapping
     public ResponseEntity<UserOutputId> createUser(@Valid @RequestBody UserInput userInput) {
-        try {
+//        try {
             return ResponseEntity.ok(userService.createUser(userInput));
-        } catch (DuplicateEntityException e) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
-        }
+//        } catch (DuplicateEntityException e) {
+//            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+//        }
     }
 
     @PutMapping
     public ResponseEntity<UserUpdate> editUser(@RequestHeader HttpHeaders headers, @Valid @RequestBody UserUpdate userUpdate) {
-        try {
+//           try {
             User user = authenticationHelper.tryGetUser(headers);
-            User userToEdit = userUpdateDtoToUserConverter.convert(userUpdate);
-            userService.editUser(user, userToEdit);
-            return ResponseEntity.ok(userService.editUser(user, userToEdit));
-        } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        } catch (DuplicateEntityException e) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
-        } catch (InvalidDataAccessApiUsageException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-        }
+//            User userToEdit = userUpdateDtoToUserConverter.convert(userUpdate);
+//            userService.editUser(user, userToEdit);
+            return ResponseEntity.ok(userService.editUser(user, userUpdate));
+//        } catch (EntityNotFoundException e) {
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+//        } catch (DuplicateEntityException e) {
+//            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+//        } catch (InvalidDataAccessApiUsageException e) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+//        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deactivateUser(@RequestHeader HttpHeaders headers, @Valid @PathVariable UUID id) {
-        try {
+//        try {
             User user = authenticationHelper.tryGetUser(headers);
             userService.deactivateUser(id, user);
             return ResponseEntity.ok("User deactivated successfully!");
-        }catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }catch (InvalidDataAccessApiUsageException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid data provided.");
-        }
+//        }catch (EntityNotFoundException e) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+//        }catch (InvalidDataAccessApiUsageException e) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid data provided.");
+//        }
     }
 }

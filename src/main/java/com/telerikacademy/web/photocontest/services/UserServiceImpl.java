@@ -15,6 +15,7 @@ import com.telerikacademy.web.photocontest.services.contracts.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class UserServiceImpl implements UserService {
     private final ConversionService conversionService;
     private final RoleService roleService;
     private final RankService rankService;
+    private final PasswordEncoder passwordEncoder;
 
 
 
@@ -72,12 +74,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserOutputId createUser(UserInput userInput) {
         //User user = conversionService.convert(userInput, User.class);
+        String hashedPassword = passwordEncoder.encode(userInput.getPassword());
+
         User user = User.builder()
                 .username(userInput.getUsername())
                 .firstName(userInput.getFirstName())
                 .lastName(userInput.getLastName())
                 .email(userInput.getEmail())
-                .password(userInput.getPassword())
+                .password(hashedPassword)
                 .profilePhoto(userInput.getProfilePicture())
                 .role(roleService.getRoleByName("User"))
                 .rank(rankService.getRankByName("Junkie"))
@@ -97,19 +101,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserUpdate editUser(User user, User userToEdit) {
-        User foundUser = userRepository.findByUsernameAndIsActiveTrue(userToEdit.getUsername());
-        if (foundUser == null) {
-            throw new EntityNotFoundException("User not found or inactive.");
+    public UserUpdate editUser(User user, UserUpdate userUpdate) {
+
+
+        if (!passwordEncoder.matches(userUpdate.getPassword(), user.getPassword())) {
+            String hashedPassword = passwordEncoder.encode(userUpdate.getPassword());
+            user.setPassword(hashedPassword);
         }
 
-        PermissionHelper.isSameUser(user, userRepository.findByUsernameAndIsActiveTrue(userToEdit.getUsername()), "You can edit only your profile!");
-
-        user.setFirstName(userToEdit.getFirstName());
-        user.setLastName(userToEdit.getLastName());
-        user.setEmail(userToEdit.getEmail());
-        user.setPassword(userToEdit.getPassword());
-        user.setProfilePhoto(userToEdit.getProfilePhoto());;
+        user.setFirstName(userUpdate.getFirstName());
+        user.setLastName(userUpdate.getLastName());
+        user.setEmail(userUpdate.getEmail());
+        user.setProfilePhoto(userUpdate.getProfilePicture());
 
         userRepository.save(user);
 
