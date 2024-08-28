@@ -1,4 +1,4 @@
-package com.telerikacademy.web.photocontest.sercices.contracts;
+package com.telerikacademy.web.photocontest.services.contracts;
 
 import com.telerikacademy.web.photocontest.entities.Phase;
 

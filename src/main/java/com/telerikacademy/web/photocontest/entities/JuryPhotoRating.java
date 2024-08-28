@@ -33,15 +33,16 @@ public class JuryPhotoRating {
     @Column(name = "score", nullable = false)
     private int score;
 
-    @Column(name = "comment", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "comment", nullable = false)
     private String comment;
 
     @Column(name = "category_match")
     private Boolean categoryMatch;
 
-    @Column(name = "review_date", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @Column(name = "review_date")
+    private LocalDateTime reviewDate = LocalDateTime.now();
 
     @Column(name = "is_active")
     private Boolean isActive;
+
 }

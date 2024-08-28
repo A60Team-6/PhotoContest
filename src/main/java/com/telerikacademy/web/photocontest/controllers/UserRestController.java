@@ -7,12 +7,11 @@ import com.telerikacademy.web.photocontest.converters.UserUpdateDtoToUserConvert
 import com.telerikacademy.web.photocontest.entities.dtos.UserOutputId;
 import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import com.telerikacademy.web.photocontest.helpers.AuthenticationHelper;
-import com.telerikacademy.web.photocontest.helpers.MapperHelper;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.UserInput;
 import com.telerikacademy.web.photocontest.entities.dtos.UserOutput;
 import com.telerikacademy.web.photocontest.entities.dtos.UserUpdate;
-import com.telerikacademy.web.photocontest.sercices.contracts.UserService;
+import com.telerikacademy.web.photocontest.services.contracts.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +31,6 @@ import java.util.UUID;
 public class UserRestController {
 
     private final UserService userService;
-    private final MapperHelper mapperHelper;
     private final AuthenticationHelper authenticationHelper;
     private final UserInputToUserConverter userInputToUserConverter;
     private final UserToUserOutputDtoConverter userToUserOutputDtoConverter;

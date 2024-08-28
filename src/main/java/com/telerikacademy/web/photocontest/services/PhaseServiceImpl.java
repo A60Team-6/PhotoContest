@@ -1,8 +1,8 @@
-package com.telerikacademy.web.photocontest.sercices;
+package com.telerikacademy.web.photocontest.services;
 
 import com.telerikacademy.web.photocontest.entities.Phase;
 import com.telerikacademy.web.photocontest.repositories.PhaseRepository;
-import com.telerikacademy.web.photocontest.sercices.contracts.PhaseService;
+import com.telerikacademy.web.photocontest.services.contracts.PhaseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

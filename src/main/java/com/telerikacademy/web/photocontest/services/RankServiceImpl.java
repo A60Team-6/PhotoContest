@@ -1,8 +1,8 @@
-package com.telerikacademy.web.photocontest.sercices;
+package com.telerikacademy.web.photocontest.services;
 
 import com.telerikacademy.web.photocontest.entities.Rank;
 import com.telerikacademy.web.photocontest.repositories.RankRepository;
-import com.telerikacademy.web.photocontest.sercices.contracts.RankService;
+import com.telerikacademy.web.photocontest.services.contracts.RankService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

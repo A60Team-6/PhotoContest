@@ -2,7 +2,7 @@ package com.telerikacademy.web.photocontest.helpers;
 
 import com.telerikacademy.web.photocontest.exceptions.AuthorizationException;
 import com.telerikacademy.web.photocontest.entities.User;
-import com.telerikacademy.web.photocontest.sercices.contracts.UserService;
+import com.telerikacademy.web.photocontest.services.contracts.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;

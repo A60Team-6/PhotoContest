@@ -5,15 +5,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface JuryPhotoRatingRepository extends JpaRepository<JuryPhotoRating, UUID> {
 
-    List<JuryPhotoRating> findByPhotoIdAndIsActiveTrue(UUID photoId);
-//
-//    List<JuryPhotoRating> findByReviewerIdAndIsActiveTrue(UUID userId);
-//
-//
+    List<JuryPhotoRating> findByPhotoId(UUID photoId);
 
+//    List<JuryPhotoRating> findByUserId(UUID userId);
+
+//    Optional<JuryPhotoRating> findByPhotoIdAndUserId(UUID photoId, UUID userId);
+
+//    List<JuryPhotoRating> findAllByPhotoIdAndUserId(UUID photoId, UUID userId);
 }

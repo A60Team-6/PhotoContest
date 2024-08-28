@@ -1,4 +1,4 @@
-package com.telerikacademy.web.photocontest.sercices;
+package com.telerikacademy.web.photocontest.services;
 
 import com.telerikacademy.web.photocontest.helpers.UnauthorizedOperationException;
 import com.telerikacademy.web.photocontest.entities.Contest;
@@ -6,7 +6,7 @@ import com.telerikacademy.web.photocontest.entities.ContestParticipation;
 import com.telerikacademy.web.photocontest.entities.Photo;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.repositories.*;
-import com.telerikacademy.web.photocontest.sercices.contracts.ContestParticipationService;
+import com.telerikacademy.web.photocontest.services.contracts.ContestParticipationService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

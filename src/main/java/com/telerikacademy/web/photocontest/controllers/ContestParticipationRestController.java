@@ -2,9 +2,7 @@ package com.telerikacademy.web.photocontest.controllers;
 
 import com.telerikacademy.web.photocontest.helpers.AuthenticationHelper;
 import com.telerikacademy.web.photocontest.entities.User;
-import com.telerikacademy.web.photocontest.sercices.contracts.ContestParticipationService;
-import com.telerikacademy.web.photocontest.sercices.contracts.ContestService;
-import com.telerikacademy.web.photocontest.sercices.contracts.UserService;
+import com.telerikacademy.web.photocontest.services.contracts.ContestParticipationService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -21,9 +19,6 @@ public class ContestParticipationRestController {
 
     private final ContestParticipationService contestParticipationService;
     private final AuthenticationHelper authenticationHelper;
-    private final ContestService contestService;
-    private final UserService userService;
-
 
     @PostMapping("/participate/{contestId}")
     public ResponseEntity<String> participateInContest(@PathVariable UUID contestId, @RequestHeader HttpHeaders httpHeaders) {

@@ -1,4 +1,4 @@
-package com.telerikacademy.web.photocontest.sercices;
+package com.telerikacademy.web.photocontest.services;
 
 import com.telerikacademy.web.photocontest.entities.dtos.UserOutputId;
 import com.telerikacademy.web.photocontest.entities.dtos.UserInput;
@@ -9,9 +9,9 @@ import com.telerikacademy.web.photocontest.helpers.PermissionHelper;
 import com.telerikacademy.web.photocontest.entities.Photo;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.repositories.UserRepository;
-import com.telerikacademy.web.photocontest.sercices.contracts.RankService;
-import com.telerikacademy.web.photocontest.sercices.contracts.RoleService;
-import com.telerikacademy.web.photocontest.sercices.contracts.UserService;
+import com.telerikacademy.web.photocontest.services.contracts.RankService;
+import com.telerikacademy.web.photocontest.services.contracts.RoleService;
+import com.telerikacademy.web.photocontest.services.contracts.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;

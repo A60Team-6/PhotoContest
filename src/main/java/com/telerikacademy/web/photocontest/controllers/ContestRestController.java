@@ -4,11 +4,10 @@ import com.telerikacademy.web.photocontest.entities.dtos.ContestOutputId;
 import com.telerikacademy.web.photocontest.exceptions.AuthorizationException;
 import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import com.telerikacademy.web.photocontest.helpers.AuthenticationHelper;
-import com.telerikacademy.web.photocontest.helpers.MapperHelper;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.ContestInput;
 import com.telerikacademy.web.photocontest.entities.dtos.ContestOutput;
-import com.telerikacademy.web.photocontest.sercices.contracts.ContestService;
+import com.telerikacademy.web.photocontest.services.contracts.ContestService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +27,6 @@ import java.util.UUID;
 public class ContestRestController {
 
     private final ContestService contestService;
-    private final MapperHelper mapperHelper;
     private final AuthenticationHelper authenticationHelper;
     private final ConversionService conversionService;
 

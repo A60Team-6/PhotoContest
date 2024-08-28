@@ -1,4 +1,4 @@
-package com.telerikacademy.web.photocontest.sercices;
+package com.telerikacademy.web.photocontest.services;
 
 import com.telerikacademy.web.photocontest.entities.dtos.ContestInput;
 import com.telerikacademy.web.photocontest.entities.dtos.ContestOutput;
@@ -9,8 +9,8 @@ import com.telerikacademy.web.photocontest.entities.Contest;
 import com.telerikacademy.web.photocontest.entities.Phase;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.repositories.ContestRepository;
-import com.telerikacademy.web.photocontest.sercices.contracts.ContestService;
-import com.telerikacademy.web.photocontest.sercices.contracts.PhaseService;
+import com.telerikacademy.web.photocontest.services.contracts.ContestService;
+import com.telerikacademy.web.photocontest.services.contracts.PhaseService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;

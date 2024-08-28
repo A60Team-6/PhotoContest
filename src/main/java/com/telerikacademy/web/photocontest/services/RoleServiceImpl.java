@@ -1,8 +1,8 @@
-package com.telerikacademy.web.photocontest.sercices;
+package com.telerikacademy.web.photocontest.services;
 
 import com.telerikacademy.web.photocontest.entities.Role;
 import com.telerikacademy.web.photocontest.repositories.RoleRepository;
-import com.telerikacademy.web.photocontest.sercices.contracts.RoleService;
+import com.telerikacademy.web.photocontest.services.contracts.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -17,9 +17,6 @@ public class ContestInputDtoToContestConverter implements Converter<ContestInput
 
     @Override
     public Contest convert(ContestInput dto) {
-
-
-
         return Contest.builder()
                 .title(dto.getTitle())
                 .category(dto.getCategory())
