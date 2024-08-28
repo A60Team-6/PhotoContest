@@ -9,16 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserOutputDto {
+public class ContestOutputId {
 
-
-    private String username;
-
-    private String firstName;
-
-    private String lastName;
-
-    private String email;
-
-    private String profilePicture;
+    private String contestId;
 }

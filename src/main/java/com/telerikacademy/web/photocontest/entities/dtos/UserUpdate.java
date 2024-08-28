@@ -4,17 +4,15 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserInputDto {
-
-    @NotNull(message = "Username can not be empty!")
-    @Size(min = 4, max = 32, message = "Username should be between 4 and 32 symbols!")
-    private String username;
+@Builder
+public class UserUpdate {
 
     @NotNull(message = "First name can not be empty!")
     @Size(min = 3, max = 32, message = "First name should be between 3 and 32 symbols!")
@@ -34,6 +32,5 @@ public class UserInputDto {
 
     @Size(max = 256, message = "Profile picture is too big")
     private String profilePicture;
-
 
 }

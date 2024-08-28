@@ -1,9 +1,9 @@
 package com.telerikacademy.web.photocontest.sercices;
 
-import com.telerikacademy.web.photocontest.entities.dtos.UserOutputIdDto;
-import com.telerikacademy.web.photocontest.entities.dtos.UserInputDto;
-import com.telerikacademy.web.photocontest.entities.dtos.UserOutputDto;
-import com.telerikacademy.web.photocontest.entities.dtos.UserUpdateDto;
+import com.telerikacademy.web.photocontest.entities.dtos.UserOutputId;
+import com.telerikacademy.web.photocontest.entities.dtos.UserInput;
+import com.telerikacademy.web.photocontest.entities.dtos.UserOutput;
+import com.telerikacademy.web.photocontest.entities.dtos.UserUpdate;
 import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import com.telerikacademy.web.photocontest.helpers.PermissionHelper;
 import com.telerikacademy.web.photocontest.entities.Photo;
@@ -30,25 +30,25 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public List<UserOutputDto> getAll(){
+    public List<UserOutput> getAll(){
         List<User> users = userRepository.findAllByIsActiveTrue();
-        return users.stream().map(user -> conversionService.convert(user, UserOutputDto.class)).collect(Collectors.toList());
+        return users.stream().map(user -> conversionService.convert(user, UserOutput.class)).collect(Collectors.toList());
 
     }
 
     @Override
-    public UserOutputDto findUserById(UUID userId) {
+    public UserOutput findUserById(UUID userId) {
         User user = userRepository.findByUserIdAndIsActiveTrue(userId);
         if (user == null) {
             throw new EntityNotFoundException("User with ID " + userId + " not found.");
         }
-        return conversionService.convert(user, UserOutputDto.class);
+        return conversionService.convert(user, UserOutput.class);
     }
 
     @Override
-    public UserOutputDto findUserByUsername(String username) {
+    public UserOutput findUserByUsername(String username) {
         User user = userRepository.findByUsernameAndIsActiveTrue(username);
-        return conversionService.convert(user, UserOutputDto.class);
+        return conversionService.convert(user, UserOutput.class);
     }
 
     @Override
@@ -57,8 +57,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserOutputIdDto createUser(UserInputDto userInputDto) {
-        User user = conversionService.convert(userInputDto, User.class);
+    public UserOutputId createUser(UserInput userInput) {
+        User user = conversionService.convert(userInput, User.class);
         User existingUser = userRepository.findByUsernameAndIsActiveTrue(user.getUsername());
 
         if (existingUser != null) {
@@ -67,11 +67,11 @@ public class UserServiceImpl implements UserService {
 
         userRepository.save(user);
 
-       return conversionService.convert(user, UserOutputIdDto.class);
+       return conversionService.convert(user, UserOutputId.class);
     }
 
     @Override
-    public UserUpdateDto editUser(User user, User userToEdit) {
+    public UserUpdate editUser(User user, User userToEdit) {
         User foundUser = userRepository.findByUsernameAndIsActiveTrue(userToEdit.getUsername());
         if (foundUser == null) {
             throw new EntityNotFoundException("User not found or inactive.");
@@ -87,7 +87,7 @@ public class UserServiceImpl implements UserService {
 
         userRepository.save(user);
 
-        return conversionService.convert(user, UserUpdateDto.class);
+        return conversionService.convert(user, UserUpdate.class);
     }
 
     @Override

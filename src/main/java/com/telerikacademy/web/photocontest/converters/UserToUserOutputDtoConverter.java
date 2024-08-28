@@ -1,22 +1,19 @@
 package com.telerikacademy.web.photocontest.converters;
 
-import com.telerikacademy.web.photocontest.entities.Rank;
-import com.telerikacademy.web.photocontest.entities.Role;
 import com.telerikacademy.web.photocontest.entities.User;
-import com.telerikacademy.web.photocontest.entities.dtos.UserInputDto;
-import com.telerikacademy.web.photocontest.entities.dtos.UserOutputDto;
+import com.telerikacademy.web.photocontest.entities.dtos.UserOutput;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
-public class UserToUserOutputDtoConverter implements Converter<User, UserOutputDto> {
+public class UserToUserOutputDtoConverter implements Converter<User, UserOutput> {
 
     @Override
-    public UserOutputDto convert(User user) {
+    public UserOutput convert(User user) {
 
-        return UserOutputDto.builder()
+        return UserOutput.builder()
                 .username(user.getUsername())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())

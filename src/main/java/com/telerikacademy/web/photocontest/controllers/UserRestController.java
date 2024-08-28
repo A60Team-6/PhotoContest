@@ -4,14 +4,14 @@ import com.telerikacademy.web.photocontest.converters.UserInputToUserConverter;
 import com.telerikacademy.web.photocontest.converters.UserToUserIdDtoConverter;
 import com.telerikacademy.web.photocontest.converters.UserToUserOutputDtoConverter;
 import com.telerikacademy.web.photocontest.converters.UserUpdateDtoToUserConverter;
-import com.telerikacademy.web.photocontest.entities.dtos.UserOutputIdDto;
+import com.telerikacademy.web.photocontest.entities.dtos.UserOutputId;
 import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import com.telerikacademy.web.photocontest.helpers.AuthenticationHelper;
 import com.telerikacademy.web.photocontest.helpers.MapperHelper;
 import com.telerikacademy.web.photocontest.entities.User;
-import com.telerikacademy.web.photocontest.entities.dtos.UserInputDto;
-import com.telerikacademy.web.photocontest.entities.dtos.UserOutputDto;
-import com.telerikacademy.web.photocontest.entities.dtos.UserUpdateDto;
+import com.telerikacademy.web.photocontest.entities.dtos.UserInput;
+import com.telerikacademy.web.photocontest.entities.dtos.UserOutput;
+import com.telerikacademy.web.photocontest.entities.dtos.UserUpdate;
 import com.telerikacademy.web.photocontest.sercices.contracts.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -40,34 +40,34 @@ public class UserRestController {
     private final UserToUserIdDtoConverter userToUserIdDtoConverter;
 
     @GetMapping
-    public List<UserOutputDto> getAll() {
+    public List<UserOutput> getAll() {
         return userService.getAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserOutputDto> getUserById(@PathVariable UUID id) {
+    public ResponseEntity<UserOutput> getUserById(@PathVariable UUID id) {
         return ResponseEntity.ok(userService.findUserById(id));
     }
 
-    @GetMapping("/username/{username}")
-    public ResponseEntity<UserOutputDto> getUserByUsername(@PathVariable String username) {
+    @GetMapping("/username")
+    public ResponseEntity<UserOutput> getUserByUsername(@RequestParam String username) {
         return ResponseEntity.ok(userService.findUserByUsername(username));
     }
 
     @PostMapping
-    public ResponseEntity<UserOutputIdDto> createUser(@Valid @RequestBody UserInputDto userInputDto) {
+    public ResponseEntity<UserOutputId> createUser(@Valid @RequestBody UserInput userInput) {
         try {
-            return ResponseEntity.ok(userService.createUser(userInputDto));
+            return ResponseEntity.ok(userService.createUser(userInput));
         } catch (DuplicateEntityException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
     }
 
     @PutMapping
-    public ResponseEntity<UserUpdateDto> editUser(@RequestHeader HttpHeaders headers, @Valid @RequestBody UserUpdateDto userUpdateDto) {
+    public ResponseEntity<UserUpdate> editUser(@RequestHeader HttpHeaders headers, @Valid @RequestBody UserUpdate userUpdate) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            User userToEdit = userUpdateDtoToUserConverter.convert(userUpdateDto);
+            User userToEdit = userUpdateDtoToUserConverter.convert(userUpdate);
             userService.editUser(user, userToEdit);
             return ResponseEntity.ok(userService.editUser(user, userToEdit));
         } catch (EntityNotFoundException e) {

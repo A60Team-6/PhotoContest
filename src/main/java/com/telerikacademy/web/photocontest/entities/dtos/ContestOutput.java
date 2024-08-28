@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ContestOutputDto {
+public class ContestOutput {
 
     private String title;
     private String category;

@@ -24,7 +24,7 @@ public class Contest {
         @Column(name = "id", nullable = false, unique = true)
         private UUID contestId;
 
-        @Column(name = "title", nullable = false, unique = true, length = 50)
+        @Column(name = "title", nullable = false, length = 50)
         private String title;
 
         @Column(name = "category", nullable = false, length = 50)

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ContestInputDto {
+public class ContestInput {
 
     @NotNull(message = "Title can not be null!")
     @Size(min = 3, max = 32, message = "Title should be between 3 and 32 symbols!")

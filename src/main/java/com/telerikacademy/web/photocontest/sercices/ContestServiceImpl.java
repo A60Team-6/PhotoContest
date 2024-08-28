@@ -1,7 +1,8 @@
 package com.telerikacademy.web.photocontest.sercices;
 
-import com.telerikacademy.web.photocontest.entities.dtos.ContestOutputDto;
-import com.telerikacademy.web.photocontest.entities.dtos.ContestOutputIdDto;
+import com.telerikacademy.web.photocontest.entities.dtos.ContestInput;
+import com.telerikacademy.web.photocontest.entities.dtos.ContestOutput;
+import com.telerikacademy.web.photocontest.entities.dtos.ContestOutputId;
 import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import com.telerikacademy.web.photocontest.helpers.PermissionHelper;
 import com.telerikacademy.web.photocontest.entities.Contest;
@@ -10,7 +11,6 @@ import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.repositories.ContestRepository;
 import com.telerikacademy.web.photocontest.repositories.PhaseRepository;
 import com.telerikacademy.web.photocontest.sercices.contracts.ContestService;
-import com.telerikacademy.web.photocontest.sercices.contracts.PhaseService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -32,36 +33,43 @@ public class ContestServiceImpl implements ContestService {
 
 
     @Override
-    public List<Contest> getAll(){
-        return contestRepository.findAllByIsActiveTrue();
+    public List<ContestOutput> getAll(){
+        List<Contest> contests = contestRepository.findAllByIsActiveTrue();
+        return contests.stream().map(contest -> conversionService.convert(contest, ContestOutput.class)).collect(Collectors.toList());
     }
 
     @Override
-    public ContestOutputDto findContestById(UUID contestId) {
+    public ContestOutput findContestById(UUID contestId) {
         Contest contest = contestRepository.findByContestIdAndIsActiveTrue(contestId);
         if (contest == null) {
             throw new EntityNotFoundException("Contest with ID " + contestId + " not found.");
         }
-        return conversionService.convert(contest, ContestOutputDto.class);
+        return conversionService.convert(contest, ContestOutput.class);
     }
 
     @Override
-    public ContestOutputDto findContestByTitle(String title) {
+    public ContestOutput findContestByTitle(String title) {
         Contest contest = contestRepository.findByTitleAndIsActiveTrue(title);
-        return conversionService.convert(contest, ContestOutputDto.class);
+        return conversionService.convert(contest, ContestOutput.class);
     }
 
     @Override
-    public ContestOutputIdDto createContest(Contest contest, User user) {
+    public ContestOutputId createContest(ContestInput contestInput, User user) {
+        Contest contest = conversionService.convert(contestInput, Contest.class);
+        if (contest == null){
+            throw new EntityNotFoundException("Contest not found");
+        }
+        contest.setOrganizer(user);
+
         PermissionHelper.isOrganizer(user, "You are not permitted for this action!");
-        Contest existingContest = contestRepository.findByTitle(contest.getTitle());
+        Contest existingContest = contestRepository.findByTitleAndIsActiveTrue(contest.getTitle());
 
         if (existingContest != null) {
             throw new DuplicateEntityException("Contest", "title", contest.getTitle());
         }
 
         contestRepository.save(contest);
-        return conversionService.convert(contest, ContestOutputIdDto.class);
+        return conversionService.convert(contest, ContestOutputId.class);
     }
 
     @Override
@@ -77,7 +85,7 @@ public class ContestServiceImpl implements ContestService {
         contestRepository.save(existingContest);
     }
 
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 60000)
     public void updateContestPhases() {
         System.out.println("Scheduled task running");
         List<Contest> activeContests = contestRepository.findAllByIsActiveTrue();
@@ -103,7 +111,7 @@ public class ContestServiceImpl implements ContestService {
 
         if ("Phase 1".equals(currentPhase)) {
             contest.setPhase(phase2);
-            contest.setChangePhaseTime(now.plusSeconds(10));
+            contest.setChangePhaseTime(now.minusMinutes(40));
             System.out.println("Contest moved to Phase 2");
         } else if ("Phase 2".equals(currentPhase)) {
             contest.setPhase(phaseRepository.findByName("Finished"));

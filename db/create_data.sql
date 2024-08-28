@@ -45,7 +45,7 @@ CREATE TABLE phases
 CREATE TABLE contests
 (
     id                CHAR(36) DEFAULT UUID() PRIMARY KEY,
-    title             VARCHAR(100) UNIQUE NOT NULL,
+    title             VARCHAR(100) NOT NULL,
     category          VARCHAR(100)        NOT NULL,
     phase_id          CHAR(36)            NOT NULL,
     cover_photo_url   VARCHAR(255),

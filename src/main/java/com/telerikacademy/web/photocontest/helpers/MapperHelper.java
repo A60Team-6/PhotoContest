@@ -23,14 +23,14 @@ public class MapperHelper {
     private final PhotoRepository photoRepository;
 
 
-    public User createUserFromUserInputDto(UserInputDto userInputDto) {
+    public User createUserFromUserInputDto(UserInput userInput) {
         User user = new User();
-        user.setUsername(userInputDto.getUsername());
-        user.setFirstName(userInputDto.getFirstName());
-        user.setLastName(userInputDto.getLastName());
-        user.setEmail(userInputDto.getEmail());
-        user.setPassword(userInputDto.getPassword());
-        user.setProfilePhoto(userInputDto.getProfilePicture());
+        user.setUsername(userInput.getUsername());
+        user.setFirstName(userInput.getFirstName());
+        user.setLastName(userInput.getLastName());
+        user.setEmail(userInput.getEmail());
+        user.setPassword(userInput.getPassword());
+        user.setProfilePhoto(userInput.getProfilePicture());
         user.setPoints(0);
         UUID rankId = java.util.UUID.fromString(RANG_JUNKIE_ID);
         Rank rank = new Rank(rankId, "Junkie");
@@ -43,24 +43,24 @@ public class MapperHelper {
         return user;
     }
 
-    public User updateUserFromUserInputDto(UserUpdateDto userUpdateDto) {
+    public User updateUserFromUserInputDto(UserUpdate userUpdate) {
         User user = new User();
-        user.setFirstName(userUpdateDto.getFirstName());
-        user.setLastName(userUpdateDto.getLastName());
-        user.setEmail(userUpdateDto.getEmail());
-        user.setPassword(userUpdateDto.getPassword());
-        user.setProfilePhoto(userUpdateDto.getProfilePicture());
+        user.setFirstName(userUpdate.getFirstName());
+        user.setLastName(userUpdate.getLastName());
+        user.setEmail(userUpdate.getEmail());
+        user.setPassword(userUpdate.getPassword());
+        user.setProfilePhoto(userUpdate.getProfilePicture());
         return user;
     }
 
-    public UserOutputDto changeFromUserToUserOutputDto(User user) {
-        UserOutputDto userOutputDto = new UserOutputDto();
-        userOutputDto.setUsername(user.getUsername());
-        userOutputDto.setFirstName(user.getFirstName());
-        userOutputDto.setLastName(user.getLastName());
-        userOutputDto.setEmail(user.getEmail());
-        userOutputDto.setProfilePicture(user.getProfilePhoto());
-        return userOutputDto;
+    public UserOutput changeFromUserToUserOutputDto(User user) {
+        UserOutput userOutput = new UserOutput();
+        userOutput.setUsername(user.getUsername());
+        userOutput.setFirstName(user.getFirstName());
+        userOutput.setLastName(user.getLastName());
+        userOutput.setEmail(user.getEmail());
+        userOutput.setProfilePicture(user.getProfilePhoto());
+        return userOutput;
     }
 
 //    public Photo createPhotoFromPhotoInputDto(PhotoInput photoInputDto) {
@@ -93,19 +93,19 @@ public class MapperHelper {
                 .build();
     }
 
-    public ContestOutputDto changeFromContestToContestOutDto(Contest contest) {
-        ContestOutputDto contestOutputDto = new ContestOutputDto();
-        contestOutputDto.setTitle(contest.getTitle());
-        contestOutputDto.setCategory(contest.getCategory());
-        contestOutputDto.setPhase(contest.getPhase());
-        return contestOutputDto;
+    public ContestOutput changeFromContestToContestOutDto(Contest contest) {
+        ContestOutput contestOutput = new ContestOutput();
+        contestOutput.setTitle(contest.getTitle());
+        contestOutput.setCategory(contest.getCategory());
+        contestOutput.setPhase(contest.getPhase());
+        return contestOutput;
     }
 
-    public Contest createContestFromContestInputDto(ContestInputDto contestInputDto, User user) {
+    public Contest createContestFromContestInputDto(ContestInput contestInput, User user) {
         Contest contest = new Contest();
-        contest.setTitle(contestInputDto.getTitle());
-        contest.setCategory(contestInputDto.getCategory());
-        contest.setPhotoUrl(contestInputDto.getCoverPhotoUrl());
+        contest.setTitle(contestInput.getTitle());
+        contest.setCategory(contestInput.getCategory());
+        contest.setPhotoUrl(contestInput.getCoverPhotoUrl());
         contest.setOrganizer(user);
         LocalDateTime createdAt = LocalDateTime.now();
         contest.setCreatedAt(createdAt);

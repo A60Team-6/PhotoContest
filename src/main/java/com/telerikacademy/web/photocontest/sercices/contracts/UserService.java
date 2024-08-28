@@ -1,10 +1,10 @@
 package com.telerikacademy.web.photocontest.sercices.contracts;
 
 import com.telerikacademy.web.photocontest.entities.User;
-import com.telerikacademy.web.photocontest.entities.dtos.UserOutputIdDto;
-import com.telerikacademy.web.photocontest.entities.dtos.UserInputDto;
-import com.telerikacademy.web.photocontest.entities.dtos.UserOutputDto;
-import com.telerikacademy.web.photocontest.entities.dtos.UserUpdateDto;
+import com.telerikacademy.web.photocontest.entities.dtos.UserOutputId;
+import com.telerikacademy.web.photocontest.entities.dtos.UserInput;
+import com.telerikacademy.web.photocontest.entities.dtos.UserOutput;
+import com.telerikacademy.web.photocontest.entities.dtos.UserUpdate;
 
 import java.util.List;
 import java.util.UUID;
@@ -12,17 +12,17 @@ import java.util.UUID;
 public interface UserService {
 
 
-    List<UserOutputDto> getAll();
+    List<UserOutput> getAll();
 
-    UserOutputDto findUserById(UUID userId);
+    UserOutput findUserById(UUID userId);
 
-    UserOutputDto findUserByUsername(String username);
+    UserOutput findUserByUsername(String username);
 
     User findUserByUsernameAuth(String username);
 
-    UserOutputIdDto createUser(UserInputDto user);
+    UserOutputId createUser(UserInput user);
 
-    UserUpdateDto editUser(User user, User userToEdit);
+    UserUpdate editUser(User user, User userToEdit);
 
     void deactivateUser(UUID userId, User user);
 }

@@ -3,24 +3,23 @@ package com.telerikacademy.web.photocontest.converters;
 import com.telerikacademy.web.photocontest.entities.Rank;
 import com.telerikacademy.web.photocontest.entities.Role;
 import com.telerikacademy.web.photocontest.entities.User;
-import com.telerikacademy.web.photocontest.entities.dtos.UserInputDto;
+import com.telerikacademy.web.photocontest.entities.dtos.UserInput;
 import com.telerikacademy.web.photocontest.repositories.RankRepository;
 import com.telerikacademy.web.photocontest.repositories.RoleRepository;
-import com.telerikacademy.web.photocontest.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
-public class UserInputToUserConverter implements Converter<UserInputDto, User> {
+public class UserInputToUserConverter implements Converter<UserInput, User> {
 
     private final RoleRepository roleRepository;
     private final RankRepository rankRepository;
 
 
     @Override
-    public User convert(UserInputDto dto) {
+    public User convert(UserInput dto) {
         Role userRole = roleRepository.findByName("User");
         Rank userRank = rankRepository.findByName("Junkie");
 

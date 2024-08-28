@@ -1,21 +1,21 @@
 package com.telerikacademy.web.photocontest.sercices.contracts;
 
-import com.telerikacademy.web.photocontest.entities.Contest;
 import com.telerikacademy.web.photocontest.entities.User;
-import com.telerikacademy.web.photocontest.entities.dtos.ContestOutputDto;
-import com.telerikacademy.web.photocontest.entities.dtos.ContestOutputIdDto;
+import com.telerikacademy.web.photocontest.entities.dtos.ContestInput;
+import com.telerikacademy.web.photocontest.entities.dtos.ContestOutput;
+import com.telerikacademy.web.photocontest.entities.dtos.ContestOutputId;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface ContestService {
-    List<Contest> getAll();
+    List<ContestOutput> getAll();
 
-    ContestOutputDto findContestById(UUID contestId);
+    ContestOutput findContestById(UUID contestId);
 
-    ContestOutputDto findContestByTitle(String title);
+    ContestOutput findContestByTitle(String title);
 
-    ContestOutputIdDto createContest(Contest contest, User user);
+    ContestOutputId createContest(ContestInput contestInput, User user);
 
     void deactivateContest(UUID contestId, User user);
 }
