@@ -15,8 +15,11 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -119,8 +122,17 @@ public class PhotoServiceImpl implements PhotoService {
 
     @Override
     public UploadFileOutput uploadPhoto(UploadFileInput uploadFileInput) throws IOException {
+
         if (uploadFileInput == null || uploadFileInput.getFile() == null || uploadFileInput.getFile().isEmpty()) {
             throw new IllegalArgumentException("Invalid file input");
+        }
+
+        // Генериране на SHA-256 хеша на файла
+        String hash = generateSHA256Hash(uploadFileInput.getFile());
+
+        // Проверка дали снимката с този хеш вече съществува в базата данни
+        if (photoRepository.existsByHash(hash)) {
+            throw new IllegalArgumentException("Duplicate photo: A photo with this content already exists.");
         }
 
         Photo photo = findPhotoEntityById(UUID.fromString(uploadFileInput.getPhotoId()));
@@ -132,11 +144,33 @@ public class PhotoServiceImpl implements PhotoService {
         }
 
         photo.setPhotoUrl(photoUrl);
+        photo.setHash(hash); // Записване на хеша в базата данни
 
         photoRepository.save(photo);
 
         return UploadFileOutput.builder().message("Photo uploaded and URL updated successfully!").build();
     }
+
+    private String generateSHA256Hash(MultipartFile file) throws IOException {
+        MessageDigest digest;
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Could not initialize SHA-256 algorithm", e);
+        }
+
+        byte[] hashBytes = digest.digest(file.getBytes());
+        StringBuilder hexString = new StringBuilder(2 * hashBytes.length);
+        for (byte b : hashBytes) {
+            String hex = Integer.toHexString(0xff & b);
+            if (hex.length() == 1) {
+                hexString.append('0');
+            }
+            hexString.append(hex);
+        }
+        return hexString.toString();
+    }
+
 
     @Override
     public Photo findPhotoEntityById(UUID id) {

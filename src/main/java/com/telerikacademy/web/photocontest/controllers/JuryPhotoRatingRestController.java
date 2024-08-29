@@ -1,7 +1,7 @@
 package com.telerikacademy.web.photocontest.controllers;
 
-//import com.telerikacademy.web.photocontest.entities.dtos.JuryPhotoRatingInputDto;
-//import com.telerikacademy.web.photocontest.entities.dtos.JuryPhotoRatingOutputDto;
+//import com.telerikacademy.web.photocontest.entities.dtos.JuryPhotoRatingInput;
+//import com.telerikacademy.web.photocontest.entities.dtos.JuryPhotoRatingOutput;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

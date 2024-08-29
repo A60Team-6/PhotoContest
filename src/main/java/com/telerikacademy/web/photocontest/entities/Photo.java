@@ -26,6 +26,9 @@ public class Photo {
     @Column(name = "photo_url")
     private String photoUrl;
 
+    @Column(nullable = false)
+    private String hash;  // Поле за хеша
+
     @ManyToOne
     @JoinColumn(name = "contest_id", nullable = false)
     private Contest contest;
