@@ -63,7 +63,7 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
-    public PhotoOutput createPhoto(PhotoInput photoInput, User user) {
+    public PhotoIdOutput createPhoto(PhotoInput photoInput, User user) {
         if (photoInput == null) {
             throw new IllegalArgumentException("Photo input cannot be null");
         }
@@ -89,7 +89,7 @@ public class PhotoServiceImpl implements PhotoService {
 
         photo = photoRepository.save(photo);
 
-        return conversionService.convert(photo, PhotoOutput.class);
+        return conversionService.convert(photo, PhotoIdOutput.class);
     }
 
     @Override

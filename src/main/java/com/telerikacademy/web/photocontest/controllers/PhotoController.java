@@ -1,10 +1,7 @@
 package com.telerikacademy.web.photocontest.controllers;
 
 import com.telerikacademy.web.photocontest.entities.User;
-import com.telerikacademy.web.photocontest.entities.dtos.PhotoInput;
-import com.telerikacademy.web.photocontest.entities.dtos.PhotoOutput;
-import com.telerikacademy.web.photocontest.entities.dtos.PhotoUpdate;
-import com.telerikacademy.web.photocontest.entities.dtos.UploadFileInput;
+import com.telerikacademy.web.photocontest.entities.dtos.*;
 import com.telerikacademy.web.photocontest.exceptions.AuthorizationException;
 import com.telerikacademy.web.photocontest.helpers.AuthenticationHelper;
 import com.telerikacademy.web.photocontest.services.contracts.PhotoService;
@@ -67,11 +64,11 @@ public class PhotoController {
     }
 
     @PostMapping
-    public ResponseEntity<PhotoOutput> createPhoto(@RequestBody PhotoInput photoInput,
-                                                   @RequestHeader HttpHeaders headers) {
+    public ResponseEntity<PhotoIdOutput> createPhoto(@RequestBody PhotoInput photoInput,
+                                                     @RequestHeader HttpHeaders headers) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            PhotoOutput createdPhoto = photoService.createPhoto(photoInput, user);
+            PhotoIdOutput createdPhoto = photoService.createPhoto(photoInput, user);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(createdPhoto);
         } catch (IllegalArgumentException e) {

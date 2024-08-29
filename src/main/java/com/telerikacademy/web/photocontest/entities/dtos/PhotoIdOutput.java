@@ -9,13 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PhotoOutput {
+public class PhotoIdOutput {
 
-    private String title;
-    private String story;
-    private String contest;
-    private String username;
-    private String photo;
-    private String uploadDate;
-
+    private String id;
 }

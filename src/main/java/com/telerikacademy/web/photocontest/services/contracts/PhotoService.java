@@ -16,7 +16,7 @@ public interface PhotoService {
 
     void updatePhoto(UUID id, PhotoUpdate photoUpdate, User user);
 
-    PhotoOutput createPhoto(PhotoInput photoInput, User user);
+    PhotoIdOutput createPhoto(PhotoInput photoInput, User user);
 
     UploadFileOutput uploadPhoto(UploadFileInput uploadFileInput) throws IOException;
 
