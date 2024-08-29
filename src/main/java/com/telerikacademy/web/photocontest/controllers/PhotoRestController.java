@@ -20,7 +20,7 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/photos")
-public class PhotoController {
+public class PhotoRestController {
 
     private final PhotoService photoService;
     private final AuthenticationHelper authenticationHelper;

@@ -2,18 +2,11 @@ package com.telerikacademy.web.photocontest.controllers;
 
 //import com.telerikacademy.web.photocontest.entities.dtos.JuryPhotoRatingInputDto;
 //import com.telerikacademy.web.photocontest.entities.dtos.JuryPhotoRatingOutputDto;
-import com.telerikacademy.web.photocontest.services.JuryPhotoRatingServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/ratings")
-public class JuryPhotoRatingController {
+public class JuryPhotoRatingRestController {
 
 //    private final JuryPhotoRatingServiceImpl juryPhotoRatingService;
 //
