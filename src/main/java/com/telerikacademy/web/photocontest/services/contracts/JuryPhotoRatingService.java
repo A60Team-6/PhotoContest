@@ -19,7 +19,7 @@ public interface JuryPhotoRatingService {
 
     List<JuryPhotoRatingOutput> getAllRatingsForPhoto(UUID photoId);
 
-//    List<JuryPhotoRatingOutput> getRatingsByUser(UUID userId);
+    List<JuryPhotoRatingOutput> getRatingsByUser(UUID userId);
 
 //    List<JuryPhotoRatingOutput> getRatingsForPhoto(UUID photoId, UUID userId);
 

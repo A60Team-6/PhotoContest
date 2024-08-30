@@ -12,6 +12,8 @@ import java.util.UUID;
 public interface UserService {
 
 
+    List<User> getAllUserEntities();
+
     List<UserOutput> getAll();
 
     UserOutput findUserById(UUID userId);

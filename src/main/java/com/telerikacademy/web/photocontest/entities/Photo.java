@@ -40,7 +40,7 @@ public class Photo {
     private User user;
 
     @Column
-    private int total_score;
+    private Double total_score;
 
     @Column(name = "upload_date")
     private LocalDateTime createdAt;
@@ -55,6 +55,6 @@ public class Photo {
         this.contest = contest;
         this.createdAt = LocalDateTime.now();
         this.isActive = true;
-        this.total_score = 0;
+        this.total_score = 0.0;
     }
 }

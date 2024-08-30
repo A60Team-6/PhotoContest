@@ -1,6 +1,7 @@
 package com.telerikacademy.web.photocontest.services;
 
 import com.telerikacademy.web.photocontest.entities.Contest;
+import com.telerikacademy.web.photocontest.entities.ContestParticipation;
 import com.telerikacademy.web.photocontest.entities.Photo;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.*;
@@ -8,9 +9,7 @@ import com.telerikacademy.web.photocontest.exceptions.AuthorizationException;
 import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import com.telerikacademy.web.photocontest.helpers.PermissionHelper;
 import com.telerikacademy.web.photocontest.repositories.PhotoRepository;
-import com.telerikacademy.web.photocontest.services.contracts.CloudinaryService;
-import com.telerikacademy.web.photocontest.services.contracts.ContestService;
-import com.telerikacademy.web.photocontest.services.contracts.PhotoService;
+import com.telerikacademy.web.photocontest.services.contracts.*;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
@@ -32,6 +31,7 @@ public class PhotoServiceImpl implements PhotoService {
     private final ConversionService conversionService;
     private final CloudinaryService cloudinaryService;
     private final ContestService contestService;
+    private final ContestParticipationService contestParticipationService;
 
     @Override
     public PhotoOutput getPhotoById(UUID id) {
@@ -81,18 +81,37 @@ public class PhotoServiceImpl implements PhotoService {
 
         Contest contest = contestService.findContestEntityById(UUID.fromString(photoInput.getContestId()));
 
-        Photo photo = Photo.builder()
-                .title(photoInput.getTitle())
-                .story(photoInput.getStory())
-                .contest(contest)
-                .build();
-        photo.setUser(user);
+        if (!contest.getPhase().getName().equals("Phase 1")) {
+            throw new IllegalArgumentException("You can not upload photo after Phase 1!");
+        }
 
-        user.getPhotos().add(photo);
+        List<ContestParticipation> contestParticipations = contestParticipationService.getAll();
 
-        photo = photoRepository.save(photo);
+        PhotoIdOutput photoIdOutput = null;
 
-        return conversionService.convert(photo, PhotoIdOutput.class);
+        for (ContestParticipation contestParticipation : contestParticipations) {
+            if (contestParticipation.getContest().equals(contest) && contestParticipation.getUser().equals(user)) {
+                if (!contestParticipation.isPhotoUploaded()) {
+
+                    Photo photo = Photo.builder()
+                            .title(photoInput.getTitle())
+                            .story(photoInput.getStory())
+                            .contest(contest)
+                            .build();
+                    photo.setUser(user);
+
+                    user.getPhotos().add(photo);
+
+                    photo = photoRepository.save(photo);
+
+
+                    photoIdOutput = conversionService.convert(photo, PhotoIdOutput.class);
+                }else {
+                    throw new IllegalArgumentException("You have already upload a photo!");
+                }
+            }
+        }
+        return photoIdOutput;
     }
 
     @Override

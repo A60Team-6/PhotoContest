@@ -1,10 +1,12 @@
 package com.telerikacademy.web.photocontest.services;
 
+import com.telerikacademy.web.photocontest.entities.Contest;
 import com.telerikacademy.web.photocontest.entities.dtos.JuryPhotoRatingOutput;
 import com.telerikacademy.web.photocontest.entities.JuryPhotoRating;
 import com.telerikacademy.web.photocontest.entities.Photo;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.JuryPhotoRatingInput;
+import com.telerikacademy.web.photocontest.entities.dtos.UserOutput;
 import com.telerikacademy.web.photocontest.repositories.JuryPhotoRatingRepository;
 import com.telerikacademy.web.photocontest.services.contracts.JuryPhotoRatingService;
 import com.telerikacademy.web.photocontest.services.contracts.PhotoService;
@@ -29,7 +31,7 @@ public class JuryPhotoRatingServiceImpl implements JuryPhotoRatingService {
 
     @Override
     public List<JuryPhotoRatingOutput> getAllRatingsForPhoto(UUID photoId) {
-        return juryPhotoRatingRepository.findByPhotoId(photoId).stream()
+        return juryPhotoRatingRepository.findByPhotoIdAndIsActiveTrue(photoId).stream()
                 .map(rating -> conversionService.convert(rating, JuryPhotoRatingOutput.class))
                 .collect(Collectors.toList());
     }
@@ -45,8 +47,17 @@ public class JuryPhotoRatingServiceImpl implements JuryPhotoRatingService {
     @Override
     public JuryPhotoRatingOutput createRating(JuryPhotoRatingInput input) {
         Photo photo = photoService.findPhotoEntityById(input.getPhotoId());
+        Contest contest = photo.getContest();
+
+        if(!contest.getPhase().getName().equals("Phase 2")){
+            throw new IllegalArgumentException("You can rate a photo only in Phase 2");
+        }
 
         User user = userService.findUserEntityById(input.getUserId());
+
+        if(user.getRole().getName().equals("User")){
+            throw new IllegalArgumentException("You can not rate a photo if you are not Jury or Organizer!");
+        }
 
         JuryPhotoRating rating = JuryPhotoRating.builder()
                 .photo(photo)
@@ -87,31 +98,17 @@ public class JuryPhotoRatingServiceImpl implements JuryPhotoRatingService {
         return conversionService.convert(rating, JuryPhotoRatingOutput.class);
     }
 
-//    @Override
-//    public List<JuryPhotoRatingOutput> getRatingsByUser(UUID userId) {
-//        return juryPhotoRatingRepository.findByUserId(userId).stream()
-//                .map(rating -> conversionService.convert(rating, JuryPhotoRatingOutput.class))
-//                .collect(Collectors.toList());
-//    }
-
-
-
-//    @Override
-//    public List<JuryPhotoRatingOutput> getRatingsForPhoto(UUID photoId, UUID userId) {
-//        List<JuryPhotoRating> ratings = juryPhotoRatingRepository.findAllByPhotoIdAndUserId(photoId, userId);
-//
-//        if (ratings.isEmpty()) {
-//            throw new EntityNotFoundException("No ratings found for this photo and user.");
-//        }
-//
-//        return ratings.stream()
-//                .map(rating -> conversionService.convert(rating, JuryPhotoRatingOutput.class))
-//                .collect(Collectors.toList());
-//    }
+    @Override
+    public List<JuryPhotoRatingOutput> getRatingsByUser(UUID userId) {
+        User user = userService.findUserEntityById(userId);
+        return juryPhotoRatingRepository.findRatingsByJury(user).stream()
+                .map(rating -> conversionService.convert(rating, JuryPhotoRatingOutput.class))
+                .collect(Collectors.toList());
+    }
 
     @Override
     public double getAverageScoreForPhoto(UUID photoId) {
-            List<JuryPhotoRating> ratings = juryPhotoRatingRepository.findByPhotoId(photoId);
+            List<JuryPhotoRating> ratings = juryPhotoRatingRepository.findByPhotoIdAndIsActiveTrue(photoId);
             return ratings.stream()
                     .mapToInt(JuryPhotoRating::getScore)
                     .average()

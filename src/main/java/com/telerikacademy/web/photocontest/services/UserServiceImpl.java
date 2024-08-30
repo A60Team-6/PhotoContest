@@ -36,6 +36,12 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    public List<User> getAllUserEntities(){
+        return userRepository.findAll();
+    }
+
+
+    @Override
     public List<UserOutput> getAll(){
         List<User> users = userRepository.findAllByIsActiveTrue();
         return users.stream().map(user -> conversionService.convert(user, UserOutput.class)).collect(Collectors.toList());

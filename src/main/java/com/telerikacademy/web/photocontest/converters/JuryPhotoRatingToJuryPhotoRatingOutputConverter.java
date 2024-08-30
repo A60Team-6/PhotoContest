@@ -11,7 +11,6 @@ public class JuryPhotoRatingToJuryPhotoRatingOutputConverter implements Converte
     @Override
     public JuryPhotoRatingOutput convert(JuryPhotoRating source) {
         return JuryPhotoRatingOutput.builder()
-                .id(source.getId())
                 .photoId(source.getPhoto().getId())
                 .userId(source.getJury().getUserId())
                 .score(source.getScore())

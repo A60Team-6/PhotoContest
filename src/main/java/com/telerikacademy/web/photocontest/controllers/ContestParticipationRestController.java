@@ -1,5 +1,6 @@
 package com.telerikacademy.web.photocontest.controllers;
 
+import com.telerikacademy.web.photocontest.entities.ContestParticipation;
 import com.telerikacademy.web.photocontest.helpers.AuthenticationHelper;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.services.contracts.ContestParticipationService;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -19,6 +21,12 @@ public class ContestParticipationRestController {
 
     private final ContestParticipationService contestParticipationService;
     private final AuthenticationHelper authenticationHelper;
+
+    @GetMapping
+    public List<ContestParticipation> getAllContestParticipation() {
+        return contestParticipationService.getAll();
+    }
+
 
     @PostMapping("/participate/{contestId}")
     public ResponseEntity<String> participateInContest(@PathVariable UUID contestId, @RequestHeader HttpHeaders httpHeaders) {

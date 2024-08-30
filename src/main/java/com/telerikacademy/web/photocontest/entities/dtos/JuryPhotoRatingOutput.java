@@ -13,12 +13,14 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class JuryPhotoRatingOutput {
-    private UUID id;
+
+
+//    private UUID id;
     private UUID photoId;
     private UUID userId;
     private int score;
     private String comment;
     private Boolean categoryMatch;
     private LocalDateTime reviewDate;
-    private Boolean isActive;
+//    private Boolean isActive;
 }

@@ -1,6 +1,7 @@
 package com.telerikacademy.web.photocontest.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -50,12 +52,7 @@ public class Contest {
         @Column(name = "is_active")
         private Boolean isActive;
 
-        @OneToMany(fetch = FetchType.LAZY, mappedBy = "contest")
-        private Set<Photo> firstPlace;
-
-        @OneToMany(fetch = FetchType.LAZY, mappedBy = "contest")
-        private Set<Photo> secondPlace;
-
-        @OneToMany(fetch = FetchType.LAZY, mappedBy = "contest")
-        private Set<Photo> thirdPlace;
+        @JsonIgnore
+        @OneToMany(fetch = FetchType.EAGER, mappedBy = "contest")
+        private Set<Photo> photos;
 }
