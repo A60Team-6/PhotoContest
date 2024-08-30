@@ -64,7 +64,7 @@ CREATE TABLE photos
     title       VARCHAR(100) NOT NULL,
     story       TEXT         NOT NULL,
     photo_url   VARCHAR(255),
-    hash     VARCHAR(64)     NOT NULL,
+    hash     VARCHAR(64),
     contest_id  CHAR(36)     NOT NULL,
     user_id     CHAR(36)     NOT NULL,
     total_score INT,

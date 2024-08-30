@@ -132,7 +132,7 @@ public class PhotoServiceImpl implements PhotoService {
 
         // Проверка дали снимката с този хеш вече съществува в базата данни
         if (photoRepository.existsByHash(hash)) {
-            throw new IllegalArgumentException("Duplicate photo: A photo with this content already exists.");
+            throw new DuplicateEntityException("Duplicate photo: A photo with this content already exists.");
         }
 
         Photo photo = findPhotoEntityById(UUID.fromString(uploadFileInput.getPhotoId()));

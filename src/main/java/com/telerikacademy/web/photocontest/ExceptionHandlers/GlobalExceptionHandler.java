@@ -3,12 +3,14 @@ package com.telerikacademy.web.photocontest.ExceptionHandlers;
 import com.telerikacademy.web.photocontest.exceptions.AuthorizationException;
 import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
@@ -62,43 +64,44 @@ public class GlobalExceptionHandler {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @ExceptionHandler(value = DuplicateEntityException.class)
-    public ResponseEntity<Object> handleDuplicateEntityException(DuplicateEntityException ex) {
+    public ResponseEntity<ApiException> handleDuplicateEntityException(DuplicateEntityException ex, HttpServletRequest request) {
         HttpStatus badRequest = HttpStatus.CONFLICT;
 
         ApiException apiException = new ApiException(
-                badRequest,
+                badRequest.value(),
                 ex.getMessage(),
-                ZonedDateTime.now(ZoneId.of("Z"))
+                LocalDateTime.now(),
+                request.getRequestURI()
         );
 
         return new ResponseEntity<>(apiException, badRequest);
     }
 
     @ExceptionHandler(value = EntityNotFoundException.class)
-    public ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException ex) {
+    public ResponseEntity<ApiException> handleEntityNotFoundException(EntityNotFoundException ex, HttpServletRequest request) {
         HttpStatus badRequest = HttpStatus.NOT_FOUND;
 
         ApiException apiException = new ApiException(
-                badRequest,
+                badRequest.value(),
                 ex.getMessage(),
-                ZonedDateTime.now(ZoneId.of("Z"))
+                LocalDateTime.now(),
+                request.getRequestURI()
         );
 
         return new ResponseEntity<>(apiException, badRequest);
     }
 
     @ExceptionHandler(value = AuthorizationException.class)
-    public ResponseEntity<Object> handleAuthorizationException(AuthorizationException ex) {
+    public ResponseEntity<ApiException> handleAuthorizationException(AuthorizationException ex, HttpServletRequest request) {
         HttpStatus badRequest = HttpStatus.UNAUTHORIZED;
 
         ApiException apiException = new ApiException(
-                badRequest,
+                badRequest.value(),
                 ex.getMessage(),
-                ZonedDateTime.now(ZoneId.of("Z"))
+                LocalDateTime.now(),
+                request.getRequestURI()
         );
 
         return new ResponseEntity<>(apiException, badRequest);
     }
-
-
 }
