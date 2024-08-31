@@ -29,8 +29,4 @@ public class UserUpdate {
     @NotNull(message = "Password can not be empty!")
     @Size(min = 8)
     private String password;
-
-    @Size(max = 256, message = "Profile picture is too big")
-    private String profilePicture;
-
 }

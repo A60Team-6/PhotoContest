@@ -18,7 +18,6 @@ public class UserToUserUpdateDtoConverter implements Converter<User, UserUpdate>
                 .lastName(user.getLastName())
                 .email(user.getEmail())
                 .password(user.getPassword())
-                .profilePicture(user.getProfilePhoto())
                 .build();
     }
 }

@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -35,7 +34,7 @@ public class User {
     @Column(name = "password", nullable = false, length = 255)
     private String password;
 
-    @Column(name = "profile_photo", nullable = false, length = 256)
+    @Column(name = "profile_photo", length = 256)
     private String profilePhoto;
 
     @Column(name = "points")
@@ -62,25 +61,22 @@ public class User {
     private Set<Photo> photos;
 
     @Builder
-    User(String username,
-         String firstName,
-         String lastName,
-         String email,
-         String password,
-         String profilePhoto,
-         Integer points,
-         Role role,
-         Rank rank,
-         Boolean isActive){
+    public User(String username,
+                String firstName,
+                String lastName,
+                String email,
+                String password,
+                Role role,
+                Rank rank) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.profilePhoto = profilePhoto;
-        this.points = points;
+        this.profilePhoto = null;
+        this.points = 0;
         this.role = role;
         this.rank = rank;
-        this.isActive = isActive;
+        this.isActive = true;
     }
 }

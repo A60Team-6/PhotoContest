@@ -1,14 +1,12 @@
 package com.telerikacademy.web.photocontest.services;
 
-import com.telerikacademy.web.photocontest.entities.dtos.UserOutputId;
-import com.telerikacademy.web.photocontest.entities.dtos.UserInput;
-import com.telerikacademy.web.photocontest.entities.dtos.UserOutput;
-import com.telerikacademy.web.photocontest.entities.dtos.UserUpdate;
+import com.telerikacademy.web.photocontest.entities.dtos.*;
 import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import com.telerikacademy.web.photocontest.helpers.PermissionHelper;
 import com.telerikacademy.web.photocontest.entities.Photo;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.repositories.UserRepository;
+import com.telerikacademy.web.photocontest.services.contracts.CloudinaryService;
 import com.telerikacademy.web.photocontest.services.contracts.RankService;
 import com.telerikacademy.web.photocontest.services.contracts.RoleService;
 import com.telerikacademy.web.photocontest.services.contracts.UserService;
@@ -17,7 +15,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -32,6 +32,7 @@ public class UserServiceImpl implements UserService {
     private final RoleService roleService;
     private final RankService rankService;
     private final PasswordEncoder passwordEncoder;
+    private final CloudinaryService cloudinaryService;
 
 
 
@@ -79,7 +80,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserOutputId createUser(UserInput userInput) {
-        //User user = conversionService.convert(userInput, User.class);
         String hashedPassword = passwordEncoder.encode(userInput.getPassword());
 
         User user = User.builder()
@@ -88,17 +88,19 @@ public class UserServiceImpl implements UserService {
                 .lastName(userInput.getLastName())
                 .email(userInput.getEmail())
                 .password(hashedPassword)
-                .profilePhoto(userInput.getProfilePicture())
                 .role(roleService.getRoleByName("User"))
                 .rank(rankService.getRankByName("Junkie"))
-                .points(0)
-                .isActive(true)
                 .build();
 
         User existingUser = userRepository.findByUsernameAndIsActiveTrue(user.getUsername());
+        User existingEmail = userRepository.findByEmailAndIsActiveTrue(user.getEmail());
 
         if (existingUser != null) {
             throw new DuplicateEntityException("User", "username", user.getUsername());
+        }
+
+        if (existingEmail != null) {
+            throw new DuplicateEntityException("User", "email", user.getEmail());
         }
 
         userRepository.save(user);
@@ -118,7 +120,6 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(userUpdate.getFirstName());
         user.setLastName(userUpdate.getLastName());
         user.setEmail(userUpdate.getEmail());
-        user.setProfilePhoto(userUpdate.getProfilePicture());
 
         userRepository.save(user);
 
@@ -135,5 +136,27 @@ public class UserServiceImpl implements UserService {
         }
         existingUser.setIsActive(false);
         userRepository.save(existingUser);
+    }
+
+    @Override
+    public UploadFileOutput uploadPhoto(String id, MultipartFile file) throws IOException {
+
+        if (id == null || file.isEmpty()) {
+            throw new IllegalArgumentException("Invalid file input");
+        }
+
+        User user = findUserEntityById(UUID.fromString(id));
+
+        String photoUrl = cloudinaryService.uploadFile(file);
+
+        if (photoUrl == null || photoUrl.isEmpty()) {
+            throw new IOException("Failed to upload photo to Cloudinary");
+        }
+
+        user.setProfilePhoto(photoUrl);
+
+        userRepository.save(user);
+
+        return UploadFileOutput.builder().message("Photo uploaded and URL updated successfully!").build();
     }
 }
