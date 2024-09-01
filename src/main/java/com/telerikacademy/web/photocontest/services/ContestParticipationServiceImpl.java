@@ -23,18 +23,19 @@ public class ContestParticipationServiceImpl implements ContestParticipationServ
 
 
     private final ContestParticipationRepository repository;
-    private final ContestService contestService;
+    //private final ContestService contestService;
+    private final ContestRepository contestRepository;
 
     @Override
     public List<ContestParticipation> getAll() {
         return repository.findAllByIsActiveTrue();
     }
 
-
     @Override
     public void participateInContest(User user, UUID id){
         boolean contestExistsAndIsActive = true;
-        Contest contest = contestService.findContestEntityById(id);
+    //    Contest contest = contestService.findContestEntityById(id);
+        Contest contest = contestRepository.findByContestIdAndIsActiveTrue(id);
 
         if(contest == null){
             contestExistsAndIsActive = false;

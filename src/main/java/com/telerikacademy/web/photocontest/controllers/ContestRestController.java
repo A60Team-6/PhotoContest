@@ -1,6 +1,9 @@
 package com.telerikacademy.web.photocontest.controllers;
 
+import com.telerikacademy.web.photocontest.entities.Contest;
+import com.telerikacademy.web.photocontest.entities.Photo;
 import com.telerikacademy.web.photocontest.entities.dtos.ContestOutputId;
+import com.telerikacademy.web.photocontest.entities.dtos.PhotoOutput;
 import com.telerikacademy.web.photocontest.exceptions.AuthorizationException;
 import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import com.telerikacademy.web.photocontest.helpers.AuthenticationHelper;
@@ -8,6 +11,8 @@ import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.ContestInput;
 import com.telerikacademy.web.photocontest.entities.dtos.ContestOutput;
 import com.telerikacademy.web.photocontest.services.contracts.ContestService;
+import com.telerikacademy.web.photocontest.services.contracts.PhotoService;
+import com.telerikacademy.web.photocontest.services.contracts.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -29,10 +34,17 @@ public class ContestRestController {
     private final ContestService contestService;
     private final AuthenticationHelper authenticationHelper;
     private final ConversionService conversionService;
+    private final PhotoService photoService;
 
     @GetMapping
     public List<ContestOutput> getAll() {
-        return contestService.getAll();
+        return contestService.getAllActive();
+    }
+
+    @GetMapping("/all/photos/contest/{contestId}")
+    public ResponseEntity<List<PhotoOutput>> getAllPhotosOfContest(@PathVariable UUID contestId) {
+        Contest contest = contestService.findContestEntityById(contestId);
+        return ResponseEntity.ok(photoService.getAllPhotosOfContest(contest));
     }
 
     @GetMapping("/{id}")

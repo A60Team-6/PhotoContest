@@ -54,12 +54,6 @@ public class User {
     @Column(name = "is_active")
     private Boolean isActive;
 
-    @JsonIgnore
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private Set<Photo> photos;
-
     @Builder
     public User(String username,
                 String firstName,

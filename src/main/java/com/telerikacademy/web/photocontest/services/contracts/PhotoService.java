@@ -1,5 +1,6 @@
 package com.telerikacademy.web.photocontest.services.contracts;
 
+import com.telerikacademy.web.photocontest.entities.Contest;
 import com.telerikacademy.web.photocontest.entities.Photo;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.*;
@@ -9,6 +10,14 @@ import java.util.List;
 import java.util.UUID;
 
 public interface PhotoService {
+
+    List<PhotoOutput> getAllPhotosOfUser(User user);
+
+    List<Photo> getAllPhotosEntityOfUser(User user);
+
+    List<PhotoOutput> getAllPhotosOfContest(Contest contest);
+
+    List<Photo> getAllPhotosEntityOfContest(Contest contest);
 
     List<PhotoOutput> getAll();
 

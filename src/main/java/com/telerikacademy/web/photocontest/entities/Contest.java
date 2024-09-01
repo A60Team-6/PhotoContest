@@ -7,8 +7,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.parameters.P;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -51,8 +53,4 @@ public class Contest {
 
         @Column(name = "is_active")
         private Boolean isActive;
-
-        @JsonIgnore
-        @OneToMany(fetch = FetchType.EAGER, mappedBy = "contest")
-        private Set<Photo> photos;
 }

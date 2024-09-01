@@ -1,29 +1,27 @@
 package com.telerikacademy.web.photocontest.services;
 
-import com.telerikacademy.web.photocontest.Managers.ContestScoreManager;
-import com.telerikacademy.web.photocontest.Managers.RankManager;
+
+import com.telerikacademy.web.photocontest.entities.Contest;
+import com.telerikacademy.web.photocontest.entities.Phase;
 import com.telerikacademy.web.photocontest.entities.Photo;
+import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.ContestInput;
 import com.telerikacademy.web.photocontest.entities.dtos.ContestOutput;
 import com.telerikacademy.web.photocontest.entities.dtos.ContestOutputId;
 import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import com.telerikacademy.web.photocontest.helpers.PermissionHelper;
-import com.telerikacademy.web.photocontest.entities.Contest;
-import com.telerikacademy.web.photocontest.entities.Phase;
-import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.repositories.ContestRepository;
+import com.telerikacademy.web.photocontest.repositories.PhotoRepository;
+import com.telerikacademy.web.photocontest.repositories.UserRepository;
 import com.telerikacademy.web.photocontest.services.contracts.*;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -35,14 +33,22 @@ public class ContestServiceImpl implements ContestService {
     private final ConversionService conversionService;
     private final ContestRepository contestRepository;
     private final PhaseService phaseService;
-//    private final RankManager rankManager;
-//    private final ContestScoreManager contestScoreManager;
-//    private final JuryPhotoRatingService juryPhotoRatingService;
+    private final PhotoService photoService;
+    private final RankService rankService;
+    //private final JuryPhotoRatingService juryPhotoRatingService;
+    private final PhotoRepository photoRepository;
+    private final UserRepository userRepository;
 
 
     @Override
-    public List<ContestOutput> getAll() {
+    public List<ContestOutput> getAllActive() {
         List<Contest> contests = contestRepository.findAllByIsActiveTrue();
+        return contests.stream().map(contest -> conversionService.convert(contest, ContestOutput.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ContestOutput> getAllContests() {
+        List<Contest> contests = contestRepository.findAll();
         return contests.stream().map(contest -> conversionService.convert(contest, ContestOutput.class)).collect(Collectors.toList());
     }
 
@@ -123,6 +129,7 @@ public class ContestServiceImpl implements ContestService {
             if (now.isAfter(contest.getChangePhaseTime())) {
                 System.out.println("Changing phase for contest: " + contest.getTitle());
                 changePhase(contest);
+                activeContests = contestRepository.findAllByIsActiveTrue();
             }
         }
     }
@@ -135,7 +142,7 @@ public class ContestServiceImpl implements ContestService {
 
         if ("Phase 1".equals(currentPhase)) {
             contest.setPhase(phase2);
-            contest.setChangePhaseTime(now.plusMinutes(3));
+            contest.setChangePhaseTime(contest.getChangePhaseTime());
             System.out.println("Contest moved to Phase 2");
         } else if ("Phase 2".equals(currentPhase)) {
             contest.setPhase(phaseService.getPhaseByName("Finished"));
@@ -144,96 +151,87 @@ public class ContestServiceImpl implements ContestService {
 
         contest.setChangePhaseTime(now);
         contestRepository.save(contest);
-
-//        if("Finished".equals(contest.getPhase().getName())){
-//            contestScoreManager.decideTop3PlacesAndSetPointsToUsers(contest);
-//            contest.getPhotos().forEach(photo -> rankManager.changeRanking(photo.getUser()));
-//        }
+        if ("Finished".equals(contest.getPhase().getName())) {
+            decideTop3PlacesAndSetPointsToUsers(contest);
+            List<Photo> photos = photoRepository.findAllByContestAndIsActiveTrue(contest);
+            photos.forEach(photo -> changeRanking(photo.getUser()));
+            contest.setIsActive(false);
+            contestRepository.save(contest);
+        }
     }
 
+    private void decideTop3PlacesAndSetPointsToUsers(Contest contest) {
 
-//    private void decideTop3PlacesAndSetPointsToUsers(Contest contest) {
-//        if (contest.getPhase().getName().equals("Finished")) {
-//            setTotalScoreToEveryPhotoInTheContest(contest);
-//
-//            Set<Photo> photos = contest.getPhotos();
-//
-//            double maxScore = photos.stream()
-//                    .mapToDouble(Photo::getTotal_score)
-//                    .max()
-//                    .orElse(0);
-//
-//            List<Photo> topPhotos = photos.stream()
-//                    .filter(photo -> photo.getTotal_score() == maxScore)
-//                    .toList();
-//
-//            if (topPhotos.size() == 1) {
-//                Photo topPhoto = topPhotos.get(0);
-//                topPhoto.getUser().setPoints(topPhoto.getUser().getPoints() + 50);
-//            } else if (topPhotos.size() > 1) {
-//                topPhotos.forEach(photo -> photo.getUser().setPoints(photo.getUser().getPoints() + 40));
-//            }
-//
-//            double secondMaxScore = photos.stream()
-//                    .filter(photo -> photo.getTotal_score() < maxScore)
-//                    .mapToDouble(Photo::getTotal_score)
-//                    .max()
-//                    .orElse(0);
-//
-//            if (maxScore >= (secondMaxScore * 2)) {
-//                for (Photo photo : topPhotos) {
-//                    photo.getUser().setPoints(photo.getUser().getPoints() + 75);
-//                }
-//            }
-//
-//            List<Photo> secondPlacePhotos = photos.stream()
-//                    .filter(photo -> photo.getTotal_score() == secondMaxScore)
-//                    .toList();
-//
-//            if (secondPlacePhotos.size() == 1) {
-//                Photo secondPlacePhoto = secondPlacePhotos.get(0);
-//                secondPlacePhoto.getUser().setPoints(secondPlacePhoto.getUser().getPoints() + 35);
-//            } else if (secondPlacePhotos.size() > 1) {
-//                secondPlacePhotos.forEach(photo -> photo.getUser().setPoints(photo.getUser().getPoints() + 25));
-//            }
-//
-//
-//            double thirdMaxScore = photos.stream()
-//                    .filter(photo -> photo.getTotal_score() < secondMaxScore)
-//                    .mapToDouble(Photo::getTotal_score)
-//                    .max()
-//                    .orElse(0);
-//
-//            List<Photo> thirdPlacePhotos = photos.stream()
-//                    .filter(photo -> photo.getTotal_score() == thirdMaxScore)
-//                    .toList();
-//
-//            if (thirdPlacePhotos.size() == 1) {
-//                Photo thirdPlacePhoto = thirdPlacePhotos.get(0);
-//                thirdPlacePhoto.getUser().setPoints(thirdPlacePhoto.getUser().getPoints() + 20);
-//            } else if (thirdPlacePhotos.size() > 1) {
-//                thirdPlacePhotos.forEach(photo -> photo.getUser().setPoints(photo.getUser().getPoints() + 10));
-//            }
-//        }
-//    }
+        List<Photo> photos = photoRepository.findAllByContestAndIsActiveTrue(contest);
 
-//    private void changeRanking(User user){
-//        if(user.getPoints() > 1001){
-//            user.setRank(rankService.getRankByName("WiseAndBenevolentPhotoDictator"));
-//        }else if(user.getPoints() >= 151 && user.getPoints() <= 1000){
-//            user.setRank(rankService.getRankByName("Master"));
-//            //Jury invitation
-//        }else if(user.getPoints() >= 51 && user.getPoints() <= 150){
-//            user.setRank(rankService.getRankByName("Enthusiast"));
-//        }
-//    }
+        double maxScore = findMaxScore(photos);
+        List<Photo> topPhotos = filterPhotosByScore(photos, maxScore);
 
-//    private void setTotalScoreToEveryPhotoInTheContest(Contest contest){
-//        Set<Photo> photos = contest.getPhotos();
-//
-//        for(Photo photo : photos){
-//            photo.setTotal_score(juryPhotoRatingService.getAverageScoreForPhoto(photo.getId()));
-//        }
-//    }
+        double secondMaxScore = findOtherScore(photos, maxScore);
 
+        if (maxScore >= (secondMaxScore * 2)) {
+            for (Photo photo : topPhotos) {
+                photo.getUser().setPoints(photo.getUser().getPoints() + 75);
+                userRepository.save(photo.getUser());
+            }
+        } else {
+            assignPointsToPhotos(topPhotos, 50, 40);
+        }
+
+        List<Photo> secondPlacePhotos = filterPhotosByScore(photos, secondMaxScore);
+        assignPointsToPhotos(secondPlacePhotos, 35, 25);
+
+
+        double thirdMaxScore = findOtherScore(photos, secondMaxScore);
+        List<Photo> thirdPlacePhotos = filterPhotosByScore(photos, thirdMaxScore);
+        assignPointsToPhotos(thirdPlacePhotos, 20, 10);
+    }
+
+    private double findMaxScore(List<Photo> photos) {
+        return photos.stream()
+                .mapToDouble(Photo::getTotal_score)
+                .max()
+                .orElse(0);
+    }
+
+    private double findOtherScore(List<Photo> photos, double maxScore) {
+        return photos.stream()
+                .filter(photo -> photo.getTotal_score() < maxScore)
+                .mapToDouble(Photo::getTotal_score)
+                .max()
+                .orElse(0);
+    }
+
+    private List<Photo> filterPhotosByScore(List<Photo> photos, double score) {
+        return photos.stream()
+                .filter(photo -> photo.getTotal_score() == score)
+                .toList();
+    }
+
+    private void assignPointsToPhotos(List<Photo> photos, int singlePoints, int sharedPoints) {
+        if (photos.size() == 1) {
+            addPointsToUser(photos.get(0).getUser(), singlePoints);
+        } else if (photos.size() > 1) {
+            photos.forEach(photo -> addPointsToUser(photo.getUser(), sharedPoints));
+        }
+    }
+
+    private void addPointsToUser(User user, int points) {
+        user.setPoints(user.getPoints() + points);
+        userRepository.save(user);
+    }
+
+    private void changeRanking(User user) {
+        if (user.getPoints() > 1001) {
+            user.setRank(rankService.getRankByName("WiseAndBenevolentPhotoDictator"));
+            userRepository.save(user);
+        } else if (user.getPoints() >= 151 && user.getPoints() <= 1000) {
+            user.setRank(rankService.getRankByName("Master"));
+            userRepository.save(user);
+            //Jury invitation
+        } else if (user.getPoints() >= 51 && user.getPoints() <= 150) {
+            user.setRank(rankService.getRankByName("Enthusiast"));
+            userRepository.save(user);
+        }
+    }
 }

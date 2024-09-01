@@ -1,15 +1,13 @@
 package com.telerikacademy.web.photocontest.services;
 
+import com.telerikacademy.web.photocontest.entities.Contest;
 import com.telerikacademy.web.photocontest.entities.dtos.*;
 import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import com.telerikacademy.web.photocontest.helpers.PermissionHelper;
 import com.telerikacademy.web.photocontest.entities.Photo;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.repositories.UserRepository;
-import com.telerikacademy.web.photocontest.services.contracts.CloudinaryService;
-import com.telerikacademy.web.photocontest.services.contracts.RankService;
-import com.telerikacademy.web.photocontest.services.contracts.RoleService;
-import com.telerikacademy.web.photocontest.services.contracts.UserService;
+import com.telerikacademy.web.photocontest.services.contracts.*;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
@@ -19,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -33,6 +30,7 @@ public class UserServiceImpl implements UserService {
     private final RankService rankService;
     private final PasswordEncoder passwordEncoder;
     private final CloudinaryService cloudinaryService;
+    private final PhotoService photoService;
 
 
 
@@ -130,7 +128,7 @@ public class UserServiceImpl implements UserService {
     public void deactivateUser(UUID userId, User user) {
         PermissionHelper.isSameUser(user, userRepository.findByUsernameAndIsActiveTrue(user.getUsername()), "You can deactivate only yourself!");
         User existingUser = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        Set<Photo> photos = existingUser.getPhotos();
+        List<Photo> photos = photoService.getAllPhotosEntityOfUser(user);
         for(Photo photo : photos) {
             photo.setIsActive(false);
         }

@@ -1,10 +1,12 @@
 package com.telerikacademy.web.photocontest.controllers;
 
+import com.telerikacademy.web.photocontest.entities.Contest;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.*;
 import com.telerikacademy.web.photocontest.exceptions.AuthorizationException;
 import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import com.telerikacademy.web.photocontest.helpers.AuthenticationHelper;
+import com.telerikacademy.web.photocontest.services.contracts.ContestService;
 import com.telerikacademy.web.photocontest.services.contracts.PhotoService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;

@@ -8,6 +8,7 @@ import com.telerikacademy.web.photocontest.entities.dtos.*;
 import com.telerikacademy.web.photocontest.exceptions.AuthorizationException;
 import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import com.telerikacademy.web.photocontest.helpers.PermissionHelper;
+import com.telerikacademy.web.photocontest.repositories.ContestRepository;
 import com.telerikacademy.web.photocontest.repositories.PhotoRepository;
 import com.telerikacademy.web.photocontest.services.contracts.*;
 import jakarta.persistence.EntityNotFoundException;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -30,7 +32,8 @@ public class PhotoServiceImpl implements PhotoService {
     private final PhotoRepository photoRepository;
     private final ConversionService conversionService;
     private final CloudinaryService cloudinaryService;
-    private final ContestService contestService;
+    //private final ContestService contestService;
+    private final ContestRepository contestRepository;
     private final ContestParticipationService contestParticipationService;
 
     @Override
@@ -38,6 +41,59 @@ public class PhotoServiceImpl implements PhotoService {
         Photo photo = photoRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Photo not found"));
         return conversionService.convert(photo, PhotoOutput.class);
+    }
+
+    @Override
+    public List<PhotoOutput> getAllPhotosOfUser(User user) {
+        List<Photo> photos = new ArrayList<>();
+        List<Photo> allPhotos = photoRepository.findAllByIsActiveTrue();
+        for(Photo photo : allPhotos){
+            if(photo.getUser().equals(user)){
+                photos.add(photo);
+            }
+        }
+        return photos.stream()
+                .map(photo -> conversionService.convert(photo, PhotoOutput.class))
+                .collect(Collectors.toList());
+    }
+
+
+    @Override
+    public List<Photo> getAllPhotosEntityOfUser(User user) {
+        List<Photo> photos = new ArrayList<>();
+        List<Photo> allPhotos = photoRepository.findAllByIsActiveTrue();
+        for(Photo photo : allPhotos){
+            if(photo.getUser().equals(user)){
+                photos.add(photo);
+            }
+        }
+        return photos;
+    }
+
+    @Override
+    public  List<PhotoOutput> getAllPhotosOfContest(Contest contest) {
+        List<Photo> photos = new ArrayList<>();
+        List<Photo> allPhotos = photoRepository.findAllByIsActiveTrue();
+        for(Photo photo : allPhotos){
+            if(photo.getContest().equals(contest)){
+                photos.add(photo);
+            }
+        }
+        return photos.stream()
+                .map(photo -> conversionService.convert(photo, PhotoOutput.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public  List<Photo> getAllPhotosEntityOfContest(Contest contest) {
+        List<Photo> photos = new ArrayList<>();
+        List<Photo> allPhotos = photoRepository.findAllByIsActiveTrue();
+        for(Photo photo : allPhotos){
+            if(photo.getContest().equals(contest)){
+                photos.add(photo);
+            }
+        }
+        return photos;
     }
 
     @Override
@@ -79,7 +135,8 @@ public class PhotoServiceImpl implements PhotoService {
             throw new IllegalArgumentException("A photo with the same title already exists.");
         }
 
-        Contest contest = contestService.findContestEntityById(UUID.fromString(photoInput.getContestId()));
+       // Contest contest = contestService.findContestEntityById(UUID.fromString(photoInput.getContestId()));
+        Contest contest = contestRepository.findByContestIdAndIsActiveTrue(UUID.fromString(photoInput.getContestId()));
 
         if (!contest.getPhase().getName().equals("Phase 1")) {
             throw new IllegalArgumentException("You can not upload photo after Phase 1!");
@@ -99,11 +156,9 @@ public class PhotoServiceImpl implements PhotoService {
                             .contest(contest)
                             .build();
                     photo.setUser(user);
-
-                    user.getPhotos().add(photo);
-
                     photo = photoRepository.save(photo);
 
+                    System.out.println("Creating photo for contest: " + contest.getTitle() + ", Phase:");
 
                     photoIdOutput = conversionService.convert(photo, PhotoIdOutput.class);
                 }else {

@@ -10,7 +10,9 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ContestService {
-    List<ContestOutput> getAll();
+    List<ContestOutput> getAllActive();
+
+    List<ContestOutput> getAllContests();
 
     ContestOutput findContestById(UUID contestId);
 

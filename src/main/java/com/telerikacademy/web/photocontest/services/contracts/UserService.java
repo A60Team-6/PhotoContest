@@ -1,5 +1,6 @@
 package com.telerikacademy.web.photocontest.services.contracts;
 
+import com.telerikacademy.web.photocontest.entities.Contest;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.*;
 import org.springframework.web.multipart.MultipartFile;
