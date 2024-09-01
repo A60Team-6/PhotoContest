@@ -205,7 +205,7 @@ public class PhotoServiceImpl implements PhotoService {
         String hash = generateSHA256Hash(uploadFileInput.getFile());
 
         // Проверка дали снимката с този хеш вече съществува в базата данни
-        if (photoRepository.existsByHash(hash)) {
+        if (photoRepository.existsByHash(hash)) { // Да проверим дали снимката участава в конкретния конкурс с метода getAllPhotosOfContest
             throw new DuplicateEntityException("Duplicate photo: A photo with this content already exists.");
         }
 
