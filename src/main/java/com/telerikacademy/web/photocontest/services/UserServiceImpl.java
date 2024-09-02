@@ -139,7 +139,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UploadFileOutput uploadPhoto(String id, MultipartFile file) throws IOException {
 
-        if (id == null || file.isEmpty()) {
+        if (id == null || file == null || file.isEmpty()) {
             throw new IllegalArgumentException("Invalid file input");
         }
 
