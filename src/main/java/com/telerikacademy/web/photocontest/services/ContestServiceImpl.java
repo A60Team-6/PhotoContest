@@ -20,6 +20,7 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -84,7 +85,7 @@ public class ContestServiceImpl implements ContestService {
                 .category(contestInput.getCategory())
                 .phase(phaseService.getPhaseByName("Phase 1"))
                 .createdAt(LocalDateTime.now())
-                .changePhaseTime(LocalDateTime.now())
+                .changePhaseTime(LocalDateTime.now().plusHours(contestInput.getChangePhaseTime()))
                 .isActive(true)
                 .build();
 
@@ -142,7 +143,9 @@ public class ContestServiceImpl implements ContestService {
 
         if ("Phase 1".equals(currentPhase)) {
             contest.setPhase(phase2);
-            contest.setChangePhaseTime(contest.getChangePhaseTime());
+            Duration duration = Duration.between(contest.getCreatedAt(), contest.getChangePhaseTime());
+            long hours = duration.toHours();
+            contest.setChangePhaseTime(now.plusHours(hours));
             System.out.println("Contest moved to Phase 2");
         } else if ("Phase 2".equals(currentPhase)) {
             contest.setPhase(phaseService.getPhaseByName("Finished"));

@@ -2,6 +2,7 @@ package com.telerikacademy.web.photocontest.entities.dtos;
 
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,5 +24,7 @@ public class ContestInput {
     @Size(max = 255, message = "Cover photo url should be no more than 255 symbols!")
     private String coverPhotoUrl;
 
-
+    @NotNull
+    @Positive
+    private int changePhaseTime;
 }
