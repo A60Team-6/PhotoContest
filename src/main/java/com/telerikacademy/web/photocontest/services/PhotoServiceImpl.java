@@ -131,12 +131,20 @@ public class PhotoServiceImpl implements PhotoService {
             throw new AuthorizationException("User is not authorized or inactive");
         }
 
-        if (photoRepository.existsByTitleAndIsActiveTrue(photoInput.getTitle())) {
-            throw new IllegalArgumentException("A photo with the same title already exists.");
+        Contest contest = contestRepository.findByContestIdAndIsActiveTrue(UUID.fromString(photoInput.getContestId()));
+        List<Photo> photos = getAllPhotosEntityOfContest(contest);
+        for (Photo photo1 : photos) {
+            if (photoInput.getTitle().equals(photo1.getTitle())) {
+                throw new DuplicateEntityException("Duplicate photo: A photo with this title already exists in this content .");
+            }
         }
+//
+//        if (photoRepository.existsByTitleAndIsActiveTrue(photoInput.getTitle())) {
+//            throw new IllegalArgumentException("A photo with the same title already exists.");
+//        }
 
        // Contest contest = contestService.findContestEntityById(UUID.fromString(photoInput.getContestId()));
-        Contest contest = contestRepository.findByContestIdAndIsActiveTrue(UUID.fromString(photoInput.getContestId()));
+//        Contest contest = contestRepository.findByContestIdAndIsActiveTrue(UUID.fromString(photoInput.getContestId()));
 
         if (!contest.getPhase().getName().equals("Phase 1")) {
             throw new IllegalArgumentException("You can not upload photo after Phase 1!");
@@ -204,12 +212,19 @@ public class PhotoServiceImpl implements PhotoService {
         // Генериране на SHA-256 хеша на файла
         String hash = generateSHA256Hash(uploadFileInput.getFile());
 
-        // Проверка дали снимката с този хеш вече съществува в базата данни
-        if (photoRepository.existsByHash(hash)) { // Да проверим дали снимката участава в конкретния конкурс с метода getAllPhotosOfContest
-            throw new DuplicateEntityException("Duplicate photo: A photo with this content already exists.");
-        }
 
         Photo photo = findPhotoEntityById(UUID.fromString(uploadFileInput.getPhotoId()));
+        Contest contest = photo.getContest();
+        List<Photo> photos = getAllPhotosEntityOfContest(contest);
+        for (Photo photo1 : photos) {
+            if (hash.equals(photo1.getHash())) {
+                throw new DuplicateEntityException("Duplicate photo: A photo already exists in this content .");
+            }
+        }
+//        // Проверка дали снимката с този хеш вече съществува в базата данни
+//        if (photoRepository.existsByHash(hash) && photo.getContest().getContestId() == contest.getContestId()) { // Да проверим дали снимката участава в конкретния конкурс с метода getAllPhotosOfContest
+//            throw new DuplicateEntityException("Duplicate photo: A photo with this content already exists.");
+//        }
 
         String photoUrl = cloudinaryService.uploadFile(uploadFileInput.getFile());
 

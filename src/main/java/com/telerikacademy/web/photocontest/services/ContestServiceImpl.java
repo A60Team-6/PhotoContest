@@ -152,7 +152,7 @@ public class ContestServiceImpl implements ContestService {
             System.out.println("Contest finished");
         }
 
-        contest.setChangePhaseTime(now);
+//        contest.setChangePhaseTime(now);
         contestRepository.save(contest);
         if ("Finished".equals(contest.getPhase().getName())) {
             decideTop3PlacesAndSetPointsToUsers(contest);
