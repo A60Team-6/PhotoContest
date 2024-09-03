@@ -16,6 +16,8 @@ public interface UserService {
 
     List<UserOutput> getAll();
 
+    List<User> getAllUsersWithJuryRights();
+
     UserOutput findUserById(UUID userId);
 
     User findUserEntityById(UUID userId);

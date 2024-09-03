@@ -6,12 +6,10 @@ import com.telerikacademy.web.photocontest.entities.JuryPhotoRating;
 import com.telerikacademy.web.photocontest.entities.Photo;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.JuryPhotoRatingInput;
-import com.telerikacademy.web.photocontest.entities.dtos.UserOutput;
 import com.telerikacademy.web.photocontest.repositories.JuryPhotoRatingRepository;
 import com.telerikacademy.web.photocontest.repositories.PhotoRepository;
 import com.telerikacademy.web.photocontest.repositories.UserRepository;
 import com.telerikacademy.web.photocontest.services.contracts.JuryPhotoRatingService;
-import com.telerikacademy.web.photocontest.services.contracts.PhotoService;
 import com.telerikacademy.web.photocontest.services.contracts.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +36,11 @@ public class JuryPhotoRatingServiceImpl implements JuryPhotoRatingService {
         return juryPhotoRatingRepository.findByPhotoIdAndIsActiveTrue(photoId).stream()
                 .map(rating -> conversionService.convert(rating, JuryPhotoRatingOutput.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<JuryPhotoRating> getAllRatingsEntityForPhoto(UUID photoId) {
+        return juryPhotoRatingRepository.findByPhotoIdAndIsActiveTrue(photoId);
     }
 
     @Override

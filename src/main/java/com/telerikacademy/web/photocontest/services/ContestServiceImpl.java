@@ -1,16 +1,14 @@
 package com.telerikacademy.web.photocontest.services;
 
 
-import com.telerikacademy.web.photocontest.entities.Contest;
-import com.telerikacademy.web.photocontest.entities.Phase;
-import com.telerikacademy.web.photocontest.entities.Photo;
-import com.telerikacademy.web.photocontest.entities.User;
+import com.telerikacademy.web.photocontest.entities.*;
 import com.telerikacademy.web.photocontest.entities.dtos.ContestInput;
 import com.telerikacademy.web.photocontest.entities.dtos.ContestOutput;
 import com.telerikacademy.web.photocontest.entities.dtos.ContestOutputId;
 import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import com.telerikacademy.web.photocontest.helpers.PermissionHelper;
 import com.telerikacademy.web.photocontest.repositories.ContestRepository;
+import com.telerikacademy.web.photocontest.repositories.JuryPhotoRatingRepository;
 import com.telerikacademy.web.photocontest.repositories.PhotoRepository;
 import com.telerikacademy.web.photocontest.repositories.UserRepository;
 import com.telerikacademy.web.photocontest.services.contracts.*;
@@ -18,6 +16,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -34,11 +33,12 @@ public class ContestServiceImpl implements ContestService {
     private final ConversionService conversionService;
     private final ContestRepository contestRepository;
     private final PhaseService phaseService;
-    private final PhotoService photoService;
     private final RankService rankService;
-    //private final JuryPhotoRatingService juryPhotoRatingService;
+    private final JuryPhotoRatingService juryPhotoRatingService;
     private final PhotoRepository photoRepository;
     private final UserRepository userRepository;
+    private final UserService userService;
+    private final JuryPhotoRatingRepository juryPhotoRatingRepository;
 
 
     @Override
@@ -155,11 +155,48 @@ public class ContestServiceImpl implements ContestService {
 //        contest.setChangePhaseTime(now);
         contestRepository.save(contest);
         if ("Finished".equals(contest.getPhase().getName())) {
-            decideTop3PlacesAndSetPointsToUsers(contest);
+
             List<Photo> photos = photoRepository.findAllByContestAndIsActiveTrue(contest);
+            List<User> jurors = userService.getAllUsersWithJuryRights();
+            for (Photo photo : photos) {
+                List<JuryPhotoRating> ratingsForPhoto = juryPhotoRatingService.getAllRatingsEntityForPhoto(photo.getId());
+                for (User jury : jurors) {
+                    boolean isThere = false;
+                    for (JuryPhotoRating rating : ratingsForPhoto) {
+                        if (rating.getJury().equals(jury)) {
+                            isThere = true;
+                        }
+
+                    }
+                    if (!isThere) {
+                        JuryPhotoRating defaultRating = JuryPhotoRating.builder()
+                                .photo(photo)
+                                .jury(jury)
+                                .score(3)
+                                .comment("This jury did not rate your photo.")
+                                .categoryMatch(true)
+                                .reviewDate(LocalDateTime.now())
+                                .isActive(true)
+                                .build();
+                        juryPhotoRatingRepository.save(defaultRating);
+
+
+                        double averageScore = juryPhotoRatingService.getAverageScoreForPhoto(photo.getId());
+                        photo.setTotal_score(averageScore);
+                        photoRepository.save(photo);
+                    }
+                }
+            }
+
+
+            decideTop3PlacesAndSetPointsToUsers(contest);
             photos.forEach(photo -> changeRanking(photo.getUser()));
             contest.setIsActive(false);
             contestRepository.save(contest);
+
+
+
+
         }
     }
 

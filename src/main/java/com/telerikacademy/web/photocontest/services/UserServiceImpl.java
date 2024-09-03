@@ -1,6 +1,5 @@
 package com.telerikacademy.web.photocontest.services;
 
-import com.telerikacademy.web.photocontest.entities.Contest;
 import com.telerikacademy.web.photocontest.entities.dtos.*;
 import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import com.telerikacademy.web.photocontest.helpers.PermissionHelper;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -46,6 +46,19 @@ public class UserServiceImpl implements UserService {
         return users.stream().map(user -> conversionService.convert(user, UserOutput.class)).collect(Collectors.toList());
 
     }
+
+    @Override
+    public List<User> getAllUsersWithJuryRights(){
+        List<User> users = userRepository.findAllByIsActiveTrue();
+        List<User> jurors = new ArrayList<>();
+        for (User user : users) {
+            if (user.getRole().getName().equals("Jury") || user.getRole().getName().equals("Organizer")) {
+                jurors.add(user);
+            }
+        }
+        return jurors;
+    }
+
 
     @Override
     public UserOutput findUserById(UUID userId) {

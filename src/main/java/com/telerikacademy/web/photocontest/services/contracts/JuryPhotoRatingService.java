@@ -1,5 +1,6 @@
 package com.telerikacademy.web.photocontest.services.contracts;
 
+import com.telerikacademy.web.photocontest.entities.JuryPhotoRating;
 import com.telerikacademy.web.photocontest.entities.dtos.JuryPhotoRatingInput;
 import com.telerikacademy.web.photocontest.entities.dtos.JuryPhotoRatingOutput;
 
@@ -7,6 +8,8 @@ import java.util.List;
 import java.util.UUID;
 
 public interface JuryPhotoRatingService {
+
+    List<JuryPhotoRating> getAllRatingsEntityForPhoto(UUID photoId);
 
     JuryPhotoRatingOutput getRatingById(UUID id);
 
