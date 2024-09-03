@@ -1,15 +1,16 @@
 package com.telerikacademy.web.photocontest;
 
-import com.telerikacademy.web.photocontest.entities.*;
+import com.telerikacademy.web.photocontest.entities.Contest;
+import com.telerikacademy.web.photocontest.entities.Phase;
+import com.telerikacademy.web.photocontest.entities.Photo;
+import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.*;
-import com.telerikacademy.web.photocontest.exceptions.AuthorizationException;
 import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import com.telerikacademy.web.photocontest.repositories.ContestRepository;
 import com.telerikacademy.web.photocontest.repositories.PhotoRepository;
 import com.telerikacademy.web.photocontest.services.PhotoServiceImpl;
 import com.telerikacademy.web.photocontest.services.contracts.CloudinaryService;
 import com.telerikacademy.web.photocontest.services.contracts.ContestParticipationService;
-import com.telerikacademy.web.photocontest.services.contracts.ContestService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,9 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -39,9 +42,6 @@ class PhotoServiceImplTest {
 
     @Mock
     private ContestRepository contestRepository;
-
-    @Mock
-    private ContestParticipationService contestParticipationService;
 
     @InjectMocks
     private PhotoServiceImpl photoService;
@@ -308,5 +308,4 @@ class PhotoServiceImplTest {
         assertThrows(DuplicateEntityException.class, () -> photoService.createPhoto(photoInput, user));
         verify(photoRepository, never()).save(any(Photo.class));
     }
-
 }

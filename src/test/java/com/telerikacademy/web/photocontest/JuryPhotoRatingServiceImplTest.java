@@ -7,14 +7,13 @@ import com.telerikacademy.web.photocontest.repositories.JuryPhotoRatingRepositor
 import com.telerikacademy.web.photocontest.repositories.PhotoRepository;
 import com.telerikacademy.web.photocontest.repositories.UserRepository;
 import com.telerikacademy.web.photocontest.services.JuryPhotoRatingServiceImpl;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.core.convert.ConversionService;
-
-import jakarta.persistence.EntityNotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.Collections;

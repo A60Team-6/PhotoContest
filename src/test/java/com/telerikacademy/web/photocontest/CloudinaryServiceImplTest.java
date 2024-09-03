@@ -3,7 +3,6 @@ package com.telerikacademy.web.photocontest;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.Uploader;
 import com.telerikacademy.web.photocontest.services.CloudinaryServiceImpl;
-import com.telerikacademy.web.photocontest.services.contracts.CloudinaryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

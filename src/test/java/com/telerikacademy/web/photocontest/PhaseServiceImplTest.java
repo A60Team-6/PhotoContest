@@ -1,4 +1,5 @@
 package com.telerikacademy.web.photocontest;
+
 import com.telerikacademy.web.photocontest.entities.Phase;
 import com.telerikacademy.web.photocontest.repositories.PhaseRepository;
 import com.telerikacademy.web.photocontest.services.PhaseServiceImpl;
@@ -8,7 +9,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.lang.reflect.Field;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;

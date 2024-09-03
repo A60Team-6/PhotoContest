@@ -1,11 +1,9 @@
 package com.telerikacademy.web.photocontest;
 
-import com.telerikacademy.web.photocontest.entities.Photo;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.*;
 import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import com.telerikacademy.web.photocontest.repositories.UserRepository;
-//import com.telerikacademy.web.photocontest.services.PhotoService;
 import com.telerikacademy.web.photocontest.services.UserServiceImpl;
 import com.telerikacademy.web.photocontest.services.contracts.CloudinaryService;
 import com.telerikacademy.web.photocontest.services.contracts.PhotoService;
@@ -22,7 +20,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -357,26 +358,4 @@ class UserServiceImplTest {
         assertThrows(IllegalArgumentException.class, () -> userService.uploadPhoto(null, mock(MultipartFile.class)));
         assertThrows(IllegalArgumentException.class, () -> userService.uploadPhoto(UUID.randomUUID().toString(), null));
     }
-
-
-//    @Test
-//    void testUploadPhoto_ShouldThrowIOExceptionWhenCloudinaryFails() throws IOException {
-//        // Arrange
-//        String userId = UUID.randomUUID().toString();
-//        MultipartFile file = mock(MultipartFile.class);
-//        User user = new User();
-//
-//        // Мокнете правилния метод за намиране на потребителя
-//        when(userRepository.findByUserIdAndIsActiveTrue(UUID.fromString(userId))).thenReturn(Optional.of(user));
-//
-//        // Симулирайте изключение IOException при опит за качване на файл в Cloudinary
-//        when(cloudinaryService.uploadFile(file)).thenThrow(IOException.class);
-//
-//        // Act & Assert
-//        assertThrows(IOException.class, () -> userService.uploadPhoto(userId, file));
-//    }
-
-
-
-
 }

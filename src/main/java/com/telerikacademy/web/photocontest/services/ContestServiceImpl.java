@@ -135,7 +135,7 @@ public class ContestServiceImpl implements ContestService {
         }
     }
 
-    private void changePhase(Contest contest) {
+    public void changePhase(Contest contest) {
         String currentPhase = contest.getPhase().getName();
         LocalDateTime now = LocalDateTime.now();
         Phase phase2 = phaseService.getPhaseByName("Phase 2");
@@ -163,7 +163,7 @@ public class ContestServiceImpl implements ContestService {
         }
     }
 
-    private void decideTop3PlacesAndSetPointsToUsers(Contest contest) {
+    public void decideTop3PlacesAndSetPointsToUsers(Contest contest) {
 
         List<Photo> photos = photoRepository.findAllByContestAndIsActiveTrue(contest);
 
@@ -190,14 +190,14 @@ public class ContestServiceImpl implements ContestService {
         assignPointsToPhotos(thirdPlacePhotos, 20, 10);
     }
 
-        private double findMaxScore(List<Photo> photos) {
+        public double findMaxScore(List<Photo> photos) {
         return photos.stream()
                 .mapToDouble(Photo::getTotal_score)
                 .max()
                 .orElse(0);
     }
 
-    private double findOtherScore(List<Photo> photos, double maxScore) {
+    public double findOtherScore(List<Photo> photos, double maxScore) {
         return photos.stream()
                 .filter(photo -> photo.getTotal_score() < maxScore)
                 .mapToDouble(Photo::getTotal_score)
@@ -205,13 +205,13 @@ public class ContestServiceImpl implements ContestService {
                 .orElse(0);
     }
 
-    private List<Photo> filterPhotosByScore(List<Photo> photos, double score) {
+    public List<Photo> filterPhotosByScore(List<Photo> photos, double score) {
         return photos.stream()
                 .filter(photo -> photo.getTotal_score() == score)
                 .toList();
     }
 
-    private void assignPointsToPhotos(List<Photo> photos, int singlePoints, int sharedPoints) {
+    public void assignPointsToPhotos(List<Photo> photos, int singlePoints, int sharedPoints) {
         if (photos.size() == 1) {
             addPointsToUser(photos.get(0).getUser(), singlePoints);
         } else if (photos.size() > 1) {
@@ -219,12 +219,12 @@ public class ContestServiceImpl implements ContestService {
         }
     }
 
-    private void addPointsToUser(User user, int points) {
+    public void addPointsToUser(User user, int points) {
         user.setPoints(user.getPoints() + points);
         userRepository.save(user);
     }
 
-    private void changeRanking(User user) {
+    public void changeRanking(User user) {
         if (user.getPoints() > 1001) {
             user.setRank(rankService.getRankByName("WiseAndBenevolentPhotoDictator"));
             userRepository.save(user);
