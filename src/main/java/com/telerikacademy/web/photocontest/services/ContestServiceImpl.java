@@ -190,7 +190,7 @@ public class ContestServiceImpl implements ContestService {
         assignPointsToPhotos(thirdPlacePhotos, 20, 10);
     }
 
-    private double findMaxScore(List<Photo> photos) {
+        private double findMaxScore(List<Photo> photos) {
         return photos.stream()
                 .mapToDouble(Photo::getTotal_score)
                 .max()
