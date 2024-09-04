@@ -1,14 +1,12 @@
 package com.telerikacademy.web.photocontest;
 
+import com.telerikacademy.web.photocontest.entities.Role;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.*;
 import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import com.telerikacademy.web.photocontest.repositories.UserRepository;
 import com.telerikacademy.web.photocontest.services.UserServiceImpl;
-import com.telerikacademy.web.photocontest.services.contracts.CloudinaryService;
-import com.telerikacademy.web.photocontest.services.contracts.PhotoService;
-import com.telerikacademy.web.photocontest.services.contracts.RankService;
-import com.telerikacademy.web.photocontest.services.contracts.RoleService;
+import com.telerikacademy.web.photocontest.services.contracts.*;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -93,6 +91,50 @@ class UserServiceImplTest {
         // Assert
         assertEquals(1, result.size());
         verify(userRepository, times(1)).findAllByIsActiveTrue();
+    }
+
+    @Test
+    void getAllUsersWithJuryRights_shouldReturnOnlyJuryAndOrganizers() {
+        // Arrange
+        List<User> users = new ArrayList<>();
+
+        // Create mock roles
+        Role juryRole = new Role();
+        juryRole.setName("Jury");
+
+        Role organizerRole = new Role();
+        organizerRole.setName("Organizer");
+
+        Role userRole = new Role();
+        userRole.setName("User");
+
+        // Create mock users
+        User user1 = new User();
+        user1.setRole(juryRole);
+        user1.setIsActive(true);
+
+        User user2 = new User();
+        user2.setRole(organizerRole);
+        user2.setIsActive(true);
+
+        User user3 = new User();
+        user3.setRole(userRole);
+        user3.setIsActive(true);
+
+        users.add(user1);
+        users.add(user2);
+        users.add(user3);
+
+        // Mock repository
+        when(userRepository.findAllByIsActiveTrue()).thenReturn(users);
+
+        // Act
+        List<User> result = userService.getAllUsersWithJuryRights();
+
+        // Assert
+        assertEquals(2, result.size()); // Only user1 and user2 should be in the result
+        assertEquals("Jury", result.get(0).getRole().getName());
+        assertEquals("Organizer", result.get(1).getRole().getName());
     }
 
     // Тест за метода findUserById
