@@ -40,6 +40,7 @@ public class AuthenticationHelper {
 //            if (!user.getPassword().equals(password)) {
 //                throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
 //            }
+            /* ToDo Why do u have injected PasswordEncoder if you will initialize it here ????*/
             PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             if(!passwordEncoder.matches(password, user.getPassword())) {
                 throw new AuthorizationException(WRONG_USERNAME_OR_PASSWORD);
@@ -47,6 +48,7 @@ public class AuthenticationHelper {
 
             return user;
         } catch (EntityNotFoundException e) {
+            /* ToDo What is the point to catch entity not found exception and to propagate AuthorizationException??*/
             throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
         }
     }

@@ -35,7 +35,7 @@ public class JuryPhotoRatingServiceImpl implements JuryPhotoRatingService {
                 .map(rating -> conversionService.convert(rating, JuryPhotoRatingOutput.class))
                 .collect(Collectors.toList());
     }
-
+// ToDo integrate map to conver
     @Override
     public JuryPhotoRatingOutput getRatingById(UUID id) {
         JuryPhotoRating rating = juryPhotoRatingRepository.findById(id)
@@ -43,6 +43,52 @@ public class JuryPhotoRatingServiceImpl implements JuryPhotoRatingService {
 
         return conversionService.convert(rating, JuryPhotoRatingOutput.class);
     }
+
+    // Todo this method is making several things at once, separate logic into smaller methods...
+
+//    @Override
+//    public JuryPhotoRatingOutput createRating(JuryPhotoRatingInput input) {
+//        Photo photo = validateAndFetchPhoto(input);
+//        User user = validateAndFetchUser(input);
+//
+//        JuryPhotoRating rating = buildRating(input, photo, user);
+//
+//        return convertRatingToOutput(rating);
+//    }
+//
+//    // Validation and fetch for photo
+//    private Photo validateAndFetchPhoto(JuryPhotoRatingInput input) {
+//        return Optional.of(photoService.findPhotoEntityById(input.getPhotoId()))
+//                .filter(photo -> "Phase 2".equals(photo.getContest().getPhase().getName()))
+//                .orElseThrow(() -> new IllegalArgumentException("You can rate a photo only in Phase 2"));
+//    }
+//
+//    // Validation and fetch for user
+//    private User validateAndFetchUser(JuryPhotoRatingInput input) {
+//        return Optional.of(userService.findUserEntityById(input.getUserId()))
+//                .filter(user -> !user.getRole().getName().equals("User"))
+//                .orElseThrow(() -> new IllegalArgumentException("You can not rate a photo if you are not Jury or Organizer!"));
+//    }
+//
+//    // Build the JuryPhotoRating
+//    private JuryPhotoRating buildRating(JuryPhotoRatingInput input, Photo photo, User user) {
+//        return juryPhotoRatingRepository.save(
+//                JuryPhotoRating.builder()
+//                        .photo(photo)
+//                        .jury(user)
+//                        .score(input.getScore())
+//                        .comment(input.getComment())
+//                        .categoryMatch(input.getCategoryMatch())
+//                        .reviewDate(LocalDateTime.now())
+//                        .isActive(true)
+//                        .build()
+//        );
+//    }
+//
+//    // Convert to output
+//    private JuryPhotoRatingOutput convertRatingToOutput(JuryPhotoRating rating) {
+//        return conversionService.convert(rating, JuryPhotoRatingOutput.class);
+//    }
 
     @Override
     public JuryPhotoRatingOutput createRating(JuryPhotoRatingInput input) {
@@ -74,6 +120,10 @@ public class JuryPhotoRatingServiceImpl implements JuryPhotoRatingService {
         return conversionService.convert(rating, JuryPhotoRatingOutput.class);
     }
 
+    // ToDo all of your delete methods can be made in single DB query instead of doing this
+    // ToDo EXPENSIVE operation as save insted - > @Modifying
+    //@Query("UPDATE JuryPhotoRating r SET r.isActive = false WHERE r.id = :id AND r.isActive = true")
+    //void softDeleteById(@Param("id") UUID id); ToDO this should be in your repository
     @Override
     public void softDeleteRating(UUID id) {
         JuryPhotoRating rating = juryPhotoRatingRepository.findById(id)
@@ -83,6 +133,34 @@ public class JuryPhotoRatingServiceImpl implements JuryPhotoRatingService {
 
         juryPhotoRatingRepository.save(rating);
     }
+
+    // tOdo this logic is very smell... can you think of ways to improve it ? I will give you hints check it..
+//    @Override
+//    public JuryPhotoRatingOutput updateRating(UUID id, JuryPhotoRatingInput input) {
+//        return juryPhotoRatingRepository.findById(id)
+//                .map(rating -> updateFields(rating, input))
+//                .map(juryPhotoRatingRepository::save)
+//                .map(r -> conversionService.convert(r, JuryPhotoRatingOutput.class))
+//                .orElseThrow(() -> new EntityNotFoundException("Rating not found"));
+//    }
+//
+//    private JuryPhotoRating updateFields(JuryPhotoRating rating, JuryPhotoRatingInput input) {
+//        return Optional.of(rating)
+//                .filter(r -> isRatingChanged(r, input)) // Only update if changes are present
+//                .map(r -> {
+//                    r.setScore(input.getScore());
+//                    r.setComment(input.getComment());
+//                    r.setCategoryMatch(input.getCategoryMatch());
+//                    return r;
+//                })
+//                .orElse(rating);
+//    }
+//
+//    private boolean isRatingChanged(JuryPhotoRating rating, JuryPhotoRatingInput input) {
+//        return !Objects.equals(rating.getScore(), input.getScore()) ||
+//                !Objects.equals(rating.getComment(), input.getComment()) ||
+//                !Objects.equals(rating.getCategoryMatch(), input.getCategoryMatch());
+//    }
 
     @Override
     public JuryPhotoRatingOutput updateRating(UUID id, JuryPhotoRatingInput input) {

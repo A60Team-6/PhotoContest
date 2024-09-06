@@ -4,19 +4,19 @@ import com.telerikacademy.web.photocontest.entities.dtos.JuryPhotoRatingInput;
 import com.telerikacademy.web.photocontest.entities.dtos.JuryPhotoRatingOutput;
 import com.telerikacademy.web.photocontest.services.JuryPhotoRatingServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.function.ToDoubleBiFunction;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/ratings")
 public class JuryPhotoRatingRestController {
-
+    /* Why are you injecting direct instances rather than interface??????*/
     private final JuryPhotoRatingServiceImpl juryPhotoRatingService;
 
 //    @Autowired
@@ -28,12 +28,14 @@ public class JuryPhotoRatingRestController {
     public ResponseEntity<List<JuryPhotoRatingOutput>> getRatingsForPhoto(@PathVariable UUID photoId) {
         List<JuryPhotoRatingOutput> ratings = juryPhotoRatingService.getAllRatingsForPhoto(photoId);
         return ResponseEntity.ok(ratings);
+        /*ToDo instead you can do it ResponseEntity.ok(service.getAll......)*/
     }
 
     @PostMapping
     public ResponseEntity<JuryPhotoRatingOutput> addRating(@RequestBody JuryPhotoRatingInput dto) {
         JuryPhotoRatingOutput rating = juryPhotoRatingService.createRating(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(rating);
+        /*Same as above*/
     }
 
     @DeleteMapping("/{id}")
@@ -57,6 +59,7 @@ public class JuryPhotoRatingRestController {
 
     @GetMapping("/photo/{photoId}/average-score")
     public ResponseEntity<Double> getAverageScoreForPhoto(@PathVariable UUID photoId) {
+        /*ToDO Bad practive is to return ResponseEntity of Double....instead wrap it into DTO for better performance*/
         double averageScore = juryPhotoRatingService.getAverageScoreForPhoto(photoId);
         return ResponseEntity.ok(averageScore);
     }

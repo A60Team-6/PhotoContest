@@ -20,10 +20,8 @@ import java.util.UUID;
 @Service
 @Builder
 public class ContestParticipationServiceImpl implements ContestParticipationService {
-
-
     private final ContestParticipationRepository repository;
-    private final ContestService contestService;
+    private final ContestRepository contestRepository;
 
     @Override
     public List<ContestParticipation> getAll() {
@@ -33,21 +31,25 @@ public class ContestParticipationServiceImpl implements ContestParticipationServ
 
     @Override
     public void participateInContest(User user, UUID id){
-        boolean contestExistsAndIsActive = true;
-        Contest contest = contestService.findContestEntityById(id);
 
-        if(contest == null){
-            contestExistsAndIsActive = false;
-        }
+//        ToDo useless statement
+        //        boolean contestExistsAndIsActive = true;
+        Contest contest = getContestById(id);
 
-        if(!contestExistsAndIsActive){
-            throw new EntityNotFoundException("Contest not found");
-        }
+        /* ToDo useless checks..*/
+//        if(contest == null){
+//            contestExistsAndIsActive = false;
+//        }
+//
+//        if(!contestExistsAndIsActive){
+//            throw new EntityNotFoundException("Contest not found");
+//        }
 
         if(!contest.getPhase().getName().equals("Phase 1")){
             throw new UnauthorizedOperationException("Time to participate in contest has expired!");
         }
 
+        // Why do we have default values for photoUploaded and isActive when they will be always like that? Constructor?
         ContestParticipation contestParticipation = ContestParticipation.builder()
                 .contest(contest)
                 .user(user)
@@ -58,5 +60,9 @@ public class ContestParticipationServiceImpl implements ContestParticipationServ
                 .build();
 
         repository.save(contestParticipation);
+    }
+
+    public Contest getContestById(UUID id) {
+        return  contestRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 }

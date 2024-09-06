@@ -30,7 +30,6 @@ public class PhotoServiceImpl implements PhotoService {
     private final PhotoRepository photoRepository;
     private final ConversionService conversionService;
     private final CloudinaryService cloudinaryService;
-    private final ContestService contestService;
     private final ContestParticipationService contestParticipationService;
 
     @Override
@@ -79,7 +78,7 @@ public class PhotoServiceImpl implements PhotoService {
             throw new IllegalArgumentException("A photo with the same title already exists.");
         }
 
-        Contest contest = contestService.findContestEntityById(UUID.fromString(photoInput.getContestId()));
+        Contest contest = contestParticipationService.getContestById(UUID.fromString(photoInput.getContestId()));
 
         if (!contest.getPhase().getName().equals("Phase 1")) {
             throw new IllegalArgumentException("You can not upload photo after Phase 1!");

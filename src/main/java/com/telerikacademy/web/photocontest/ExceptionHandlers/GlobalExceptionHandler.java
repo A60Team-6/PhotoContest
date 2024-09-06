@@ -17,6 +17,8 @@ import java.time.ZonedDateTime;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    /*ToDo what happened here????*/
+
 //    @ExceptionHandler({DuplicateEntityException.class})
 //    public ResponseEntity<Object> handleDuplicateEntityException(DuplicateEntityException exception) {
 //        return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());

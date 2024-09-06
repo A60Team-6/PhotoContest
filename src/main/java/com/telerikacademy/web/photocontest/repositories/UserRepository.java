@@ -10,7 +10,9 @@ import java.util.UUID;
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID> {
 
-  //  User findByUsernameAndIsActive(String username);
+
+    /*ToDo why this is here?*/
+    //  User findByUsernameAndIsActive(String username);
 
     List<User> findAllByIsActiveTrue();
 

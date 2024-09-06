@@ -28,8 +28,10 @@ public class ContestRestController {
 
     private final ContestService contestService;
     private final AuthenticationHelper authenticationHelper;
+    /* ToDo unused import */
     private final ConversionService conversionService;
 
+    /*DTOS!*/
     @GetMapping
     public List<ContestOutput> getAll() {
         return contestService.getAll();

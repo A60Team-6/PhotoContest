@@ -10,6 +10,7 @@ import java.util.UUID;
 @Repository
 public interface PhotoRepository extends JpaRepository<Photo, UUID> {
 
+    /*ToDo not used!*/
     Photo findByPhotoUrl(String url);
 
     List<Photo> findAllByIsActiveTrue();

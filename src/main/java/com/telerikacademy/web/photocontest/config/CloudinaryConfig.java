@@ -10,6 +10,8 @@ import java.util.Map;
 @Configuration
 public class CloudinaryConfig {
 
+    /* ToDo PLACE IN APPLICATION.PROPERTIES FILE! */
+
     @Bean
     public Cloudinary cloudinary() {
         Map<String, String> config = ObjectUtils.asMap(
