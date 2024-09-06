@@ -17,5 +17,4 @@ public interface ContestRepository extends JpaRepository<Contest, UUID> {
 
     Contest findByTitleAndIsActiveTrue(String title);
 
-    Contest findByTitle(String title);
 }

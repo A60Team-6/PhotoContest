@@ -30,22 +30,16 @@ public class AuthenticationHelper {
         if (!headers.containsKey(AUTHORIZATION_HEADER_NAME)) {
             throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
         }
-
-        try {
             String userInfo = headers.getFirst(AUTHORIZATION_HEADER_NAME);
             String username = getUsername(userInfo);
             String password = getPassword(userInfo);
             User user = userService.findUserByUsernameAuth(username);
 
-            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             if (!passwordEncoder.matches(password, user.getPassword())) {
                 throw new AuthorizationException(WRONG_USERNAME_OR_PASSWORD);
             }
 
             return user;
-        } catch (EntityNotFoundException e) {
-            throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
-        }
     }
 
     private String getUsername(String userInfo) {

@@ -17,105 +17,74 @@ import java.time.ZonedDateTime;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-//    @ExceptionHandler({DuplicateEntityException.class})
-//    public ResponseEntity<Object> handleDuplicateEntityException(DuplicateEntityException exception) {
-//        return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
-//    }
-//
-//    @ExceptionHandler({EntityNotFoundException.class})
-//    public ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException exception) {
-//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
-//    }
-
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<String> handleGlobalException(Exception ex) {
-//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred.");
-//    }
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//    @ExceptionHandler(Exception.class)
-//    public final ResponseEntity<ErrorResponse> handleAllExceptions(Exception exception) {
-//        HttpStatus status;
-//        String message;
-//
-//        switch (exception.getClass().getSimpleName()) {
-//            case "EntityNotFoundException":
-//                status = HttpStatus.NOT_FOUND;
-//                message = "The requested entity was not found.";
-//                break;
-//            case "DuplicateEntityException":
-//                status = HttpStatus.CONFLICT;
-//                message = "The entity already exists.";
-//                break;
-//            case "AuthorizationException":
-//                status = HttpStatus.UNAUTHORIZED;
-//                message = "You are not authorized to perform this action.";
-//                break;
-//            default:
-//                status = HttpStatus.INTERNAL_SERVER_ERROR;
-//                message = "An unexpected error occurred.";
-//        }
-//
-//        ErrorResponse errorResponse = new ErrorResponse(status.value(), message, exception.getLocalizedMessage());
-//        return new ResponseEntity<>(errorResponse, status);
-//    }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @ExceptionHandler(value = DuplicateEntityException.class)
     public ResponseEntity<ApiException> handleDuplicateEntityException(DuplicateEntityException ex, HttpServletRequest request) {
-        HttpStatus badRequest = HttpStatus.CONFLICT;
+        HttpStatus httpStatus = HttpStatus.CONFLICT;
 
         ApiException apiException = new ApiException(
-                badRequest.value(),
+                httpStatus.value(),
                 ex.getMessage(),
                 LocalDateTime.now(),
                 request.getRequestURI()
         );
 
-        return new ResponseEntity<>(apiException, badRequest);
+        return new ResponseEntity<>(apiException, httpStatus);
     }
 
     @ExceptionHandler(value = EntityNotFoundException.class)
     public ResponseEntity<ApiException> handleEntityNotFoundException(EntityNotFoundException ex, HttpServletRequest request) {
-        HttpStatus badRequest = HttpStatus.NOT_FOUND;
+        HttpStatus httpStatus = HttpStatus.NOT_FOUND;
 
         ApiException apiException = new ApiException(
-                badRequest.value(),
+                httpStatus.value(),
                 ex.getMessage(),
                 LocalDateTime.now(),
                 request.getRequestURI()
         );
 
-        return new ResponseEntity<>(apiException, badRequest);
+        return new ResponseEntity<>(apiException, httpStatus);
     }
 
     @ExceptionHandler(value = AuthorizationException.class)
     public ResponseEntity<ApiException> handleAuthorizationException(AuthorizationException ex, HttpServletRequest request) {
-        HttpStatus badRequest = HttpStatus.UNAUTHORIZED;
+        HttpStatus httpStatus = HttpStatus.UNAUTHORIZED;
 
         ApiException apiException = new ApiException(
-                badRequest.value(),
+                httpStatus.value(),
                 ex.getMessage(),
                 LocalDateTime.now(),
                 request.getRequestURI()
         );
 
-        return new ResponseEntity<>(apiException, badRequest);
+        return new ResponseEntity<>(apiException, httpStatus);
     }
 
     @ExceptionHandler(value = UnsupportedOperationException.class)
     public ResponseEntity<ApiException> handleUnsupportedOperationException(UnsupportedOperationException ex, HttpServletRequest request) {
-        HttpStatus badRequest = HttpStatus.UNAUTHORIZED;
+        HttpStatus httpStatus = HttpStatus.UNAUTHORIZED;
 
         ApiException apiException = new ApiException(
-                badRequest.value(),
+                httpStatus.value(),
                 ex.getMessage(),
                 LocalDateTime.now(),
                 request.getRequestURI()
         );
 
-        return new ResponseEntity<>(apiException, badRequest);
+        return new ResponseEntity<>(apiException, httpStatus);
+    }
+
+    @ExceptionHandler(value = Exception.class)
+    public ResponseEntity<ApiException> handleException(Exception ex, HttpServletRequest request) {
+        HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+
+        ApiException apiException = new ApiException(
+                httpStatus.value(),
+                ex.getMessage(),
+                LocalDateTime.now(),
+                request.getRequestURI()
+        );
+
+        return new ResponseEntity<>(apiException, httpStatus);
     }
 }
