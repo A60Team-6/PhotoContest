@@ -35,9 +35,9 @@ public class ContestParticipationRestController {
             User user = authenticationHelper.tryGetUser(httpHeaders);
             contestParticipationService.participateInContest(user, contestId);
             return new ResponseEntity<>("This user started participate in contest!", HttpStatus.OK);
-        }catch (EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }catch (UnsupportedOperationException e){
+        } catch (UnsupportedOperationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }

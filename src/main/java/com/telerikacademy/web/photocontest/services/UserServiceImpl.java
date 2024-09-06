@@ -33,22 +33,21 @@ public class UserServiceImpl implements UserService {
     private final PhotoService photoService;
 
 
-
     @Override
-    public List<User> getAllUserEntities(){
+    public List<User> getAllUserEntities() {
         return userRepository.findAll();
     }
 
 
     @Override
-    public List<UserOutput> getAll(){
+    public List<UserOutput> getAll() {
         List<User> users = userRepository.findAllByIsActiveTrue();
         return users.stream().map(user -> conversionService.convert(user, UserOutput.class)).collect(Collectors.toList());
 
     }
 
     @Override
-    public List<User> getAllUsersWithJuryRights(){
+    public List<User> getAllUsersWithJuryRights() {
         List<User> users = userRepository.findAllByIsActiveTrue();
         List<User> jurors = new ArrayList<>();
         for (User user : users) {
@@ -116,7 +115,7 @@ public class UserServiceImpl implements UserService {
 
         userRepository.save(user);
 
-       return conversionService.convert(user, UserOutputId.class);
+        return conversionService.convert(user, UserOutputId.class);
     }
 
     @Override
@@ -142,7 +141,7 @@ public class UserServiceImpl implements UserService {
         PermissionHelper.isSameUser(user, userRepository.findByUsernameAndIsActiveTrue(user.getUsername()), "You can deactivate only yourself!");
         User existingUser = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         List<Photo> photos = photoService.getAllPhotosEntityOfUser(user);
-        for(Photo photo : photos) {
+        for (Photo photo : photos) {
             photo.setIsActive(false);
         }
         existingUser.setIsActive(false);

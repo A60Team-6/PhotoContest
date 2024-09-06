@@ -37,11 +37,8 @@ public class AuthenticationHelper {
             String password = getPassword(userInfo);
             User user = userService.findUserByUsernameAuth(username);
 
-//            if (!user.getPassword().equals(password)) {
-//                throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
-//            }
             PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            if(!passwordEncoder.matches(password, user.getPassword())) {
+            if (!passwordEncoder.matches(password, user.getPassword())) {
                 throw new AuthorizationException(WRONG_USERNAME_OR_PASSWORD);
             }
 

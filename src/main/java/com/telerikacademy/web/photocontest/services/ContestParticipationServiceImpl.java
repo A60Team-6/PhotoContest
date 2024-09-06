@@ -32,20 +32,20 @@ public class ContestParticipationServiceImpl implements ContestParticipationServ
     }
 
     @Override
-    public void participateInContest(User user, UUID id){
+    public void participateInContest(User user, UUID id) {
         boolean contestExistsAndIsActive = true;
-    //    Contest contest = contestService.findContestEntityById(id);
+        //    Contest contest = contestService.findContestEntityById(id);
         Contest contest = contestRepository.findByContestIdAndIsActiveTrue(id);
 
-        if(contest == null){
+        if (contest == null) {
             contestExistsAndIsActive = false;
         }
 
-        if(!contestExistsAndIsActive){
+        if (!contestExistsAndIsActive) {
             throw new EntityNotFoundException("Contest not found");
         }
 
-        if(!contest.getPhase().getName().equals("Phase 1")){
+        if (!contest.getPhase().getName().equals("Phase 1")) {
             throw new UnauthorizedOperationException("Time to participate in contest has expired!");
         }
 

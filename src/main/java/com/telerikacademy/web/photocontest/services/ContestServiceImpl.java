@@ -195,8 +195,6 @@ public class ContestServiceImpl implements ContestService {
             contestRepository.save(contest);
 
 
-
-
         }
     }
 
@@ -227,7 +225,7 @@ public class ContestServiceImpl implements ContestService {
         assignPointsToPhotos(thirdPlacePhotos, 20, 10);
     }
 
-        public double findMaxScore(List<Photo> photos) {
+    public double findMaxScore(List<Photo> photos) {
         return photos.stream()
                 .mapToDouble(Photo::getTotal_score)
                 .max()

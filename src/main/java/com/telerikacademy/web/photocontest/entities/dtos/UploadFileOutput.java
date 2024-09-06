@@ -8,5 +8,6 @@ import lombok.Data;
 @Builder
 @AllArgsConstructor
 public class UploadFileOutput {
+
     private String message;
 }

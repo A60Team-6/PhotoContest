@@ -68,14 +68,14 @@ public class ContestRestController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteContest(@PathVariable UUID id,@RequestHeader HttpHeaders headers) {
+    public ResponseEntity<String> deleteContest(@PathVariable UUID id, @RequestHeader HttpHeaders headers) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
             contestService.deactivateContest(id, user);
             return ResponseEntity.ok("Deleted contest successfully");
-        }catch (AuthorizationException e){
+        } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
-        }catch (EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }

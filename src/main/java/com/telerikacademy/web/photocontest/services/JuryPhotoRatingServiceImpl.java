@@ -62,14 +62,14 @@ public class JuryPhotoRatingServiceImpl implements JuryPhotoRatingService {
 
         Contest contest = photo.getContest();
 
-        if(!"Phase 2".equals(contest.getPhase().getName())){
+        if (!"Phase 2".equals(contest.getPhase().getName())) {
             throw new IllegalArgumentException("You can rate a photo only in Phase 2");
         }
 
         //User user = userService.findUserEntityById(input.getUserId());
         User user = userRepository.findByUserIdAndIsActiveTrue(input.getUserId());
 
-        if("User".equals(user.getRole().getName())){
+        if ("User".equals(user.getRole().getName())) {
             throw new IllegalArgumentException("You can not rate a photo if you are not Jury or Organizer!");
         }
 
@@ -128,10 +128,10 @@ public class JuryPhotoRatingServiceImpl implements JuryPhotoRatingService {
 
     @Override
     public double getAverageScoreForPhoto(UUID photoId) {
-            List<JuryPhotoRating> ratings = juryPhotoRatingRepository.findByPhotoIdAndIsActiveTrue(photoId);
-            return ratings.stream()
-                    .mapToInt(JuryPhotoRating::getScore)
-                    .average()
-                    .orElse(0.0);
+        List<JuryPhotoRating> ratings = juryPhotoRatingRepository.findByPhotoIdAndIsActiveTrue(photoId);
+        return ratings.stream()
+                .mapToInt(JuryPhotoRating::getScore)
+                .average()
+                .orElse(0.0);
     }
 }

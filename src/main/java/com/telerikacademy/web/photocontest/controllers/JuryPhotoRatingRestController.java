@@ -19,11 +19,6 @@ public class JuryPhotoRatingRestController {
 
     private final JuryPhotoRatingServiceImpl juryPhotoRatingService;
 
-//    @Autowired
-//    public JuryPhotoRatingRestController(JuryPhotoRatingServiceImpl juryPhotoRatingService) {
-//        this.juryPhotoRatingService = juryPhotoRatingService;
-//    }
-
     @GetMapping("/photo/{photoId}")
     public ResponseEntity<List<JuryPhotoRatingOutput>> getRatingsForPhoto(@PathVariable UUID photoId) {
         List<JuryPhotoRatingOutput> ratings = juryPhotoRatingService.getAllRatingsForPhoto(photoId);

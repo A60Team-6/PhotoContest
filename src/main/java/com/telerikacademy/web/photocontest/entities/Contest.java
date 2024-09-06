@@ -23,34 +23,34 @@ import java.util.UUID;
 @Builder
 public class Contest {
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name = "id", nullable = false, unique = true)
-        private UUID contestId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, unique = true)
+    private UUID contestId;
 
-        @Column(name = "title", nullable = false, length = 50)
-        private String title;
+    @Column(name = "title", nullable = false, length = 50)
+    private String title;
 
-        @Column(name = "category", nullable = false, length = 50)
-        private String category;
+    @Column(name = "category", nullable = false, length = 50)
+    private String category;
 
-        @ManyToOne
-        @JoinColumn(name = "phase_id", nullable = false)
-        private Phase phase;
+    @ManyToOne
+    @JoinColumn(name = "phase_id", nullable = false)
+    private Phase phase;
 
-        @Column(name = "cover_photo_url", nullable = false, length = 255)
-        private String photoUrl;
+    @Column(name = "cover_photo_url", nullable = false, length = 255)
+    private String photoUrl;
 
-        @ManyToOne
-        @JoinColumn(name = "user_id", nullable = false)
-        private User organizer;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User organizer;
 
-        @Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-        private LocalDateTime createdAt = LocalDateTime.now();
+    @Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime createdAt = LocalDateTime.now();
 
-        @Column(name = "change_phase_time", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-        private LocalDateTime changePhaseTime = LocalDateTime.now();
+    @Column(name = "change_phase_time", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime changePhaseTime = LocalDateTime.now();
 
-        @Column(name = "is_active")
-        private Boolean isActive;
+    @Column(name = "is_active")
+    private Boolean isActive;
 }

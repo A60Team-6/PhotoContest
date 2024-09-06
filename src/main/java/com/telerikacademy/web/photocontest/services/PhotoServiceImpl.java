@@ -47,8 +47,8 @@ public class PhotoServiceImpl implements PhotoService {
     public List<PhotoOutput> getAllPhotosOfUser(User user) {
         List<Photo> photos = new ArrayList<>();
         List<Photo> allPhotos = photoRepository.findAllByIsActiveTrue();
-        for(Photo photo : allPhotos){
-            if(photo.getUser().equals(user)){
+        for (Photo photo : allPhotos) {
+            if (photo.getUser().equals(user)) {
                 photos.add(photo);
             }
         }
@@ -62,8 +62,8 @@ public class PhotoServiceImpl implements PhotoService {
     public List<Photo> getAllPhotosEntityOfUser(User user) {
         List<Photo> photos = new ArrayList<>();
         List<Photo> allPhotos = photoRepository.findAllByIsActiveTrue();
-        for(Photo photo : allPhotos){
-            if(photo.getUser().equals(user)){
+        for (Photo photo : allPhotos) {
+            if (photo.getUser().equals(user)) {
                 photos.add(photo);
             }
         }
@@ -71,11 +71,11 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
-    public  List<PhotoOutput> getAllPhotosOfContest(Contest contest) {
+    public List<PhotoOutput> getAllPhotosOfContest(Contest contest) {
         List<Photo> photos = new ArrayList<>();
         List<Photo> allPhotos = photoRepository.findAllByIsActiveTrue();
-        for(Photo photo : allPhotos){
-            if(photo.getContest().equals(contest)){
+        for (Photo photo : allPhotos) {
+            if (photo.getContest().equals(contest)) {
                 photos.add(photo);
             }
         }
@@ -85,11 +85,11 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
-    public  List<Photo> getAllPhotosEntityOfContest(Contest contest) {
+    public List<Photo> getAllPhotosEntityOfContest(Contest contest) {
         List<Photo> photos = new ArrayList<>();
         List<Photo> allPhotos = photoRepository.findAllByIsActiveTrue();
-        for(Photo photo : allPhotos){
-            if(photo.getContest().equals(contest)){
+        for (Photo photo : allPhotos) {
+            if (photo.getContest().equals(contest)) {
                 photos.add(photo);
             }
         }
@@ -143,7 +143,7 @@ public class PhotoServiceImpl implements PhotoService {
 //            throw new IllegalArgumentException("A photo with the same title already exists.");
 //        }
 
-       // Contest contest = contestService.findContestEntityById(UUID.fromString(photoInput.getContestId()));
+        // Contest contest = contestService.findContestEntityById(UUID.fromString(photoInput.getContestId()));
 //        Contest contest = contestRepository.findByContestIdAndIsActiveTrue(UUID.fromString(photoInput.getContestId()));
 
         if (!contest.getPhase().getName().equals("Phase 1")) {
@@ -169,7 +169,7 @@ public class PhotoServiceImpl implements PhotoService {
                     System.out.println("Creating photo for contest: " + contest.getTitle() + ", Phase:");
 
                     photoIdOutput = conversionService.convert(photo, PhotoIdOutput.class);
-                }else {
+                } else {
                     throw new IllegalArgumentException("You have already upload a photo!");
                 }
             }

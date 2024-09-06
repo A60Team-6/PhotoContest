@@ -19,12 +19,9 @@ public interface JuryPhotoRatingService {
 
     JuryPhotoRatingOutput updateRating(UUID id, JuryPhotoRatingInput dto);
 
-
     List<JuryPhotoRatingOutput> getAllRatingsForPhoto(UUID photoId);
 
     List<JuryPhotoRatingOutput> getRatingsByUser(UUID userId);
-
-//    List<JuryPhotoRatingOutput> getRatingsForPhoto(UUID photoId, UUID userId);
 
     double getAverageScoreForPhoto(UUID photoId);
 }

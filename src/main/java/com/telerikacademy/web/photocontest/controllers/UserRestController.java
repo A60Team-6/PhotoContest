@@ -45,13 +45,13 @@ public class UserRestController {
     }
 
     @GetMapping("/user/photos")
-    public ResponseEntity<List<PhotoOutput>> getAllPhotosOfUser(@RequestHeader HttpHeaders headers){
+    public ResponseEntity<List<PhotoOutput>> getAllPhotosOfUser(@RequestHeader HttpHeaders headers) {
         return ResponseEntity.ok(photoService.getAllPhotosOfUser(authenticationHelper.tryGetUser(headers)));
     }
 
     @PostMapping
     public ResponseEntity<UserOutputId> createUser(@Valid @RequestBody UserInput userInput) {
-            return ResponseEntity.ok(userService.createUser(userInput));
+        return ResponseEntity.ok(userService.createUser(userInput));
     }
 
     @PostMapping("/upload/{id}")
@@ -66,15 +66,15 @@ public class UserRestController {
 
     @PutMapping
     public ResponseEntity<UserUpdate> editUser(@RequestHeader HttpHeaders headers, @Valid @RequestBody UserUpdate userUpdate) {
-            User user = authenticationHelper.tryGetUser(headers);
-            return ResponseEntity.ok(userService.editUser(user, userUpdate));
+        User user = authenticationHelper.tryGetUser(headers);
+        return ResponseEntity.ok(userService.editUser(user, userUpdate));
 
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deactivateUser(@RequestHeader HttpHeaders headers, @Valid @PathVariable UUID id) {
-            User user = authenticationHelper.tryGetUser(headers);
-            userService.deactivateUser(id, user);
-            return ResponseEntity.ok("User deactivated successfully!");
+        User user = authenticationHelper.tryGetUser(headers);
+        userService.deactivateUser(id, user);
+        return ResponseEntity.ok("User deactivated successfully!");
     }
 }
