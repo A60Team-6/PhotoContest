@@ -104,4 +104,18 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(apiException, badRequest);
     }
+
+    @ExceptionHandler(value = UnsupportedOperationException.class)
+    public ResponseEntity<ApiException> handleUnsupportedOperationException(UnsupportedOperationException ex, HttpServletRequest request) {
+        HttpStatus badRequest = HttpStatus.UNAUTHORIZED;
+
+        ApiException apiException = new ApiException(
+                badRequest.value(),
+                ex.getMessage(),
+                LocalDateTime.now(),
+                request.getRequestURI()
+        );
+
+        return new ResponseEntity<>(apiException, badRequest);
+    }
 }

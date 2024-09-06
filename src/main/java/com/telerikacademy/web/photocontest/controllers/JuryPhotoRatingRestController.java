@@ -3,6 +3,7 @@ package com.telerikacademy.web.photocontest.controllers;
 import com.telerikacademy.web.photocontest.entities.dtos.JuryPhotoRatingInput;
 import com.telerikacademy.web.photocontest.entities.dtos.JuryPhotoRatingOutput;
 import com.telerikacademy.web.photocontest.services.JuryPhotoRatingServiceImpl;
+import com.telerikacademy.web.photocontest.services.contracts.JuryPhotoRatingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,7 @@ import java.util.UUID;
 @RequestMapping("/api/ratings")
 public class JuryPhotoRatingRestController {
 
-    private final JuryPhotoRatingServiceImpl juryPhotoRatingService;
+    private final JuryPhotoRatingService juryPhotoRatingService;
 
     @GetMapping("/photo/{photoId}")
     public ResponseEntity<List<JuryPhotoRatingOutput>> getRatingsForPhoto(@PathVariable UUID photoId) {

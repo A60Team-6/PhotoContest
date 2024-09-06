@@ -4,7 +4,7 @@ import com.telerikacademy.web.photocontest.entities.Contest;
 import com.telerikacademy.web.photocontest.entities.ContestParticipation;
 import com.telerikacademy.web.photocontest.entities.Phase;
 import com.telerikacademy.web.photocontest.entities.User;
-import com.telerikacademy.web.photocontest.helpers.UnauthorizedOperationException;
+import com.telerikacademy.web.photocontest.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.web.photocontest.repositories.ContestParticipationRepository;
 import com.telerikacademy.web.photocontest.repositories.ContestRepository;
 import com.telerikacademy.web.photocontest.services.ContestParticipationServiceImpl;

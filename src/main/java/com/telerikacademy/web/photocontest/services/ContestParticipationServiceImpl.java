@@ -1,12 +1,11 @@
 package com.telerikacademy.web.photocontest.services;
 
-import com.telerikacademy.web.photocontest.helpers.UnauthorizedOperationException;
 import com.telerikacademy.web.photocontest.entities.Contest;
 import com.telerikacademy.web.photocontest.entities.ContestParticipation;
 import com.telerikacademy.web.photocontest.entities.User;
+import com.telerikacademy.web.photocontest.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.web.photocontest.repositories.*;
 import com.telerikacademy.web.photocontest.services.contracts.ContestParticipationService;
-import com.telerikacademy.web.photocontest.services.contracts.ContestService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;

@@ -33,7 +33,6 @@ public class ContestRestController {
 
     private final ContestService contestService;
     private final AuthenticationHelper authenticationHelper;
-    private final ConversionService conversionService;
     private final PhotoService photoService;
 
     @GetMapping
@@ -59,24 +58,14 @@ public class ContestRestController {
 
     @PostMapping
     public ResponseEntity<ContestOutputId> createContest(@RequestHeader HttpHeaders headers, @Valid @RequestBody ContestInput contestInput) {
-        try {
             User user = authenticationHelper.tryGetUser(headers);
             return ResponseEntity.ok(contestService.createContest(contestInput, user));
-        } catch (DuplicateEntityException e) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
-        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteContest(@PathVariable UUID id, @RequestHeader HttpHeaders headers) {
-        try {
             User user = authenticationHelper.tryGetUser(headers);
             contestService.deactivateContest(id, user);
             return ResponseEntity.ok("Deleted contest successfully");
-        } catch (AuthorizationException e) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
-        } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        }
     }
 }

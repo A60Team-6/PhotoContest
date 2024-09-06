@@ -15,10 +15,4 @@ public interface JuryPhotoRatingRepository extends JpaRepository<JuryPhotoRating
     List<JuryPhotoRating> findByPhotoIdAndIsActiveTrue(UUID photoId);
 
     List<JuryPhotoRating> findRatingsByJury(User user);
-
-    List<JuryPhotoRating> findRatingsByPhotoId(UUID photoId);
-
-//    Optional<JuryPhotoRating> findByPhotoIdAndUserId(UUID photoId, UUID userId);
-
-//    List<JuryPhotoRating> findAllByPhotoIdAndUserId(UUID photoId, UUID userId);
 }

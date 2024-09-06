@@ -11,8 +11,6 @@ import java.util.UUID;
 @Repository
 public interface PhotoRepository extends JpaRepository<Photo, UUID> {
 
-    Photo findByPhotoUrl(String url);
-
     List<Photo> findAllByIsActiveTrue();
 
     Photo findByIdAndIsActiveTrue(UUID id);
