@@ -1,27 +1,19 @@
-package com.telerikacademy.web.photocontest.controllers;
+package com.telerikacademy.web.photocontest.controllers.Rest;
 
 import com.telerikacademy.web.photocontest.entities.Contest;
-import com.telerikacademy.web.photocontest.entities.Photo;
 import com.telerikacademy.web.photocontest.entities.dtos.ContestOutputId;
 import com.telerikacademy.web.photocontest.entities.dtos.PhotoOutput;
-import com.telerikacademy.web.photocontest.exceptions.AuthorizationException;
-import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import com.telerikacademy.web.photocontest.helpers.AuthenticationHelper;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.ContestInput;
 import com.telerikacademy.web.photocontest.entities.dtos.ContestOutput;
 import com.telerikacademy.web.photocontest.services.contracts.ContestService;
 import com.telerikacademy.web.photocontest.services.contracts.PhotoService;
-import com.telerikacademy.web.photocontest.services.contracts.UserService;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;

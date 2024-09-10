@@ -16,17 +16,25 @@ public interface UserService {
 
     List<UserOutput> getAll();
 
+    boolean existsByEmail(String email);
+
+    boolean existsByUsername(String username);
+
     List<User> getAllUsersWithJuryRights();
 
-    UserOutput findUserById(UUID userId);
+    UserOutput findUserById(UUID userId, User authenticatedUser);
 
     User findUserEntityById(UUID userId);
 
     UserOutput findUserByUsername(String username);
 
+    User findUserEntityByUsername(String username);
+
     User findUserByUsernameAuth(String username);
 
-    UserOutputId createUser(UserInput user);
+  //  UserOutputId createUser(UserInput user);
+
+    UserOutputId createUser(Register register);
 
     UserUpdate editUser(User user, UserUpdate userToEdit);
 

@@ -17,4 +17,10 @@ public class PermissionHelper {
             throw new UnauthorizedOperationException(message);
         }
     }
+
+    public static void isSameUserOrOrganizer(User authenticatedUser, User currentUser, String message) {
+        if(!authenticatedUser.equals(currentUser) && !"Organizer".equals(authenticatedUser.getRole().getName())) {
+            throw new UnauthorizedOperationException(message);
+        }
+    }
 }

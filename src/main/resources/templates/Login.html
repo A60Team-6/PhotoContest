@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+
+<!-- Контейнер за логин формата -->
+<div class="content-container">
+    <form action="#" th:action="@{/auth/login}" th:object="${login}" method="post">
+        <label th:text="#{user.label.username}">Username</label>
+        <input type="text" th:field="*{username}">
+        <label th:errors="*{username}">Username error placeholder.</label>
+
+        <label th:text="#{user.label.password}">Password</label>
+        <input type="password" th:field="*{password}">
+        <label class="error" th:errors="*{password}">Password error placeholder.</label>
+
+        <input type="submit" value="Login">
+    </form>
+</div>
+
+<!-- Футър -->
+<footer>
+    <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' Photo Contest'}">Photo Contest</small>
+</footer>
+
+</body>
+</html>

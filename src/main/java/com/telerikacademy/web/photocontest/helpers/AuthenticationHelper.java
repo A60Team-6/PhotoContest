@@ -1,11 +1,14 @@
 package com.telerikacademy.web.photocontest.helpers;
 
+import com.telerikacademy.web.photocontest.exceptions.AuthenticationFailureException;
 import com.telerikacademy.web.photocontest.exceptions.AuthorizationException;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.services.contracts.UserService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -58,5 +61,40 @@ public class AuthenticationHelper {
         }
 
         return userInfo.substring(firstSpace + 1);
+    }
+
+    public User tryGetUser(HttpSession session){
+        String currentUser = (String) session.getAttribute("currentUser");
+
+        if(currentUser == null) {
+            throw new AuthenticationFailureException("No user logged in.");
+        }
+
+        return userService.findUserEntityByUsername(currentUser);
+    }
+
+    public User tryGetCurrentUser(HttpSession session) {
+        String currentUsername = (String) session.getAttribute("currentUser");
+
+        if (currentUsername == null) {
+            throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
+        }
+
+        return userService.findUserEntityByUsername(currentUsername);
+    }
+
+    public User verifyAuthentication(String username, String password) {
+        try {
+            User user = userService.findUserEntityByUsername(username);
+//            if(!user.getPassword().equals(password)) {
+//                throw new AuthenticationFailureException(WRONG_USERNAME_OR_PASSWORD);
+//            }
+            if (!BCrypt.checkpw(password, user.getPassword())) {
+                throw new AuthenticationFailureException(WRONG_USERNAME_OR_PASSWORD);
+            }
+            return user;
+        }catch (EntityNotFoundException e){
+            throw new AuthenticationFailureException(WRONG_USERNAME_OR_PASSWORD);
+        }
     }
 }

@@ -47,6 +47,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    @Override
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
+
+    @Override
     public List<User> getAllUsersWithJuryRights() {
         List<User> users = userRepository.findAllByIsActiveTrue();
         List<User> jurors = new ArrayList<>();
@@ -60,8 +71,9 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public UserOutput findUserById(UUID userId) {
+    public UserOutput findUserById(UUID userId, User authenticatedUser) {
         User user = userRepository.findByUserIdAndIsActiveTrue(userId);
+        PermissionHelper.isSameUserOrOrganizer(authenticatedUser, user, "You have not access to this user!");
         if (user == null) {
             throw new EntityNotFoundException("User with ID " + userId + " not found.");
         }
@@ -84,19 +96,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findUserEntityByUsername(String username) {
+        return userRepository.findByUsernameAndIsActiveTrue(username);
+    }
+
+    @Override
     public User findUserByUsernameAuth(String username) {
         return userRepository.findByUsernameAndIsActiveTrue(username);
     }
 
     @Override
-    public UserOutputId createUser(UserInput userInput) {
-        String hashedPassword = passwordEncoder.encode(userInput.getPassword());
+    public UserOutputId createUser(Register register) {
+        String hashedPassword = passwordEncoder.encode(register.getPassword());
 
         User user = User.builder()
-                .username(userInput.getUsername())
-                .firstName(userInput.getFirstName())
-                .lastName(userInput.getLastName())
-                .email(userInput.getEmail())
+                .username(register.getUsername())
+                .firstName(register.getFirstName())
+                .lastName(register.getLastName())
+                .email(register.getEmail())
                 .password(hashedPassword)
                 .role(roleService.getRoleByName("User"))
                 .rank(rankService.getRankByName("Junkie"))

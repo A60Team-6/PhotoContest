@@ -1,21 +1,17 @@
-package com.telerikacademy.web.photocontest.controllers;
+package com.telerikacademy.web.photocontest.controllers.Rest;
 
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.*;
 import com.telerikacademy.web.photocontest.helpers.AuthenticationHelper;
 import com.telerikacademy.web.photocontest.services.contracts.PhotoService;
 import com.telerikacademy.web.photocontest.services.contracts.UserService;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
@@ -35,8 +31,9 @@ public class UserRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserOutput> getUserById(@PathVariable UUID id) {
-        return ResponseEntity.ok(userService.findUserById(id));
+    public ResponseEntity<UserOutput> getUserById(@PathVariable UUID id, @RequestHeader HttpHeaders headers) {
+        User authUser = authenticationHelper.tryGetUser(headers);
+        return ResponseEntity.ok(userService.findUserById(id, authUser));
     }
 
     @GetMapping("/username")
@@ -50,8 +47,8 @@ public class UserRestController {
     }
 
     @PostMapping
-    public ResponseEntity<UserOutputId> createUser(@Valid @RequestBody UserInput userInput) {
-        return ResponseEntity.ok(userService.createUser(userInput));
+    public ResponseEntity<UserOutputId> createUser(@Valid @RequestBody Register register) {
+        return ResponseEntity.ok(userService.createUser(register));
     }
 
     @PostMapping("/upload/{id}")

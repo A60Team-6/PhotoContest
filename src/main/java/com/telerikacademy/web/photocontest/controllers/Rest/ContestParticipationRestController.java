@@ -1,11 +1,9 @@
-package com.telerikacademy.web.photocontest.controllers;
+package com.telerikacademy.web.photocontest.controllers.Rest;
 
 import com.telerikacademy.web.photocontest.entities.ContestParticipation;
 import com.telerikacademy.web.photocontest.helpers.AuthenticationHelper;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.services.contracts.ContestParticipationService;
-import com.telerikacademy.web.photocontest.services.contracts.ContestService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

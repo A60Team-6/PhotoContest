@@ -1,14 +1,9 @@
-package com.telerikacademy.web.photocontest.controllers;
+package com.telerikacademy.web.photocontest.controllers.Rest;
 
-import com.telerikacademy.web.photocontest.entities.Contest;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.*;
-import com.telerikacademy.web.photocontest.exceptions.AuthorizationException;
-import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import com.telerikacademy.web.photocontest.helpers.AuthenticationHelper;
-import com.telerikacademy.web.photocontest.services.contracts.ContestService;
 import com.telerikacademy.web.photocontest.services.contracts.PhotoService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.http.HttpHeaders;
@@ -16,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
