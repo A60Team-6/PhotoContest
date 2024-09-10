@@ -86,6 +86,9 @@ public class AuthenticationHelper {
     public User verifyAuthentication(String username, String password) {
         try {
             User user = userService.findUserEntityByUsername(username);
+            if(user == null){
+                throw new EntityNotFoundException("User not found.");
+            }
 //            if(!user.getPassword().equals(password)) {
 //                throw new AuthenticationFailureException(WRONG_USERNAME_OR_PASSWORD);
 //            }
@@ -94,6 +97,8 @@ public class AuthenticationHelper {
             }
             return user;
         }catch (EntityNotFoundException e){
+            throw new EntityNotFoundException(WRONG_USERNAME_OR_PASSWORD);
+        }catch (AuthenticationFailureException e){
             throw new AuthenticationFailureException(WRONG_USERNAME_OR_PASSWORD);
         }
     }
