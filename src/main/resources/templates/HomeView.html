@@ -2,17 +2,164 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photography Contest - Home</title>
+    <link rel="stylesheet" th:href="@{/css/HomeView.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&display=swap"
+          rel="stylesheet">
 </head>
 <body>
-<div class="navigation">
-    <h3>
-        <a href="#" th:href="@{/}" th:text="#{navigation.home}">Home</a>
-        <a href="#" th:unless="${isAuthenticated}" th:href="@{/auth/login}">Login</a>
-        <a href="#" th:unless="${isAuthenticated}" th:href="@{/auth/register}">Register</a>
-        <a href="#" th:if="${isAuthenticated}" th:href="@{/auth/logout}">Logout</a>
-        <a href="#" th:if="${isAuthenticated}" th:href="@{/user/Me}">My Profile</a>
-    </h3>
-</div>
+<header class="site-header">
+    <div class="container">
+        <h1 class="title">Welcome to the Photography Contest</h1>
+        <nav>
+            <ul class="nav-links">
+                <li><a th:href="@{/categories}">Categories</a></li>
+                <li><a th:href="@{/prizes}">Prizes</a></li>
+                <li><a th:href="@{/winners}">Winners</a></li>
+                <li><a th:href="@{/submit-photo}">Submit Your Photo</a></li>
+                <li><a th:href="@{/login}">Login</a></li>
+
+                <li><a href="#" th:href="@{/}" th:text="#{navigation.home}">Home</a></li>
+                <li><a href="#" th:unless="${isAuthenticated}" th:href="@{/auth/login}">Login</a></li>
+                <li><a href="#" th:unless="${isAuthenticated}" th:href="@{/auth/register}">Register</a></li>
+                <li><a href="#" th:if="${isAuthenticated}" th:href="@{/auth/logout}">Logout</a></li>
+                <li><a href="#" th:if="${isAuthenticated}" th:href="@{/user/Me}">My Profile</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <section class="intro">
+        <div class="container">
+            <h2 class="tagline">Capture the Beauty of Nature</h2>
+            <p>Show your skills in this international contest and compete for amazing prizes. The contest is open for
+                all photography enthusiasts, amateurs, and professionals alike.</p>
+            <a th:href="@{/submit-photo}" class="cta-button">Submit Your Photo</a>
+        </div>
+    </section>
+
+    <section class="featured-categories">
+        <div class="container">
+            <h2>Contest Categories</h2>
+            <div class="category-carousel">
+                <div class="carousel-inner">
+                    <div class="category-item">
+                        <h3>Nature</h3>
+                        <img th:href="@{/img/nature.jpg}" src="../assets/img/nature.jpg" alt="Nature"/>
+                        <h5>A general category for photos that feature natural elements, ecosystems, landscapes and
+                            living
+                            things, without a specific focus on a particular type of nature.</h5>
+                    </div>
+                    <div class="category-item">
+                        <h3>Wildlife</h3>
+                        <img th:href="@{/img/wildlife.jpg}" src="../assets/img/wildlife.jpg" alt="Wildlife"/>
+                        <h5>Photographs of animals in their natural environment, without human intervention. This
+                            category
+                            includes wild animals, birds, insects and other creatures.</h5>
+                    </div>
+                    <div class="category-item">
+                        <h3>Macro Photography</h3>
+                        <img th:href="@{/img/macro_photography.jpg}" src="../assets/img/macro_photography.jpg"
+                             alt="Macro"/>
+                        <h5>Detailed and close-up photos of small nature objects such as insects, water drops, leaves
+                            and
+                            other miniature elements shown in macro detail.</h5>
+                    </div>
+                    <div class="category-item">
+                        <h3>Landscapes</h3>
+                        <img th:href="@{/img/landscapes.jpg}" src="../assets/img/landscapes.jpg" alt="Landscapes"/>
+                        <h5>Photos of wide natural scenes, such as mountains, plains, forests, oceans, and more. The
+                            category focuses on the broad scope and scale of natural beauty.</h5>
+                    </div>
+                    <div class="category-item">
+                        <h3>Aerial Photography</h3>
+                        <img th:href="@{/img/Aerial_Photography.jpg}" src="../assets/img/Aerial_Photography.jpg"
+                             alt="Aerial Photography"/>
+                        <h5>Photographs of natural scenes taken from the air using drones or other aerial vehicles.</h5>
+                    </div>
+                    <div class="category-item">
+                        <h3>Water Elements</h3>
+                        <img th:href="@{/img/waterfall.jpg}" src="../assets/img/waterfall.jpg" alt="Water Elements"/>
+                        <h5>Footage that includes oceans, rivers, waterfalls, lakes, or any water features.</h5>
+                    </div>
+                    <div class="category-item">
+                        <h3>Night Skies</h3>
+                        <img th:href="@{/img/Night_Skies.jpg}" src="../assets/img/Night_Skies.jpg" alt="Night Skies"/>
+                        <h5>Pictures of the night sky, including stars, the moon, and other celestial bodies.</h5>
+                    </div>
+                    <div class="category-item">
+                        <h3>Seasons</h3>
+                        <img th:href="@{/img/Seasons.jpg}" src="../assets/img/Seasons.jpg" alt="Seasons"/>
+                        <h5>Photographs that emphasize seasonal changes in nature, such as spring flowers, autumn
+                            leaves,
+                            snowy landscapes.</h5>
+                    </div>
+                    <div class="category-item">
+                        <h3>Extreme Weather</h3>
+                        <img th:href="@{/img/Extreme_Weather.jpg}" src="../assets/img/Extreme_Weather.jpg" alt="Extreme Weather"/>
+                        <h5>Photos focusing on the power of natural elements such as thunderstorms, tornadoes,
+                            hurricanes
+                            and other extreme weather events.</h5>
+                    </div>
+                    <div class="category-item">
+                        <h3>Sunrise and Sunset</h3>
+                        <img th:href="@{/img/sunrise.jpg}" src="../assets/img/sunrise.jpg"
+                             alt="Sunrise and Sunset"/>
+                        <h5>Shots that capture the magic of sunrises and sunsets.</h5>
+                    </div>
+                    <div class="category-item">
+                        <h3>Underwater</h3>
+                        <img th:href="@{/img/Underwater.jpg}" src="../assets/img/Underwater.jpg" alt="Underwater"/>
+                        <h5>Photos taken underwater showing marine life, corals, and waters capes.</h5>
+                    </div>
+                    <div class="category-item">
+                        <h3>Mountain Peaks</h3>
+                        <img th:href="@{/img/Mountain_Peaks.jpg}" src="../assets/img/Mountain_Peaks.jpg" alt="Mountain Peaks"/>
+                        <h5>Photographs dedicated to mountain peaks and their majestic views.</h5>
+                    </div>
+                    <div class="category-item">
+                        <h3>Deserts</h3>
+                        <img th:href="@{/img/desert.jpg}" src="../assets/img/desert.jpg" alt="Deserts "/>
+                        <h5>Photos of desert landscapes, sand dunes and desert flora and fauna.</h5>
+                    </div>
+                    <div class="category-item">
+                        <h3>Forests and Jungles</h3>
+                        <img th:href="@{/img/jungle.jpg}" src="../assets/img/jungle.jpg"
+                             alt="Forests and Jungles "/>
+                        <h5>Photographs of dense forests and jungles that reveal the richness of these ecosystems.</h5>
+                    </div>
+                    <div class="category-item">
+                        <h3>Arctic and Polar Regions</h3>
+                        <img th:href="@{/img/icebergs.jpg}" src="../assets/img/icebergs.jpg"
+                             alt="Arctic and Polar Regions"/>
+                        <h5>Pictures dedicated to the cold and snowy places like the Arctic, Antarctica and polar
+                            regions.</h5>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-prev">&#10094;</button>
+            <button class="carousel-next">&#10095;</button>
+        </div>
+    </section>
+
+    <section class="contest-info">
+        <div class="container">
+            <h2>Why Participate?</h2>
+            <p>Join the competition to showcase your talent, gain recognition, and win prizes. Every photo counts
+                toward raising awareness of nature preservation.</p>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2024 Photography Contest | <a th:href="@{/privacy-policy}">Privacy Policy</a> | <a
+                th:href="@{/contact}">Contact Us</a></p>
+    </div>
+</footer>
+
+<script src="/js/carousel.js"></script>
 </body>
 </html>

@@ -1,0 +1,167 @@
+/* Global Styles */
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Header */
+.site-header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.site-header .title {
+    font-family: 'Lobster', cursive;
+    font-size: 2.5em;
+}
+
+.nav-links {
+    list-style-type: none;
+    padding: 0;
+}
+
+.nav-links li {
+    display: inline;
+    margin-right: 15px;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+/* Intro Section */
+.intro {
+    background-image: url('../assets/img/home.jpg');
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    padding: 100px 0;
+    text-align: center;
+}
+
+.intro .tagline {
+    font-family: 'Lobster', cursive;
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+.intro p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+.cta-button {
+    background-color: #e74c3c;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 1.2em;
+    border-radius: 5px;
+}
+
+.cta-button:hover {
+    background-color: #c0392b;
+}
+
+/* Featured Categories */
+.featured-categories {
+    background-color: #fff;
+    padding: 60px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.featured-categories h2 {
+    /*text-align: center;*/
+    /*font-size: 2.2em;*/
+    /*margin-bottom: 40px;*/
+    font-family: 'Lobster', cursive;
+    font-size: 3em; /* Същият размер като "Capture the Beauty of Nature" */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.category-carousel {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel-inner {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.category-item {
+    flex: 0 0 25%; /* Покажи 4 елемента на ред, за да не се разтягат */
+    box-sizing: border-box;
+    text-align: center;
+    padding: 0 10px;
+}
+
+.category-item img {
+    width: 100%;
+    aspect-ratio: 16/9; /* Запазва съотношение 16:9 */
+    object-fit: contain; /* Изображението се вписва без да се изрязва */
+    border-radius: 10px;
+}
+
+.carousel-prev, .carousel-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    font-size: 2rem;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 100;
+}
+
+.carousel-prev {
+    left: 10px;
+}
+
+.carousel-next {
+    right: 10px;
+}
+
+/* Contest Info Section */
+.contest-info {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.contest-info h2 {
+    font-size: 2.2em;
+    margin-bottom: 20px;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
