@@ -2,28 +2,48 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Photography Contest</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&display=swap" rel="stylesheet">
 </head>
 <body>
 
+<!-- Хедър с навигационно меню -->
+<header class="site-header">
+    <div class="container">
+        <h1 class="title">Login to Photo Contest</h1>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#" th:href="@{/}" th:text="#{navigation.home}">Home</a></li>
+                <li><a href="#" th:unless="${isAuthenticated}" th:href="@{/auth/register}">Register</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
 <!-- Контейнер за логин формата -->
-<div class="content-container">
-    <form action="#" th:action="@{/auth/login}" th:object="${login}" method="post">
-        <label th:text="#{user.label.username}">Username</label>
-        <input type="text" th:field="*{username}">
-        <label th:errors="*{username}">Username error placeholder.</label>
+<main>
+    <div class="login-container">
+        <form action="#" th:action="@{/auth/login}" th:object="${login}" method="post" class="login-form">
+            <label for="username" th:text="#{user.label.username}">Username</label>
+            <input type="text" id="username" th:field="*{username}" placeholder="Enter your username">
+            <label th:errors="*{username}" class="error-msg">Username error placeholder.</label>
 
-        <label th:text="#{user.label.password}">Password</label>
-        <input type="password" th:field="*{password}">
-        <label class="error" th:errors="*{password}">Password error placeholder.</label>
+            <label for="password" th:text="#{user.label.password}">Password</label>
+            <input type="password" id="password" th:field="*{password}" placeholder="Enter your password">
+            <label th:errors="*{password}" class="error-msg">Password error placeholder.</label>
 
-        <input type="submit" value="Login">
-    </form>
-</div>
+            <input type="submit" value="Login" class="login-btn">
+        </form>
+    </div>
+</main>
 
 <!-- Футър -->
 <footer>
-    <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' Photo Contest'}">Photo Contest</small>
+    <div class="container">
+        <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' Photo Contest'}">© 2024 Photo Contest</small>
+    </div>
 </footer>
 
 </body>

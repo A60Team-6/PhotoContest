@@ -2,52 +2,92 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Register</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Photography Contest</title>
+    <link rel="stylesheet" th:href="@{/css/register.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="navigation">
-    <h3>
-        <a href="#" th:href="@{/}" th:text="#{navigation.home}">Home</a>
-    </h3>
-</div>
-<div class="content-container">
-    <form action="#" th:action="@{/auth/register}" th:object="${register}" method="post" enctype="multipart/form-data">
 
+<!-- Хедър с навигационно меню -->
+<header class="site-header">
+    <div class="container">
+        <h1 class="title">Register for Photo Contest</h1>
+        <nav>
+            <ul class="nav-links">
+                <li><a th:href="@{/}">Home</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
 
-        <label class="custom-file-upload">
-            <input type="file" th:field="*{profilePhoto}" accept="image/jpeg" onchange="previewProfilePhoto(event)"/>
-            Add profile photo
-        </label>
-        <label class="error" th:errors="*{profilePhoto}">Profile photo error placeholder</label>
+<!-- Контейнер за регистрационната форма -->
+<main>
+    <div class="register-container">
+        <form action="#" th:action="@{/auth/register}" th:object="${register}" method="post" enctype="multipart/form-data" class="register-form">
 
-        <label th:text="#{user.label.username}">Username</label>
-        <input type="text" th:field="*{username}"/>
-        <label class="error" th:errors="*{username}">Username error placeholder</label>
+            <!-- Преглед на профилна снимка -->
+            <div class="profile-photo-container">
+                <img id="profilePhotoPreview" src="../assets/img/default-avatar.png" alt="Profile Photo" class="profile-photo">
+            </div>
 
-        <label th:text="#{user.label.password}">Password</label>
-        <input type="password" th:field="*{password}"/>
-        <label class="error" th:errors="*{password}">Password error placeholder</label>
+            <label class="custom-file-upload">
+                <input type="file" th:field="*{profilePhoto}" accept="image/jpeg" onchange="previewProfilePhoto(event)"/>
+                <span>Add profile photo</span>
+            </label>
+            <label class="error" th:errors="*{profilePhoto}">Profile photo error placeholder</label>
 
-        <label th:text="#{user.label.passwordConfirm}">Confirm Password</label>
-        <input type="password" th:field="*{passwordConfirm}"/>
-        <label class="error" th:errors="*{passwordConfirm}">Confirm Password error placeholder</label>
+            <label th:text="#{user.label.username}">Username</label>
+            <input type="text" th:field="*{username}" placeholder="Enter your username"/>
+            <label class="error" th:errors="*{username}">Username error placeholder</label>
 
-        <label th:text="#{user.label.firstName}">First Name</label>
-        <input type="text" th:field="*{firstName}"/>
-        <label class="error" th:errors="*{firstName}">First Name error placeholder</label>
+            <label th:text="#{user.label.password}">Password</label>
+            <input type="password" th:field="*{password}" placeholder="Enter your password"/>
+            <label class="error" th:errors="*{password}">Password error placeholder</label>
 
-        <label th:text="#{user.label.lastName}">Last Name</label>
-        <input type="text" th:field="*{lastName}"/>
-        <label class="error" th:errors="*{lastName}">Last Name error placeholder</label>
+            <label th:text="#{user.label.passwordConfirm}">Confirm Password</label>
+            <input type="password" th:field="*{passwordConfirm}" placeholder="Confirm your password"/>
+            <label class="error" th:errors="*{passwordConfirm}">Confirm Password error placeholder</label>
 
-        <label th:text="#{user.label.email}">Email</label>
-        <input type="text" th:field="*{email}"/>
-        <label class="error" th:errors="*{email}">Email error placeholder</label>
+            <label th:text="#{user.label.firstName}">First Name</label>
+            <input type="text" th:field="*{firstName}" placeholder="Enter your first name"/>
+            <label class="error" th:errors="*{firstName}">First Name error placeholder</label>
 
-        <input type="submit" value="Register"/>
-    </form>
-</div>
+            <label th:text="#{user.label.lastName}">Last Name</label>
+            <input type="text" th:field="*{lastName}" placeholder="Enter your last name"/>
+            <label class="error" th:errors="*{lastName}">Last Name error placeholder</label>
+
+            <label th:text="#{user.label.email}">Email</label>
+            <input type="email" th:field="*{email}" placeholder="Enter your email"/>
+            <label class="error" th:errors="*{email}">Email error placeholder</label>
+
+            <input type="submit" value="Register" class="register-btn"/>
+        </form>
+    </div>
+</main>
+
+<!-- Футър -->
 <footer>
-    <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' Photo Contest'}">Photo Contest</small>
+    <div class="container">
+        <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' Photo Contest'}">© 2024 Photo Contest</small>
+    </div>
 </footer>
+
+<script>
+    function previewProfilePhoto(event) {
+        const reader = new FileReader();
+        const file = event.target.files[0];
+
+        reader.onload = function() {
+            const previewImage = document.getElementById('profilePhotoPreview');
+            previewImage.src = reader.result;
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
+
+</body>
+</html>

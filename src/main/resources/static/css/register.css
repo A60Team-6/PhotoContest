@@ -1,0 +1,159 @@
+/* Global Styles */
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-image: url('../assets/img/home.jpg'); /* Същата фонова снимка */
+    background-size: cover;
+    background-position: center;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header */
+.site-header {
+    background-color: rgba(0, 0, 0, 0.6); /* Лека прозрачност за по-добра видимост на текста */
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.site-header .title {
+    font-family: 'Lobster', cursive;
+    font-size: 2.5em;
+    margin: 0;
+}
+
+.nav-links {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.nav-links li {
+    display: inline;
+    margin-right: 15px;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.nav-links a:hover {
+    color: #e74c3c;
+}
+
+/* Main */
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0;
+}
+
+.register-container {
+    background-color: rgba(255, 255, 255, 0.8); /* Леко прозрачен бял фон за формата */
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 400px;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Профилна снимка */
+.profile-photo-container {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 20px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-photo {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc;
+    display: block; /* Уверяваме се, че снимката е блоков елемент */
+}
+
+.custom-file-upload {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    display: inline-block; /* Уверява се, че бутонът е правилно подравнен */
+}
+
+.custom-file-upload input[type="file"] {
+    display: none; /* Скрива полето за качване */
+}
+
+.custom-file-upload span {
+    color: #e74c3c;
+    display: inline-block; /* Подобрява подравняването на текста */
+}
+
+/* Полета за текст */
+.register-form input[type="text"],
+.register-form input[type="password"],
+.register-form input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.register-btn {
+    background-color: #e74c3c;
+    color: #fff;
+    padding: 10px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.register-btn:hover {
+    background-color: #c0392b;
+}
+
+/* Error message */
+.error {
+    color: #e74c3c;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: auto;
+}
+
+footer small {
+    color: #fff;
+}
