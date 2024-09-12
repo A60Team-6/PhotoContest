@@ -49,7 +49,7 @@ public class ContestMvcController {
     }
 
     @GetMapping("/contests")
-    public String getUsers(Model model,
+    public String getContests(Model model,
                            @RequestParam(value = "title", required = false) String title,
                            @RequestParam(value = "category", required = false) String category,
                            @RequestParam(value = "phase", required = false) String phase,

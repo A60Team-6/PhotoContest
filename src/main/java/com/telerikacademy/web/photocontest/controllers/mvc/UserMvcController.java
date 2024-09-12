@@ -48,7 +48,7 @@ public class UserMvcController {
     public String showSingleUser(@PathVariable UUID id, Model model, HttpSession session) {
         try {
             User authUser = authenticationHelper.tryGetUser(session);
-            UserOutput user = userService.findUserById(id, authUser);
+            User user = userService.findUserEntityById(id);
             model.addAttribute("user", user);
 
             return "UserView";
