@@ -46,10 +46,10 @@ public class Contest {
     private User organizer;
 
     @Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
 
-    @Column(name = "change_phase_time", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime changePhaseTime = LocalDateTime.now();
+    @Column(name = "change_phase_time", nullable = false)
+    private LocalDateTime changePhaseTime;
 
     @Column(name = "is_active")
     private Boolean isActive;
