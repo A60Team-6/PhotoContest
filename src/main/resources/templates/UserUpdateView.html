@@ -2,39 +2,63 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Update User</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update User - Photography Contest</title>
+    <link rel="stylesheet" th:href="@{/css/update-user.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<div class="content-container">
-
-    <div class="form-container">
-        <form action="#" th:action="@{/user/{id}/update(id=${id})}" th:object="${user}" method="post">
-
-            <label th:text="#{user.label.firstName}">First Name</label>
-            <input type="text" th:field="*{firstName}"/>
-            <label class="error" th:errors="*{firstName}">First name error placeholder</label>
-
-            <label th:text="#{user.label.lastName}">Last Name</label>
-            <input type="text" th:field="*{lastName}"/>
-            <label class="error" th:errors="*{lastName}">Last name error placeholder</label>
-
-            <label th:text="#{user.label.email}">Email</label>
-            <input type="text" th:field="*{email}"/>
-            <label class="error" th:errors="*{email}">Email error placeholder</label>
-
-            <label th:text="#{user.label.password}">Password</label>
-            <input type="text" th:field="*{password}"/>
-            <label class="error" th:errors="*{password}">Password error placeholder</label>
-
-            <input type="submit" value="Save User"/>
-        </form>
+<!-- Хедър с навигационно меню -->
+<header class="site-header">
+    <div class="container">
+        <h1 class="title">Update User</h1>
+        <nav>
+            <ul class="nav-links">
+                <li><a th:href="@{/}">Home</a></li>
+                <li><a href="#" th:unless="${isAuthenticated}" th:href="@{/auth/login}">Login</a></li>
+                <li><a href="#" th:unless="${isAuthenticated}" th:href="@{/auth/register}">Register</a></li>
+                <li><a href="#" th:if="${isAuthenticated}" th:href="@{/user/me}">My Profile</a></li>
+                <li><a href="#" th:if="${isAuthenticated}" th:href="@{/auth/logout}">Logout</a></li>
+            </ul>
+        </nav>
     </div>
-</div>
+</header>
 
+<!-- Основно съдържание -->
+<main>
+    <div class="content-container">
+        <div class="form-container">
+            <form action="#" th:action="@{/user/{id}/update(id=${id})}" th:object="${user}" method="post">
+
+                <label th:text="#{user.label.firstName}">First Name</label>
+                <input type="text" th:field="*{firstName}"/>
+                <label class="error" th:errors="*{firstName}">First name error placeholder</label>
+
+                <label th:text="#{user.label.lastName}">Last Name</label>
+                <input type="text" th:field="*{lastName}"/>
+                <label class="error" th:errors="*{lastName}">Last name error placeholder</label>
+
+                <label th:text="#{user.label.email}">Email</label>
+                <input type="text" th:field="*{email}"/>
+                <label class="error" th:errors="*{email}">Email error placeholder</label>
+
+                <label th:text="#{user.label.password}">Password</label>
+                <input type="password" th:field="*{password}"/>
+                <label class="error" th:errors="*{password}">Password error placeholder</label>
+
+                <input type="submit" value="Save User" class="submit-button"/>
+            </form>
+        </div>
+    </div>
+</main>
+
+<!-- Футър -->
 <footer>
-    <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' CryptoForum'}">CryptoForum</small>
+    <div class="container">
+        <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' PhotoContest'}">© 2024 PhotoContest</small>
+    </div>
 </footer>
+
 </body>
 </html>
-

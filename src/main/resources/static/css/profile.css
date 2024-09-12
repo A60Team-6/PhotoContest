@@ -1,0 +1,121 @@
+/* Global Styles */
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-image: url('../assets/img/home.jpg'); /* Същата фонова снимка */
+    background-size: cover;
+    background-position: center;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header */
+.site-header {
+    background-color: rgba(0, 0, 0, 0.6); /* Лека прозрачност за по-добра видимост на текста */
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.site-header .title {
+    font-family: 'Lobster', cursive;
+    font-size: 2.5em;
+    margin: 0;
+}
+
+.nav-links {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.nav-links li {
+    display: inline;
+    margin-right: 15px;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.nav-links a:hover {
+    color: #e74c3c;
+}
+
+/* Основно съдържание */
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0;
+}
+
+.body-content {
+    background-color: rgba(255, 255, 255, 0.9); /* Леко по-плътен фон за по-добър контраст */
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 60%; /* Ограничава ширината на страницата */
+    max-width: 800px; /* Максимална ширина */
+}
+
+/* Стил за полетата на профила */
+.profile-info {
+    margin-bottom: 30px;
+}
+
+.margin12 {
+    margin-bottom: 12px;
+    font-size: 1.2em;
+}
+
+/* Бутони */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.edit, .delete {
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.edit {
+    background-color: #3498db;
+    color: #fff;
+}
+
+.edit:hover {
+    background-color: #2980b9;
+}
+
+.delete {
+    background-color: #e74c3c;
+    color: #fff;
+}
+
+.delete:hover {
+    background-color: #c0392b;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: auto;
+}
+
+footer small {
+    color: #fff;
+}

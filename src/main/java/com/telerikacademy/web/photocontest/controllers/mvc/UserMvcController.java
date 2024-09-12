@@ -173,7 +173,7 @@ public class UserMvcController {
 //        }
 //    }
 
-    @GetMapping("/Me")
+    @GetMapping("/me")
     public String showCurrentUser( Model model, HttpSession session) {
         try {
             User me = authenticationHelper.tryGetUser(session);

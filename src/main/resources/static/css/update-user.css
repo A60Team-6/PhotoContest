@@ -1,0 +1,120 @@
+/* Global Styles */
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-image: url('../assets/img/home.jpg'); /* Същата фонова снимка */
+    background-size: cover;
+    background-position: center;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header */
+.site-header {
+    background-color: rgba(0, 0, 0, 0.6); /* Лека прозрачност за по-добра видимост на текста */
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.site-header .title {
+    font-family: 'Lobster', cursive;
+    font-size: 2.5em;
+    margin: 0;
+}
+
+.nav-links {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.nav-links li {
+    display: inline;
+    margin-right: 15px;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.nav-links a:hover {
+    color: #e74c3c;
+}
+
+/* Основно съдържание */
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0;
+}
+
+.content-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 60%;
+    max-width: 800px;
+}
+
+/* Формуляри */
+.form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-container label {
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.form-container input {
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 1em;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.form-container .error {
+    color: red;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.submit-button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+.submit-button:hover {
+    background-color: #2980b9;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: auto;
+}
+
+footer small {
+    color: #fff;
+}
