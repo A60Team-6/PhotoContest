@@ -53,6 +53,8 @@ public class AuthenticationController {
         try {
             User user = authenticationHelper.verifyAuthentication(loginDto.getUsername(), loginDto.getPassword());
             session.setAttribute("currentUser", loginDto.getUsername());
+            session.setAttribute("isOrganizer", user.getRole().getName().equals("Organizer"));
+            session.setAttribute("isJury", user.getRole().getName().equals("Jury"));
             return "redirect:/";
         } catch (AuthenticationFailureException e) {
             bindingResult.rejectValue("username", "auth_error", e.getMessage());
@@ -109,5 +111,8 @@ public class AuthenticationController {
 
     }
     //    празен ред
+
+
+
 
 }
