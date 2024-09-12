@@ -32,4 +32,5 @@ public class HomeMvcController {
     public String showHomePage() {
         return "HomeView";
     }
+    //    празен ред
 }

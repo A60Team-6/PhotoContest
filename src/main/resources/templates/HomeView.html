@@ -18,13 +18,16 @@
                 <li><a th:href="@{/prizes}">Prizes</a></li>
                 <li><a th:href="@{/winners}">Winners</a></li>
                 <li><a th:href="@{/submit-photo}">Submit Your Photo</a></li>
-                <li><a th:href="@{/login}">Login</a></li>
 
                 <li><a href="#" th:href="@{/}" th:text="#{navigation.home}">Home</a></li>
                 <li><a href="#" th:unless="${isAuthenticated}" th:href="@{/auth/login}">Login</a></li>
                 <li><a href="#" th:unless="${isAuthenticated}" th:href="@{/auth/register}">Register</a></li>
                 <li><a href="#" th:if="${isAuthenticated}" th:href="@{/auth/logout}">Logout</a></li>
                 <li><a href="#" th:if="${isAuthenticated}" th:href="@{/user/Me}">My Profile</a></li>
+                <li><a href="#" th:if="${isAuthenticated}" th:href="@{/contest/phaseOne}">Contests In Phase
+                    1</a></li>
+                <li><a href="#" th:if="${isAuthenticated && session.isOrganizer || session.isJury}"
+                       th:href="@{/contest/phaseTwo}">Contests In Phase 2</a></li>
             </ul>
         </nav>
     </div>
@@ -98,7 +101,8 @@
                     </div>
                     <div class="category-item">
                         <h3>Extreme Weather</h3>
-                        <img th:href="@{/img/Extreme_Weather.jpg}" src="../assets/img/Extreme_Weather.jpg" alt="Extreme Weather"/>
+                        <img th:href="@{/img/Extreme_Weather.jpg}" src="../assets/img/Extreme_Weather.jpg"
+                             alt="Extreme Weather"/>
                         <h5>Photos focusing on the power of natural elements such as thunderstorms, tornadoes,
                             hurricanes
                             and other extreme weather events.</h5>
@@ -116,7 +120,8 @@
                     </div>
                     <div class="category-item">
                         <h3>Mountain Peaks</h3>
-                        <img th:href="@{/img/Mountain_Peaks.jpg}" src="../assets/img/Mountain_Peaks.jpg" alt="Mountain Peaks"/>
+                        <img th:href="@{/img/Mountain_Peaks.jpg}" src="../assets/img/Mountain_Peaks.jpg"
+                             alt="Mountain Peaks"/>
                         <h5>Photographs dedicated to mountain peaks and their majestic views.</h5>
                     </div>
                     <div class="category-item">

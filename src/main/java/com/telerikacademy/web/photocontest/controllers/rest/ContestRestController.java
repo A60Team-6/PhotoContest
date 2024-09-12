@@ -60,4 +60,5 @@ public class ContestRestController {
             contestService.deactivateContest(id, user);
             return ResponseEntity.ok("Deleted contest successfully");
     }
+    //    празен ред
 }

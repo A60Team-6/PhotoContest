@@ -69,7 +69,7 @@ public class ContestMvcController {
         return "UsersView";  // Връщаме името на View-то
     }
 
-    @GetMapping("/contestsInPhaseOne")
+    @GetMapping("/phaseOne")
     public String getAllContestsInPhaseOne(Model model, HttpSession session){
         try{
             User user = authenticationHelper.tryGetUser(session);
@@ -82,7 +82,7 @@ public class ContestMvcController {
         }
     }
 
-    @GetMapping("/contestsInPhaseTwo")
+    @GetMapping("/phaseTwo")
     public String getAllContestsInPhaseTwo(Model model, HttpSession session){
         try{
             User user = authenticationHelper.tryGetUser(session);
@@ -229,4 +229,5 @@ public class ContestMvcController {
             return "ErrorView";
         }
     }
+    //    празен ред
 }

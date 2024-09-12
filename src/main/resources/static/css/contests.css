@@ -1,0 +1,129 @@
+/* Global Styles */
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-image: url('../assets/img/home.jpg'); /* Същата фонова снимка */
+    background-size: cover;
+    background-position: center;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header */
+.site-header {
+    background-color: rgba(0, 0, 0, 0.6); /* Лека прозрачност за по-добра видимост на текста */
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.site-header .title {
+    font-family: 'Lobster', cursive;
+    font-size: 2.5em;
+    margin: 0;
+}
+
+.nav-links {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.nav-links li {
+    display: inline;
+    margin-right: 15px;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.nav-links a:hover {
+    color: #e74c3c;
+}
+
+/* Основно съдържание */
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0;
+}
+
+.body-content {
+    background-color: rgba(255, 255, 255, 0.9); /* Леко по-плътен фон за по-добър контраст */
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 70%; /* Намаляваме ширината за по-събрано поле */
+    max-width: 1200px; /* Добавяме максимална ширина */
+}
+
+/* Центрирано заглавие */
+.centered-title {
+    font-family: 'Lobster', cursive;
+    font-size: 2.5em;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Таблица */
+.table-container {
+    width: 100%;
+}
+
+.table {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px; /* Добавяме малко разстояние между заглавието и таблицата */
+}
+
+.row {
+    display: table-row;
+}
+
+.cell {
+    display: table-cell;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.header .cell {
+    font-weight: bold;
+    background-color: #e74c3c;
+    color: #fff;
+    text-align: center;
+    padding: 15px;
+}
+
+.post-title a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.post-title a:hover {
+    color: #e74c3c;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: auto;
+}
+
+footer small {
+    color: #fff;
+}

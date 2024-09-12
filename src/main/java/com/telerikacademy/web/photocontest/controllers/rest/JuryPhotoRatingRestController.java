@@ -55,5 +55,5 @@ public class JuryPhotoRatingRestController {
         return ResponseEntity.ok(averageScore);
     }
 
-
+//    празен ред
 }

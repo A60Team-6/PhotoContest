@@ -74,4 +74,6 @@ public class UserRestController {
         userService.deactivateUser(id, user);
         return ResponseEntity.ok("User deactivated successfully!");
     }
+
+//    празен ред
 }
