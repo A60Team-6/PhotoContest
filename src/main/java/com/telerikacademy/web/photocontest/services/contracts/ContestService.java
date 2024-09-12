@@ -5,6 +5,7 @@ import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.ContestInput;
 import com.telerikacademy.web.photocontest.entities.dtos.ContestOutput;
 import com.telerikacademy.web.photocontest.entities.dtos.ContestOutputId;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.UUID;
@@ -12,7 +13,13 @@ import java.util.UUID;
 public interface ContestService {
     List<ContestOutput> getAllActive();
 
+    List<Contest> getAllActiveContestInPhase1();
+
+    List<Contest> getAllActiveContestInPhase2();
+
     List<ContestOutput> getAllContests();
+
+    Page<Contest> getContestsWithFilters(String title, String category, String phase, int page, int size, String sortBy, String sortDirection);
 
     ContestOutput findContestById(UUID contestId);
 

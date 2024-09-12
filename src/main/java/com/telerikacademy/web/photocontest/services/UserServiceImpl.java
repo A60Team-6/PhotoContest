@@ -10,6 +10,10 @@ import com.telerikacademy.web.photocontest.services.contracts.*;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -45,6 +49,16 @@ public class UserServiceImpl implements UserService {
         return users.stream().map(user -> conversionService.convert(user, UserOutput.class)).collect(Collectors.toList());
 
     }
+
+
+//    @Override
+//    public Page<User> getUsersWithFilters(String firstName, String lastName, String username, String email, int page, int size, String sortBy, String sortDirection) {
+//        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
+//        Pageable pageable = PageRequest.of(page, size, sort);
+//
+//        return userRepository.findUsersByMultipleFields(firstName, lastName, username, email, pageable);
+//    }
+
 
     @Override
     public boolean existsByEmail(String email) {

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+
+</head>
+<body>
+
+<h1>User List</h1>
+
+<!-- Филтри -->
+<form method="get" action="/users">
+    <input type="text" name="firstName" placeholder="First Name" value="" />
+    <input type="text" name="lastName" placeholder="Last Name" value="" />
+    <input type="text" name="username" placeholder="Username" value="" />
+    <input type="text" name="email" placeholder="Email" value="" />
+    <button type="submit">Filter</button>
+</form>
+
+<table>
+    <thead>
+    <tr>
+        <th>
+            <a th:href="@{|/users?page=${currentPage}&size=${size}&sortBy=firstName&sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'}|}">
+                First Name <span th:text="${sortBy == 'firstName'} ? (sortDirection == 'asc' ? '▲' : '▼') : ''"></span>
+            </a>
+        </th>
+        <th>
+            <a th:href="@{|/users?page=${currentPage}&size=${size}&sortBy=lastName&sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'}|}">
+                Last Name <span th:text="${sortBy == 'lastName'} ? (sortDirection == 'asc' ? '▲' : '▼') : ''"></span>
+            </a>
+        </th>
+        <th>
+            <a th:href="@{|/users?page=${currentPage}&size=${size}&sortBy=username&sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'}|}">
+                Username <span th:text="${sortBy == 'username'} ? (sortDirection == 'asc' ? '▲' : '▼') : ''"></span>
+            </a>
+        </th>
+        <th>
+            <a th:href="@{|/users?page=${currentPage}&size=${size}&sortBy=email&sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'}|}">
+                Email <span th:text="${sortBy == 'email'} ? (sortDirection == 'asc' ? '▲' : '▼') : ''"></span>
+            </a>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.firstName}">John</td>
+        <td th:text="${user.lastName}">Doe</td>
+        <td th:text="${user.username}">johndoe</td>
+        <td th:text="${user.email}">john.doe@example.com</td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Пагинация -->
+<div class="pagination">
+    <a th:if="${currentPage > 0}" th:href="@{/users?page=${currentPage - 1}&size=${size}&sortBy=${sortBy}&sortDirection=${sortDirection}}">Previous</a>
+
+    <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+        <a th:classappend="${i == currentPage} ? 'active'"
+           th:href="@{/users?page=${i}&size=${size}&sortBy=${sortBy}&sortDirection=${sortDirection}}"
+           th:text="${i + 1}">1</a>
+    </span>
+
+    <a th:if="${currentPage < totalPages - 1}" th:href="@{/users?page=${currentPage + 1}&size=${size}&sortBy=${sortBy}&sortDirection=${sortDirection}}">Next</a>
+</div>
+
+</body>
+</html>

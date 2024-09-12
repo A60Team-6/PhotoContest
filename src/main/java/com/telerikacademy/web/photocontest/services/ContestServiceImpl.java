@@ -15,8 +15,11 @@ import com.telerikacademy.web.photocontest.services.contracts.*;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -48,9 +51,30 @@ public class ContestServiceImpl implements ContestService {
     }
 
     @Override
+    public List<Contest> getAllActiveContestInPhase1(){
+        List<Contest> contests = contestRepository.findAllByIsActiveTrue();
+        return contests.stream().filter(contest -> contest.getPhase().getName().equals("Phase 1")).toList();
+    }
+
+    @Override
+    public List<Contest> getAllActiveContestInPhase2(){
+        List<Contest> contests = contestRepository.findAllByIsActiveTrue();
+
+        return contests.stream().filter(contest -> contest.getPhase().getName().equals("Phase 2")).toList();
+    }
+
+    @Override
     public List<ContestOutput> getAllContests() {
         List<Contest> contests = contestRepository.findAll();
         return contests.stream().map(contest -> conversionService.convert(contest, ContestOutput.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<Contest> getContestsWithFilters(String title, String category, String phase, int page, int size, String sortBy, String sortDirection) {
+        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        return contestRepository.findContestsByMultipleFields(title, category, phase, pageable);
     }
 
     @Override
