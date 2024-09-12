@@ -1,4 +1,4 @@
-package com.telerikacademy.web.photocontest.controllers.Mvc;
+package com.telerikacademy.web.photocontest.controllers.mvc;
 
 
 import com.telerikacademy.web.photocontest.helpers.AuthenticationHelper;
