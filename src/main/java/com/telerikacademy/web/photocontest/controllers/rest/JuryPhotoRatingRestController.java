@@ -1,4 +1,4 @@
-package com.telerikacademy.web.photocontest.controllers.rest;
+package com.telerikacademy.web.photocontest.controllers.Rest;
 
 import com.telerikacademy.web.photocontest.entities.dtos.JuryPhotoRatingInput;
 import com.telerikacademy.web.photocontest.entities.dtos.JuryPhotoRatingOutput;
@@ -55,5 +55,5 @@ public class JuryPhotoRatingRestController {
         return ResponseEntity.ok(averageScore);
     }
 
-//    празен ред
+
 }

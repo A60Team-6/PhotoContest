@@ -1,4 +1,4 @@
-package com.telerikacademy.web.photocontest.controllers.rest;
+package com.telerikacademy.web.photocontest.controllers.Rest;
 
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.*;
@@ -74,6 +74,4 @@ public class UserRestController {
         userService.deactivateUser(id, user);
         return ResponseEntity.ok("User deactivated successfully!");
     }
-
-//    празен ред
 }

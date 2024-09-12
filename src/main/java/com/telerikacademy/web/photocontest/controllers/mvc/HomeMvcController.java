@@ -1,4 +1,4 @@
-package com.telerikacademy.web.photocontest.controllers.mvc;
+package com.telerikacademy.web.photocontest.controllers.Mvc;
 
 
 import com.telerikacademy.web.photocontest.helpers.AuthenticationHelper;
@@ -33,5 +33,4 @@ public class HomeMvcController {
     public String showHomePage() {
         return "HomeView";
     }
-    //    празен ред
 }

@@ -1,4 +1,4 @@
-package com.telerikacademy.web.photocontest.controllers.rest;
+package com.telerikacademy.web.photocontest.controllers.Rest;
 
 import com.telerikacademy.web.photocontest.entities.Contest;
 import com.telerikacademy.web.photocontest.entities.dtos.ContestOutputId;
@@ -60,5 +60,4 @@ public class ContestRestController {
             contestService.deactivateContest(id, user);
             return ResponseEntity.ok("Deleted contest successfully");
     }
-    //    празен ред
 }

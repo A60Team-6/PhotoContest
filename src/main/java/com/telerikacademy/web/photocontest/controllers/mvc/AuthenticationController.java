@@ -1,4 +1,4 @@
-package com.telerikacademy.web.photocontest.controllers.mvc;
+package com.telerikacademy.web.photocontest.controllers.Mvc;
 
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.Login;
@@ -108,6 +108,5 @@ public class AuthenticationController {
         }
 
     }
-    //    празен ред
 
 }

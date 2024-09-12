@@ -1,4 +1,4 @@
-package com.telerikacademy.web.photocontest.controllers.mvc;
+package com.telerikacademy.web.photocontest.controllers.Mvc;
 
 
 import com.telerikacademy.web.photocontest.entities.User;
@@ -48,7 +48,7 @@ public class UserMvcController {
     public String showSingleUser(@PathVariable UUID id, Model model, HttpSession session) {
         try {
             User authUser = authenticationHelper.tryGetUser(session);
-            User user = userService.findUserEntityById(id);
+            UserOutput user = userService.findUserById(id, authUser);
             model.addAttribute("user", user);
 
             return "UserView";
@@ -173,7 +173,7 @@ public class UserMvcController {
 //        }
 //    }
 
-    @GetMapping("/me")
+    @GetMapping("/Me")
     public String showCurrentUser( Model model, HttpSession session) {
         try {
             User me = authenticationHelper.tryGetUser(session);
@@ -189,7 +189,7 @@ public class UserMvcController {
             return "AccessDeniedView";
         }
     }
-//    празен ред
+
 
 }
 

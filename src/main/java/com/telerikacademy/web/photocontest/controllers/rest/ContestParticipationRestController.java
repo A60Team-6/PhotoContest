@@ -1,4 +1,4 @@
-package com.telerikacademy.web.photocontest.controllers.rest;
+package com.telerikacademy.web.photocontest.controllers.Rest;
 
 import com.telerikacademy.web.photocontest.entities.ContestParticipation;
 import com.telerikacademy.web.photocontest.helpers.AuthenticationHelper;
@@ -47,5 +47,5 @@ public class ContestParticipationRestController {
 //        }
 //    }
 
-//    празен ред
+
 }

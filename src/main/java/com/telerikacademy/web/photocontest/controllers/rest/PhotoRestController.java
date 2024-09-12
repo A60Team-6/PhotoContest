@@ -1,4 +1,4 @@
-package com.telerikacademy.web.photocontest.controllers.rest;
+package com.telerikacademy.web.photocontest.controllers.Rest;
 
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.*;
@@ -87,5 +87,5 @@ public class PhotoRestController {
 
         return new ResponseEntity<>("Photo was updated succsesfully!", HttpStatus.OK);
     }
-//    празен ред
+
 }
