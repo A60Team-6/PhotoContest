@@ -1,4 +1,4 @@
-package com.telerikacademy.web.photocontest.controllers.Rest;
+package com.telerikacademy.web.photocontest.controllers.rest;
 
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.*;

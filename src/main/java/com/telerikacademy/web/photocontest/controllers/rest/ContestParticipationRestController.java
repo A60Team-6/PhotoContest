@@ -1,4 +1,4 @@
-package com.telerikacademy.web.photocontest.controllers.Rest;
+package com.telerikacademy.web.photocontest.controllers.rest;
 
 import com.telerikacademy.web.photocontest.entities.ContestParticipation;
 import com.telerikacademy.web.photocontest.helpers.AuthenticationHelper;

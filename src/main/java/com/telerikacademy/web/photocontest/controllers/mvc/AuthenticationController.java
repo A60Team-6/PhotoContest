@@ -1,4 +1,4 @@
-package com.telerikacademy.web.photocontest.controllers.Mvc;
+package com.telerikacademy.web.photocontest.controllers.mvc;
 
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.Login;
@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.io.IOException;
 
 @RequiredArgsConstructor
 @Controller

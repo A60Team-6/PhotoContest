@@ -1,4 +1,4 @@
-package com.telerikacademy.web.photocontest.controllers.Mvc;
+package com.telerikacademy.web.photocontest.controllers.mvc;
 
 
 import com.telerikacademy.web.photocontest.entities.User;
@@ -7,7 +7,6 @@ import com.telerikacademy.web.photocontest.entities.dtos.UserUpdate;
 import com.telerikacademy.web.photocontest.exceptions.AuthenticationFailureException;
 import com.telerikacademy.web.photocontest.exceptions.AuthorizationException;
 import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
-import com.telerikacademy.web.photocontest.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.web.photocontest.helpers.AuthenticationHelper;
 import com.telerikacademy.web.photocontest.services.contracts.UserService;
 import jakarta.persistence.EntityNotFoundException;
@@ -16,7 +15,6 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
