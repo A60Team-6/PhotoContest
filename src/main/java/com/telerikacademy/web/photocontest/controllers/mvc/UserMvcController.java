@@ -1,4 +1,4 @@
-package com.telerikacademy.web.photocontest.controllers.Mvc;
+package com.telerikacademy.web.photocontest.controllers.mvc;
 
 
 import com.telerikacademy.web.photocontest.entities.User;
@@ -173,7 +173,7 @@ public class UserMvcController {
 //        }
 //    }
 
-    @GetMapping("/Me")
+    @GetMapping("/me")
     public String showCurrentUser( Model model, HttpSession session) {
         try {
             User me = authenticationHelper.tryGetUser(session);
