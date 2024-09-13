@@ -18,11 +18,11 @@
 
 <div class="body-content">
     <header class="header">
-        <h2 th:text="#{subtitle}">Create a new rating</h2>
+        <h2 th:text="#{subtitle1}">Create a new rating</h2>
     </header>
 
     <div class="post-form">
-        <form action="#" th:action="@{/photo/{id}/set/score}" th:object="${juryPhotoRating}" method="post">
+        <form th:action="@{/photo/{id}/set/score(id=${photoId})}" th:object="${juryPhotoRating}" method="post">
             <label th:text="#{rating.score.label}">Score</label>
             <input type="text" th:field="*{score}" placeholder="Enter photo score"/>
             <div th:if="${#fields.hasErrors('score')}" th:errors="*{score}" class="error-message"></div>
@@ -33,10 +33,10 @@
             <div th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}" class="error-message"></div>
 
             <label>
-                <input type="radio" name="isMatch" value="true" required /> Match
+                <input type="radio" th:field="*{categoryMatch}" value="true" required /> Match
             </label>
             <label>
-                <input type="radio" name="isMatch" value="false" /> Unmatch
+                <input type="radio" th:field="*{categoryMatch}" value="false" /> Unmatch
             </label>
 
             <input type="submit" value="Save"/>

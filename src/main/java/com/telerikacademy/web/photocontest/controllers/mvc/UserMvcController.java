@@ -102,7 +102,7 @@ public class UserMvcController {
 
 
             userService.editUser(user, userDto);
-            return "redirect:/user/Me";
+            return "redirect:/user/me";
         } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());

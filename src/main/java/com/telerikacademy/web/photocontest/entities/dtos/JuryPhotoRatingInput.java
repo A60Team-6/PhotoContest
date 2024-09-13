@@ -18,12 +18,16 @@ public class JuryPhotoRatingInput {
 
     @NotNull
     private UUID photoId;
+
     @NotNull
     private UUID userId;
+
     @Min(0)
     @Max(10)
     private int score;
+
     @NotNull
     private String comment;
+
     private Boolean categoryMatch;
 }
