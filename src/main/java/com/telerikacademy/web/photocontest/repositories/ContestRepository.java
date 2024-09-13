@@ -18,6 +18,8 @@ public interface ContestRepository extends JpaRepository<Contest, UUID> {
 
     List<Contest> findAllByIsActiveTrue();
 
+    List<Contest> findAllByIsActiveFalse();
+
     Contest findByContestIdAndIsActiveTrue(UUID id);
 
     Contest findByTitleAndIsActiveTrue(String title);

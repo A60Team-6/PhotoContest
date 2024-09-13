@@ -175,8 +175,7 @@ public class UserMvcController {
     public String showCurrentUser( Model model, HttpSession session) {
         try {
             User me = authenticationHelper.tryGetUser(session);
-            UserOutput user = userService.findUserById(me.getUserId(), me);
-            model.addAttribute("user", user);
+            model.addAttribute("user", me);
             model.addAttribute("id", me.getUserId());
             return "MeView";
         } catch (EntityNotFoundException e) {

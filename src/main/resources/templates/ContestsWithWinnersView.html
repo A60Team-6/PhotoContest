@@ -1,0 +1,147 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<header class="site-header">-->
+<!--    <div class="container">-->
+<!--        <nav>-->
+<!--            <ul class="nav-links">-->
+<!--                <li><a th:href="@{/}">Home</a></li>-->
+<!--                <li><a href="#" th:unless="${isAuthenticated}" th:href="@{/auth/login}">Login</a></li>-->
+<!--                <li><a href="#" th:unless="${isAuthenticated}" th:href="@{/auth/register}">Register</a></li>-->
+<!--                <li><a href="#" th:if="${isAuthenticated}" th:href="@{/user/me}">My Profile</a></li>-->
+<!--                <li><a href="#" th:if="${isAuthenticated}" th:href="@{/auth/logout}">Logout</a></li>-->
+<!--            </ul>-->
+<!--        </nav>-->
+<!--    </div>-->
+<!--</header>-->
+<!--<div th:if="${contestsWithWinners.isEmpty()}">-->
+<!--    <h2 th:text="#{contests.title.empty}">No Contests</h2>-->
+<!--</div>-->
+
+<!--<div th:unless="${contestsWithWinners.isEmpty()}">-->
+<!--    <div class="table">-->
+<!--        <div class="header">-->
+<!--            <h1 th:text="#{contests.all.label}">All Contests</h1>-->
+<!--        </div>-->
+
+<!--        <div class="row" th:each="contest : ${contestsWithWinners}">-->
+<!--            <div class="cell">-->
+<!--                <span th:text="#{contest.label.title} + ': '"></span>-->
+<!--                <a th:text="${contest.getContestOutput().title}">Title</a>-->
+<!--            </div>-->
+<!--            <div class="cell">-->
+<!--                <span th:text="#{contest.label.category} + ': '"></span><span th:text="${contest.getContestOutput().category}">Category</span>-->
+<!--            </div>-->
+<!--            <div class="cell">-->
+<!--                <span th:text="#{contest.label.phase} + ': '"></span><span th:text="${contest.getContestOutput().phase.name}">Phase</span>-->
+<!--            </div>-->
+<!--            <div th:if="${contest.photoOutputList.isEmpty()}">-->
+<!--                <h2 th:text="#{photo.label.empty}">No Photos</h2>-->
+<!--            </div>-->
+
+<!--            <div th:unless="${contest.photoOutputList.isEmpty()}">-->
+<!--                <div class="table">-->
+<!--                    <div class="header">-->
+<!--                        <h1 th:text="#{photo.allFirst.label}">All Photos On First Place</h1>-->
+<!--                    </div>-->
+
+<!--                    <div class="row" th:each="photo : ${contest.photoOutputList}">-->
+<!--                        <div class="cell">-->
+<!--                            <span th:text="#{photo.title.label} + ': '"></span><span th:text="${photo.title}">Title</span>-->
+<!--                        </div>-->
+<!--                        <div class="cell">-->
+<!--                            <span th:text="#{photo.story.label} + ': '"></span><span th:text="${photo.story}">Story</span>-->
+<!--                        </div>-->
+<!--                        <div class="cell">-->
+<!--                            <span th:text="#{photo.label.user} + ': '"></span><span th:text="${photo.username}">Username</span>-->
+<!--                        </div>-->
+<!--                        <div class="cell">-->
+<!--                            <span th:text="#{photo.label.createAt} + ': '"></span><span th:text="${photo.uploadDate}">Created At</span>-->
+<!--                        </div>-->
+<!--                        <div class="cell">-->
+<!--                            <span th:text="#{photo.upload.label} + ': '"></span><span th:text="${photo.photo}">Photo</span>-->
+<!--                        </div>-->
+<!--                    </div>    -->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>    -->
+<!--</body>-->
+<!--</html>-->
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Completed Contests and Winning Photos</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header class="site-header">
+    <div class="container">
+        <nav>
+            <ul class="nav-links">
+                <li><a th:href="@{/}">Home</a></li>
+                <li><a href="#" th:unless="${isAuthenticated}" th:href="@{/auth/login}">Login</a></li>
+                <li><a href="#" th:unless="${isAuthenticated}" th:href="@{/auth/register}">Register</a></li>
+                <li><a href="#" th:if="${isAuthenticated}" th:href="@{/user/me}">My Profile</a></li>
+                <li><a href="#" th:if="${isAuthenticated}" th:href="@{/auth/logout}">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="container">
+    <div th:if="${contestsWithWinners.isEmpty()}">
+        <h2>No Completed Contests</h2>
+    </div>
+
+    <div th:unless="${contestsWithWinners.isEmpty()}">
+        <div class="table">
+            <h1>Completed Contests and Winning Photos</h1>
+
+            <div th:each="contest : ${contestsWithWinners}">
+                <div class="contest-info">
+                    <h3>Contest: <span th:text="${contest.contestOutput.title}">Contest Title</span></h3>
+                    <p>Category: <span th:text="${contest.contestOutput.category}">Category</span></p>
+                    <p>Phase: <span th:text="${contest.contestOutput.phase.name}">Phase</span></p>
+                </div>
+
+                <div th:if="${contest.photoOutputList.isEmpty()}">
+                    <h4>No Photos Available</h4>
+                </div>
+
+                <div th:unless="${contest.photoOutputList.isEmpty()}">
+                    <h4>Winning Photos</h4>
+
+                    <div class="photos" th:each="photo : ${contest.photoOutputList}">
+                        <div class="photo-item">
+                            <h5>Title: <span th:text="${photo.title}">Photo Title</span></h5>
+                            <p>Story: <span th:text="${photo.story}">Photo Story</span></p>
+                            <p>Uploaded by: <span th:text="${photo.username}">Username</span></p>
+                            <p>Uploaded on: <span th:text="${photo.uploadDate}">Date</span></p>
+                            <div class="photo-img">
+                                <img th:src="@{${photo.photo}}" alt="Winning photo" style="max-width:300px;"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <small th:text="${'© ' + #dates.year(#dates.createNow()) + ' PhotoContest'}">© 2024 PhotoContest</small>
+    </div>
+</footer>
+</body>
+</html>

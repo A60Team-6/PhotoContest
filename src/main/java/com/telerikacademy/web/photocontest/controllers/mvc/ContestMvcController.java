@@ -70,6 +70,19 @@ public class ContestMvcController {
         return "ContestsView";  // Връщаме името на View-то
     }
 
+    @GetMapping("/finished")
+    public String getAllFinishedContestsWithTheirWinnerPhotos(Model model, HttpSession session){
+        try{
+            User user = authenticationHelper.tryGetUser(session);
+            model.addAttribute("user", user);
+            List<FinishedContestAntItsWinner> finishedContestAntItsWinners = contestService.getAllUnActive();
+            model.addAttribute("contestsWithWinners", finishedContestAntItsWinners);
+            return "ContestsWithWinnersView";
+        }catch (AuthenticationFailureException e) {
+            return "redirect:/Login";
+        }
+    }
+
     @GetMapping("/phaseOne")
     public String getAllContestsInPhaseOne(Model model, HttpSession session) {
         try {

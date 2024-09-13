@@ -2,9 +2,7 @@ package com.telerikacademy.web.photocontest.services;
 
 
 import com.telerikacademy.web.photocontest.entities.*;
-import com.telerikacademy.web.photocontest.entities.dtos.ContestInput;
-import com.telerikacademy.web.photocontest.entities.dtos.ContestOutput;
-import com.telerikacademy.web.photocontest.entities.dtos.ContestOutputId;
+import com.telerikacademy.web.photocontest.entities.dtos.*;
 import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import com.telerikacademy.web.photocontest.helpers.PermissionHelper;
 import com.telerikacademy.web.photocontest.repositories.ContestRepository;
@@ -24,8 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -42,12 +39,30 @@ public class ContestServiceImpl implements ContestService {
     private final UserRepository userRepository;
     private final UserService userService;
     private final JuryPhotoRatingRepository juryPhotoRatingRepository;
+    private final PhotoService photoService;
 
 
     @Override
     public List<ContestOutput> getAllActive() {
         List<Contest> contests = contestRepository.findAllByIsActiveTrue();
         return contests.stream().map(contest -> conversionService.convert(contest, ContestOutput.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<FinishedContestAntItsWinner> getAllUnActive() {
+        List<Contest> contests = contestRepository.findAllByIsActiveFalse();
+        List<FinishedContestAntItsWinner> finishedContestAntItsWinners = new ArrayList<>();
+        for(Contest contest : contests){
+            List<PhotoOutput> photosOnFirstPlace = findPhotosOnFirstPlace(contest);
+            ContestOutput contestOutput = conversionService.convert(contest, ContestOutput.class);
+            finishedContestAntItsWinners.add(FinishedContestAntItsWinner.builder()
+                    .contestOutput(contestOutput)
+                    .photoOutputList(photosOnFirstPlace)
+                    .build());
+        }
+
+
+        return finishedContestAntItsWinners;
     }
 
     @Override
@@ -295,5 +310,19 @@ public class ContestServiceImpl implements ContestService {
             user.setRank(rankService.getRankByName("Enthusiast"));
             userRepository.save(user);
         }
+    }
+
+    public List<PhotoOutput> findPhotosOnFirstPlace(Contest contest){
+        List<Photo> list = photoService.getAllPhotosEntityOfContest(contest);
+        double maxScore = findMaxScore(list);
+        List<Photo> listOfPhotosOnFirstPlace = new ArrayList<>();
+
+        for(Photo photo : list){
+            if(photo.getTotal_score() == maxScore){
+                listOfPhotosOnFirstPlace.add(photo);
+            }
+        }
+
+        return listOfPhotosOnFirstPlace.stream().map(photo -> conversionService.convert(photo, PhotoOutput.class)).collect(Collectors.toList());
     }
 }
