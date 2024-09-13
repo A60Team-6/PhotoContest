@@ -6,6 +6,7 @@
     <title>Contests Phase Two - Photography Contest</title>
     <link rel="stylesheet" th:href="@{/css/contests.css}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&display=swap" rel="stylesheet">
+    <script src="/js/countdown.js"></script>
 </head>
 <body>
 
@@ -41,6 +42,7 @@
                         <div class="cell">Contest</div>
                         <div class="cell">Category</div>
                         <div class="cell">Phase</div>
+                        <div class="cell">Time Remaining</div> <!-- Нова колона -->
                     </div>
                     <div class="row" th:each="contest : ${contests}">
                         <div class="cell post-title">
@@ -48,6 +50,9 @@
                         </div>
                         <div class="cell post-content" th:text="${contest.category}">Category</div>
                         <div class="cell post-content" th:text="${contest.phase.name}">Phase</div>
+                        <div class="cell">
+                            <span class="timer" th:data-change-phase-time="${contest.changePhaseTime}" id="timer-${contest.contestId}"></span>
+                        </div>
                     </div>
                 </div>
             </div>
