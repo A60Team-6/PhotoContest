@@ -39,6 +39,7 @@ body {
 
 /* Intro Section */
 .intro {
+    height: 600px;
     background-image: url('../assets/img/home.jpg');
     background-size: cover;
     background-position: center;

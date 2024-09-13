@@ -7,6 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/HomeView.css}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&display=swap"
           rel="stylesheet">
+    <script src="/js/scroll.js"></script>
 </head>
 <body>
 <header class="site-header">
@@ -14,12 +15,12 @@
         <h1 class="title">Welcome to the Photography Contest</h1>
         <nav>
             <ul class="nav-links">
-                <li><a th:href="@{/categories}">Categories</a></li>
                 <li><a th:href="@{/prizes}">Prizes</a></li>
                 <li><a th:href="@{/winners}">Winners</a></li>
                 <li><a th:href="@{/submit-photo}">Submit Your Photo</a></li>
 
                 <li><a href="#" th:href="@{/}" th:text="#{navigation.home}">Home</a></li>
+                <li><a href="#categories">Categories</a></li> <!-- Линкът води към секцията с id="categories" -->
                 <li><a href="#" th:unless="${isAuthenticated}" th:href="@{/auth/login}">Login</a></li>
                 <li><a href="#" th:unless="${isAuthenticated}" th:href="@{/auth/register}">Register</a></li>
                 <li><a href="#" th:if="${isAuthenticated}" th:href="@{/auth/logout}">Logout</a></li>
@@ -46,7 +47,7 @@
         </div>
     </section>
 
-    <section class="featured-categories">
+    <section id="categories" class="featured-categories">
         <div class="container">
             <h2>Contest Categories</h2>
             <div class="category-carousel">
