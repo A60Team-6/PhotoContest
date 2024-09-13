@@ -4,8 +4,7 @@ import com.telerikacademy.web.photocontest.entities.Contest;
 import com.telerikacademy.web.photocontest.entities.ContestParticipation;
 import com.telerikacademy.web.photocontest.entities.Photo;
 import com.telerikacademy.web.photocontest.entities.User;
-import com.telerikacademy.web.photocontest.entities.dtos.ContestInput;
-import com.telerikacademy.web.photocontest.entities.dtos.ContestOutput;
+import com.telerikacademy.web.photocontest.entities.dtos.*;
 import com.telerikacademy.web.photocontest.exceptions.*;
 import com.telerikacademy.web.photocontest.helpers.AuthenticationHelper;
 import com.telerikacademy.web.photocontest.services.contracts.ContestParticipationService;
@@ -22,7 +21,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -50,13 +51,13 @@ public class ContestMvcController {
 
     @GetMapping("/contests")
     public String getContests(Model model,
-                           @RequestParam(value = "title", required = false) String title,
-                           @RequestParam(value = "category", required = false) String category,
-                           @RequestParam(value = "phase", required = false) String phase,
-                           @RequestParam(value = "page", defaultValue = "0") int page,
-                           @RequestParam(value = "size", defaultValue = "10") int size,
-                           @RequestParam(value = "sortBy", defaultValue = "firstName") String sortBy,
-                           @RequestParam(value = "sortDirection", defaultValue = "asc") String sortDirection) {
+                              @RequestParam(value = "title", required = false) String title,
+                              @RequestParam(value = "category", required = false) String category,
+                              @RequestParam(value = "phase", required = false) String phase,
+                              @RequestParam(value = "page", defaultValue = "0") int page,
+                              @RequestParam(value = "size", defaultValue = "10") int size,
+                              @RequestParam(value = "sortBy", defaultValue = "firstName") String sortBy,
+                              @RequestParam(value = "sortDirection", defaultValue = "asc") String sortDirection) {
 
         Page<Contest> contestsPage = contestService.getContestsWithFilters(title, category, phase, page, size, sortBy, sortDirection);
 
@@ -66,31 +67,31 @@ public class ContestMvcController {
         model.addAttribute("sortBy", sortBy);  // Поле за сортиране
         model.addAttribute("sortDirection", sortDirection);  // Посока на сортиране
 
-        return "UsersView";  // Връщаме името на View-то
+        return "ContestsView";  // Връщаме името на View-то
     }
 
     @GetMapping("/phaseOne")
-    public String getAllContestsInPhaseOne(Model model, HttpSession session){
-        try{
+    public String getAllContestsInPhaseOne(Model model, HttpSession session) {
+        try {
             User user = authenticationHelper.tryGetUser(session);
             model.addAttribute("user", user);
             List<Contest> contestList = contestService.getAllActiveContestInPhase1();
             model.addAttribute("contests", contestList);
             return "ContestsFromPhase1View";
-        }catch (AuthenticationFailureException e){
+        } catch (AuthenticationFailureException e) {
             return "redirect:/Login";
         }
     }
 
     @GetMapping("/phaseTwo")
-    public String getAllContestsInPhaseTwo(Model model, HttpSession session){
-        try{
+    public String getAllContestsInPhaseTwo(Model model, HttpSession session) {
+        try {
             User user = authenticationHelper.tryGetUser(session);
             model.addAttribute("user", user);
             List<Contest> contestList = contestService.getAllActiveContestInPhase2();
             model.addAttribute("contests", contestList);
             return "ContestsFromPhase2View";
-        }catch (AuthenticationFailureException e){
+        } catch (AuthenticationFailureException e) {
             return "redirect:/Login";
         }
     }
@@ -102,29 +103,30 @@ public class ContestMvcController {
             ContestOutput contest = contestService.findContestById(id);
             model.addAttribute("contest", contest);
             model.addAttribute("user", user);
-            boolean alreadyParticipate = false;
+            int alreadyParticipate = 1;
             List<ContestParticipation> participation = contestParticipationService.getAll();
-            for(ContestParticipation contestParticipation : participation){
-                if(contestParticipation.getContest().getTitle().equals(contest.getTitle()) && contestParticipation.getUser().equals(user)){
-                    alreadyParticipate = true;
+            for (ContestParticipation contestParticipation : participation) {
+                if (contestParticipation.getContest().getTitle().equals(contest.getTitle()) && contestParticipation.getUser().equals(user)) {
+                    alreadyParticipate = 0;
+                    break;
                 }
             }
-            boolean alreadyUploaded = false;
-            List<Photo> photosOfUser = photoService.getAllPhotosEntityOfUser(user);
+            int alreadyUploaded = 1;
             List<Photo> photosOfContest = photoService.getAllPhotosEntityOfContest(contestService.findContestEntityById(id));
 
-            for(Photo photo : photosOfUser){
-                for(Photo photo1 : photosOfContest){
-                    if(photo.equals(photo1)){
-                        alreadyUploaded = true;
-                    }
+
+            for (Photo photo1 : photosOfContest) {
+                if (photo1.getUser().equals(user)) {
+                    alreadyUploaded = 0;
+                    break;
                 }
             }
-            session.setAttribute("alreadyUploaded", alreadyUploaded);
-            session.setAttribute("contestId", id);
-            session.setAttribute("alreadyParticipate", alreadyParticipate);
+
+            model.addAttribute("contestId", id);
+            model.addAttribute("alreadyUploaded", alreadyUploaded);
+            model.addAttribute("alreadyParticipate", alreadyParticipate);
             return "ContestViewPhase1";
-        }catch (EntityNotFoundException e) {
+        } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
             return "ErrorView";
@@ -142,7 +144,7 @@ public class ContestMvcController {
             session.setAttribute("photos", photos);
             session.setAttribute("contestId", id);
             return "ContestViewPhase2";
-        }catch (EntityNotFoundException e) {
+        } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
             return "ErrorView";
@@ -164,9 +166,9 @@ public class ContestMvcController {
 
     @PostMapping("/new")
     public String createContest(@Valid @ModelAttribute("contest") ContestInput contestInput,
-                             BindingResult bindingResult,
-                             Model model,
-                             HttpSession session) {
+                                BindingResult bindingResult,
+                                Model model,
+                                HttpSession session) {
 
         User user;
         try {
@@ -223,11 +225,62 @@ public class ContestMvcController {
             model.addAttribute("user", authUser);
             contestParticipationService.participateInContest(authUser, id);
             return "ContestViewPhase1";
-        }catch (EntityNotFoundException e) {
+        } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
             return "ErrorView";
         }
     }
-    //    празен ред
+
+    @GetMapping("/{id}/upload/photo")
+    public String createAndUploadPhoto(@PathVariable UUID id, Model model, HttpSession session) {
+        try {
+            authenticationHelper.tryGetUser(session);
+            model.addAttribute("photoInput", new PhotoInput());
+            model.addAttribute("uploadFileInput", new UploadFileInput());
+            model.addAttribute("combinedInput", new CombinedPhotoInput());
+            model.addAttribute("contestId", id);
+            return "CreatePhotoView";
+        } catch (AuthenticationFailureException e) {
+            return "redirect:/auth/login";
+        }
+    }
+
+
+    @PostMapping("/{id}/upload/photo")
+    public String createAndUploadPhoto(@PathVariable UUID id, @Valid @ModelAttribute("combinedInput") CombinedPhotoInput combinedInput, BindingResult bindingResult, Model model, HttpSession session) {
+        User user;
+        try {
+            user = authenticationHelper.tryGetUser(session);
+        } catch (AuthenticationFailureException e) {
+            return "redirect:/Login";
+        }
+
+        if (bindingResult.hasErrors()) {
+            return "CreatePhotoView";
+        }
+
+        try {
+            PhotoInput photoInput = combinedInput.getPhotoInput();
+            photoInput.setContestId(id.toString());
+            model.addAttribute("combinedInput", combinedInput);
+
+            PhotoIdOutput photoIdOutput = photoService.createPhoto(photoInput, user);
+            UploadFileInput uploadFileInput = new UploadFileInput(photoIdOutput.getId(), combinedInput.getFile());
+
+            model.addAttribute("contestId", id);
+            photoService.uploadPhoto(uploadFileInput);
+
+            return "redirect:/contest/" + id + "/phOne";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
+            model.addAttribute("error", e.getMessage());
+            return "ErrorView";
+        } catch (DuplicateEntityException e) {
+            bindingResult.rejectValue("photoInput.title", "duplicate_post", e.getMessage());
+            return "CreatePhotoView";
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

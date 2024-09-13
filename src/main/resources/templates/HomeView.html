@@ -27,7 +27,7 @@
                 <li><a href="#" th:if="${isAuthenticated}" th:href="@{/contest/phaseOne}">Contests In Phase
                     1</a></li>
                 <li><a href="#"
-                       th:if="${isAuthenticated} and ${session.isOrganizer} or ${session.isJury}"
+                       th:if="(${isAuthenticated}) and (${session.isOrganizer} or ${session.isJury})"
                        th:href="@{/contest/phaseTwo}">Contests In Phase 2</a></li>
                 <li><a th:if="${isAuthenticated} and ${session.isOrganizer}" th:href="@{/contest/new}">Create New Contest</a></li>
             </ul>

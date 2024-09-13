@@ -39,10 +39,12 @@
         </div>
 
         <div class="actions">
-            <form th:if="${!session.alreadyParticipate}" th:action="@{/contest/{id}/participate(id=${session.contestId})}" method="post">
+            <form th:if="${alreadyParticipate == 1}" th:action="@{/contest/{id}/participate(id=${contestId})}" method="post">
                 <button type="submit" class="btn btn-participate">Participate</button>
             </form>
-            <!-- Ако е качил снимка, тук можеш да добавиш форма за ъплоуд -->
+            <form th:if="${alreadyUploaded == 1} and ${alreadyParticipate == 0}" th:action="@{/contest/{id}/upload/photo(id=${contestId})}" method="get">
+                <button type="submit" class="btn btn-participate">Upload Photo</button>
+            </form>
         </div>
     </div>
 </main>

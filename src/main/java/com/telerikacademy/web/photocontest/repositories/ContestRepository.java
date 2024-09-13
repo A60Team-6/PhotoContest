@@ -23,9 +23,9 @@ public interface ContestRepository extends JpaRepository<Contest, UUID> {
     Contest findByTitleAndIsActiveTrue(String title);
 
     @Query("SELECT c FROM Contest c " +
-            "WHERE (:title IS NULL OR c.title = :title) " +
-            "AND (:category IS NULL OR c.category = :category) " +
-            "AND (:phase IS NULL OR c.phase.name = :phase) ")
+            "WHERE (:title IS NULL OR c.title like :title) " +
+            "AND (:category IS NULL OR c.category like :category) " +
+            "AND (:phase IS NULL OR c.phase.name like :phase) ")
     Page<Contest> findContestsByMultipleFields(
             @Param("title") String title,
             @Param("category") String category,

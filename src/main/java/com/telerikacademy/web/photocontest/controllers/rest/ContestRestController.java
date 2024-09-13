@@ -11,6 +11,7 @@ import com.telerikacademy.web.photocontest.services.contracts.ContestService;
 import com.telerikacademy.web.photocontest.services.contracts.PhotoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +37,19 @@ public class ContestRestController {
     public ResponseEntity<List<PhotoOutput>> getAllPhotosOfContest(@PathVariable UUID contestId) {
         Contest contest = contestService.findContestEntityById(contestId);
         return ResponseEntity.ok(photoService.getAllPhotosOfContest(contest));
+    }
+
+    @GetMapping("/filtered")
+    public ResponseEntity<Page<Contest>> getContests(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String phase,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDirection) {
+        Page<Contest> contests = contestService.getContestsWithFilters(title, category, phase, page, size, sortBy, sortDirection);
+        return ResponseEntity.ok(contests);
     }
 
     @GetMapping("/{id}")
