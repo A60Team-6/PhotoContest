@@ -2,46 +2,82 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>New Photo</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Photo</title>
+    <link rel="stylesheet" th:href="@{/css/uploadPhoto.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&display=swap"
+          rel="stylesheet">
 </head>
 <body>
-<div class="navigation">
-    <h3>
-        <a href="#" th:href="@{/}" th:text="#{navigation.home}">Home</a>
-        <a href="#" th:unless="${isAuthenticated}" th:href="@{/auth/login}">Login</a>
-        <a href="#" th:unless="${isAuthenticated}" th:href="@{/auth/register}">Register</a>
-        <a href="#" th:if="${isAuthenticated}" th:href="@{/user/me}">My Profile</a>
-        <a href="#" th:if="${isAuthenticated}" th:href="@{/auth/logout}">Logout</a>
-    </h3>
-</div>
-
-<div class="body-content">
-    <header class="header">
-        <h2 th:text="#{subtitle}">Create a new post</h2>
-    </header>
-
-    <div class="post-form">
-        <form action="#" th:action="@{/contest/{id}/upload/photo(id=${contestId})}" th:object="${combinedInput}"  method="post" enctype="multipart/form-data">
-            <label th:text="#{photo.title.label}">Title</label>
-            <input type="text" th:field="*{photoInput.title}" placeholder="Enter photo title"/>
-            <div th:if="${#fields.hasErrors('photoInput.title')}" th:errors="*{photoInput.title}" class="error-message"></div>
-
-
-            <label th:text="#{photo.story.label}">Story</label>
-            <textarea th:field="*{photoInput.story}" placeholder="Write your story here..." rows="6"></textarea>
-            <div th:if="${#fields.hasErrors('photoInput.story')}" th:errors="*{photoInput.story}" class="error-message"></div>
-
-            <label th:text="#{photo.upload.label}">Upload Photo</label>
-            <input type="file" name="file" accept="image/*" required/>
-            <div th:if="${#fields.hasErrors('file')}" th:errors="*{file}" class="error-message"></div>
-
-            <input type="submit" value="Save"/>
-        </form>
+<header class="site-header">
+    <div class="container">
+        <h1 class="title">Upload Photo</h1>
+        <nav>
+            <ul class="nav-links">
+                <li><a th:href="@{/}">Home</a></li>
+                <li><a th:href="@{/contest/phaseOne}">Contests In Phase 1</a></li>
+                <li><a th:href="@{/user/me}">My Profile</a></li>
+                <li><a th:href="@{/auth/logout}">Logout</a></li>
+            </ul>
+        </nav>
     </div>
-</div>
+</header>
+
+<main>
+    <div class="body-content">
+        <header class="header">
+            <h2 class="page-title">Upload Your Photo</h2>
+        </header>
+
+        <div class="post-form">
+            <form action="#" th:action="@{/contest/{id}/upload/photo(id=${contestId})}" th:object="${combinedInput}"
+                  method="post" enctype="multipart/form-data">
+                <label th:text="#{photo.title.label}">Photo Title</label>
+                <input type="text" th:field="*{photoInput.title}" placeholder="Enter photo title"/>
+                <div th:if="${#fields.hasErrors('photoInput.title')}" th:errors="*{photoInput.title}"
+                     class="error-message"></div>
+
+                <label th:text="#{photo.story.label}">Photo Story</label>
+                <textarea th:field="*{photoInput.story}" placeholder="Write your story here..." rows="6"></textarea>
+                <div th:if="${#fields.hasErrors('photoInput.story')}" th:errors="*{photoInput.story}"
+                     class="error-message"></div>
+
+                <label th:text="#{photo.upload.label}">Photo</label>
+                <input type="file" id="photoUpload" name="file" accept="image/*" onchange="previewImage(event)"
+                       required/>
+                <div id="preview-container">
+                    <img id="photoPreview" style="display:none; max-width: 100%; height: auto;">
+                </div>
+                <div th:if="${#fields.hasErrors('file')}" th:errors="*{file}" class="error-message"></div>
+
+                <input type="submit" value="Save" class="save-button"/>
+            </form>
+        </div>
+    </div>
+</main>
+
 <footer>
-    <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' Photo Contest'}">Photo Contest</small>
+    <div class="container">
+        <p>&copy; 2024 Photography Contest | <a th:href="@{/privacy-policy}">Privacy Policy</a> | <a
+                th:href="@{/contact}">Contact Us</a></p>
+    </div>
 </footer>
+
+<script>
+    function previewImage(event) {
+        const input = event.target;
+        const preview = document.getElementById('photoPreview');
+        const previewContainer = document.getElementById('preview-container');
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
 </body>
 </html>
