@@ -41,7 +41,8 @@
             <h2 class="tagline">Capture the Beauty of Nature</h2>
             <p>Show your skills in this international contest and compete for amazing prizes. The contest is open for
                 all photography enthusiasts, amateurs, and professionals alike.</p>
-            <a th:href="@{/submit-photo}" class="cta-button">Submit Your Photo</a>
+            <a th:if="${isAuthenticated}" th:href="@{/contest/phaseOne}" class="cta-button">Submit Your Photo</a>
+            <a th:unless="${isAuthenticated}" th:href="@{/auth/login}" class="cta-button">Submit Your Photo</a>
         </div>
     </section>
 
