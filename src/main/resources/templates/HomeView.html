@@ -26,6 +26,7 @@
                 <li><a href="#" th:if="${isAuthenticated}" th:href="@{/user/me}">My Profile</a></li>
                 <li><a href="#" th:if="${isAuthenticated}" th:href="@{/contest/phaseOne}">Contests In Phase
                     1</a></li>
+                <li><a href="#" th:if="${isAuthenticated}" th:href="@{/photo/photos/of/user}">My Photos</a></li>
                 <li><a href="#" th:if="${isAuthenticated}" th:href="@{/contest/finished}">Winners</a></li>
                 <li><a href="#"
                        th:if="(${isAuthenticated}) and (${session.isOrganizer} or ${session.isJury})"

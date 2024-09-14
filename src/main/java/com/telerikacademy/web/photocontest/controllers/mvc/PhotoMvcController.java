@@ -5,6 +5,7 @@ import com.telerikacademy.web.photocontest.entities.Photo;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.ContestOutput;
 import com.telerikacademy.web.photocontest.entities.dtos.JuryPhotoRatingInput;
+import com.telerikacademy.web.photocontest.entities.dtos.JuryPhotoRatingOutput;
 import com.telerikacademy.web.photocontest.entities.dtos.PhotoOutput;
 import com.telerikacademy.web.photocontest.exceptions.*;
 import com.telerikacademy.web.photocontest.helpers.AuthenticationHelper;
@@ -45,6 +46,43 @@ public class PhotoMvcController {
     public boolean populateIsAuthenticated(HttpSession session) {
         return session.getAttribute("currentUser") != null;
     }
+
+    @GetMapping("photos/of/user")
+    public String showPhotosOfUser(Model model, HttpSession session){
+        try{
+            User user = authenticationHelper.tryGetUser(session);
+            List<Photo> photosOfUser = photoService.getAllPhotosEntityOfUser(user);
+            model.addAttribute("photosOfUser", photosOfUser);
+            model.addAttribute("user", user);
+            return "PhotosOfUserView";
+        } catch (AuthenticationFailureException e) {
+            return "AccessDeniedView";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
+            model.addAttribute("error", e.getMessage());
+            return "ErrorView";
+        }
+    }
+
+    @GetMapping("/{id}/ratings")
+    public String getJuryRatingsForPhoto(@PathVariable UUID id, Model model, HttpSession session){
+        try {
+            User user = authenticationHelper.tryGetUser(session);
+            Photo photo = photoService.findPhotoEntityById(id);
+            model.addAttribute("user", user);
+            model.addAttribute("photo", photo);
+            List<JuryPhotoRatingOutput> juryPhotoRatingOutputs = juryPhotoRatingService.getAllRatingsForPhoto(id);
+            model.addAttribute("juryPhotoRatingOutputs", juryPhotoRatingOutputs);
+            return "JuryPhotoRatingsView";
+        } catch (AuthenticationFailureException e) {
+            return "AccessDeniedView";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
+            model.addAttribute("error", e.getMessage());
+            return "ErrorView";
+        }
+    }
+
 
     @GetMapping("/{id}")
     public String showSinglePhoto(@PathVariable UUID id, Model model, HttpSession session) {

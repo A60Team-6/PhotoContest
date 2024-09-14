@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ratings Of Photo</title>
+</head>
+<body>
+
+<header class="site-header">
+    <div class="container">
+        <h1 class="title">Ratings Of Photo</h1>
+        <nav>
+            <ul class="nav-links">
+                <li><a th:href="@{/}">Home</a></li>
+                <li><a href="#" th:unless="${isAuthenticated}" th:href="@{/auth/login}">Login</a></li>
+                <li><a href="#" th:unless="${isAuthenticated}" th:href="@{/auth/register}">Register</a></li>
+                <li><a href="#" th:if="${isAuthenticated}" th:href="@{/user/me}">My Profile</a></li>
+                <li><a href="#" th:if="${isAuthenticated}" th:href="@{/auth/logout}">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <div class="body-content">
+
+        <div th:if="${juryPhotoRatingOutputs.isEmpty()}">
+            <h2 th:text="#{rating.label.empty}">No Ratings</h2>
+        </div>
+
+        <div th:unless="${juryPhotoRatingOutputs.isEmpty()}">
+            <div class="table-container">
+                <div class="table">
+                    <div class="row" th:each="rating : ${juryPhotoRatingOutputs}">
+                        <div th:text="${rating.score}">Score</div>
+                        <div class="cell post-content" th:text="${rating.comment}">Comment</div>
+                        <div class="cell post-content" th:text="${rating.categoryMatch}">Category Match</div>
+                        <div class="cell post-content" th:text="${rating.reviewDate}">Review Date</div>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="container">
+        <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' Photo Contest'}">© 2024 Photo Contest</small>
+    </div>
+</footer>
+
+</body>
+</html>
