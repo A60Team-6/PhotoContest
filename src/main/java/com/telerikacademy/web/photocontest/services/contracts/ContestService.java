@@ -16,13 +16,15 @@ public interface ContestService {
 
     List<FinishedContestAntItsWinner> getAllUnActive();
 
-    List<Contest> getAllActiveContestInPhase1();
+   // List<Contest> getAllActiveContestInPhase1();
+
+    Page<Contest> getAllActiveContestInPhase1(String title, String category, int page, int size, String sortBy, String sortDirection);
 
     List<Contest> getAllActiveContestInPhase2();
 
     List<ContestOutput> getAllContests();
 
-    Page<Contest> getContestsWithFilters(String title, String category, String phase, int page, int size, String sortBy, String sortDirection);
+ //   Page<Contest> getContestsWithFilters(String title, String category, String phase, int page, int size, String sortBy, String sortDirection);
 
     ContestOutput findContestById(UUID contestId);
 

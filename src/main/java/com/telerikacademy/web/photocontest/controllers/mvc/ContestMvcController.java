@@ -49,27 +49,6 @@ public class ContestMvcController {
         return session.getAttribute("currentUser") != null;
     }
 
-    @GetMapping("/contests")
-    public String getContests(Model model,
-                              @RequestParam(value = "title", required = false) String title,
-                              @RequestParam(value = "category", required = false) String category,
-                              @RequestParam(value = "phase", required = false) String phase,
-                              @RequestParam(value = "page", defaultValue = "0") int page,
-                              @RequestParam(value = "size", defaultValue = "10") int size,
-                              @RequestParam(value = "sortBy", defaultValue = "title") String sortBy,
-                              @RequestParam(value = "sortDirection", defaultValue = "asc") String sortDirection) {
-
-        Page<Contest> contestsPage = contestService.getContestsWithFilters(title, category, phase, page, size, sortBy, sortDirection);
-
-        model.addAttribute("contests", contestsPage.getContent());  // Потребителите от текущата страница
-        model.addAttribute("totalPages", contestsPage.getTotalPages());  // Общо страници
-        model.addAttribute("currentPage", page);  // Текуща страница
-        model.addAttribute("sortBy", sortBy);  // Поле за сортиране
-        model.addAttribute("sortDirection", sortDirection);  // Посока на сортиране
-
-        return "ContestsView";  // Връщаме името на View-то
-    }
-
     @GetMapping("/finished")
     public String getAllFinishedContestsWithTheirWinnerPhotos(Model model, HttpSession session){
         try{
@@ -84,16 +63,26 @@ public class ContestMvcController {
     }
 
     @GetMapping("/phaseOne")
-    public String getAllContestsInPhaseOne(Model model, HttpSession session) {
-        try {
-            User user = authenticationHelper.tryGetUser(session);
-            model.addAttribute("user", user);
-            List<Contest> contestList = contestService.getAllActiveContestInPhase1();
-            model.addAttribute("contests", contestList);
-            return "ContestsFromPhase1View";
-        } catch (AuthenticationFailureException e) {
-            return "redirect:/Login";
-        }
+    public String getContestsPhaseOne(Model model,
+                           @RequestParam(value = "title", required = false) String title,
+                           @RequestParam(value = "category", required = false) String category,
+                           @RequestParam(value = "page", defaultValue = "0") int page,
+                           @RequestParam(value = "size", defaultValue = "3") int size,
+                           @RequestParam(value = "sortBy", defaultValue = "title") String sortBy,
+                           @RequestParam(value = "sortDirection", defaultValue = "asc") String sortDirection) {
+
+        Page<Contest> contestsPage = contestService.getAllActiveContestInPhase1(title, category, page, size, sortBy, sortDirection);
+
+        model.addAttribute("contests", contestsPage.getContent());  // Потребителите от текущата страница
+        model.addAttribute("totalPages", contestsPage.getTotalPages());  // Общо страници
+        model.addAttribute("currentPage", page);  // Текуща страница
+        model.addAttribute("size", size);
+        model.addAttribute("sortBy", sortBy);  // Поле за сортиране
+        model.addAttribute("sortDirection", sortDirection);  // Посока на сортиране
+        model.addAttribute("title", title);
+        model.addAttribute("category", category);
+
+        return "ContestsFromPhase1View";  // Връщаме името на View-то
     }
 
     @GetMapping("/phaseTwo")

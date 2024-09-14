@@ -66,9 +66,13 @@ public class ContestServiceImpl implements ContestService {
     }
 
     @Override
-    public List<Contest> getAllActiveContestInPhase1(){
-        List<Contest> contests = contestRepository.findAllByIsActiveTrue();
-        return contests.stream().filter(contest -> contest.getPhase().getName().equals("Phase 1")).toList();
+    public Page<Contest> getAllActiveContestInPhase1(String title, String category, int page, int size, String sortBy, String sortDirection){
+       Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
+       Pageable pageable = PageRequest.of(page, size, sort);
+
+        String titleLike = title != null ? "%" + title + "%" : null;
+        String categoryLike = category != null ? "%" + category + "%" : null;
+        return contestRepository.findContestsPhase1ByMultipleFields(titleLike, categoryLike, pageable);
     }
 
     @Override
@@ -82,14 +86,6 @@ public class ContestServiceImpl implements ContestService {
     public List<ContestOutput> getAllContests() {
         List<Contest> contests = contestRepository.findAll();
         return contests.stream().map(contest -> conversionService.convert(contest, ContestOutput.class)).collect(Collectors.toList());
-    }
-
-    @Override
-    public Page<Contest> getContestsWithFilters(String title, String category, String phase, int page, int size, String sortBy, String sortDirection) {
-        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
-        Pageable pageable = PageRequest.of(page, size, sort);
-
-        return contestRepository.findContestsByMultipleFields(title, category, phase, pageable);
     }
 
     @Override

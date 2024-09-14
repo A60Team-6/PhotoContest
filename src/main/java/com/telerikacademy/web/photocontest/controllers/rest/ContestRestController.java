@@ -39,18 +39,18 @@ public class ContestRestController {
         return ResponseEntity.ok(photoService.getAllPhotosOfContest(contest));
     }
 
-    @GetMapping("/filtered")
-    public ResponseEntity<Page<Contest>> getContests(
-            @RequestParam(required = false) String title,
-            @RequestParam(required = false) String category,
-            @RequestParam(required = false) String phase,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "id") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortDirection) {
-        Page<Contest> contests = contestService.getContestsWithFilters(title, category, phase, page, size, sortBy, sortDirection);
-        return ResponseEntity.ok(contests);
-    }
+//    @GetMapping("/filtered")
+//    public ResponseEntity<Page<Contest>> getContests(
+//            @RequestParam(required = false) String title,
+//            @RequestParam(required = false) String category,
+//            @RequestParam(required = false) String phase,
+//            @RequestParam(defaultValue = "0") int page,
+//            @RequestParam(defaultValue = "10") int size,
+//            @RequestParam(defaultValue = "id") String sortBy,
+//            @RequestParam(defaultValue = "asc") String sortDirection) {
+//        Page<Contest> contests = contestService.getContestsWithFilters(title, category, phase, page, size, sortBy, sortDirection);
+//        return ResponseEntity.ok(contests);
+//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<ContestOutput> getContestById(@PathVariable UUID id) {

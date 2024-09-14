@@ -17,14 +17,39 @@
         <nav>
             <ul class="nav-links">
                 <li><a th:href="@{/}">Home</a></li>
-                <li><a href="#" th:unless="${isAuthenticated}" th:href="@{/auth/login}">Login</a></li>
-                <li><a href="#" th:unless="${isAuthenticated}" th:href="@{/auth/register}">Register</a></li>
-                <li><a href="#" th:if="${isAuthenticated}" th:href="@{/user/me}">My Profile</a></li>
-                <li><a href="#" th:if="${isAuthenticated}" th:href="@{/auth/logout}">Logout</a></li>
+                <li th:if="${!isAuthenticated}"><a th:href="@{/auth/login}">Login</a></li>
+                <li th:if="${!isAuthenticated}"><a th:href="@{/auth/register}">Register</a></li>
+                <li th:if="${isAuthenticated}"><a th:href="@{/user/me}">My Profile</a></li>
+                <li th:if="${isAuthenticated}"><a th:href="@{/auth/logout}">Logout</a></li>
             </ul>
         </nav>
     </div>
 </header>
+
+<!-- Форма за филтриране -->
+<form method="get" action="/contest/phaseOne">
+    <input type="text" name="title" placeholder="Title" th:value="${title}" />
+    <input type="text" name="category" placeholder="Category" th:value="${category}" />
+    <button type="submit">Filter</button>
+</form>
+
+<!-- Таблица за сортиране -->
+<table>
+    <thead>
+    <tr>
+        <th>
+            <a th:href="@{/contest/phaseOne(page=${currentPage}, size=${size}, sortBy=${'title'}, sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">
+                Title <span th:text="${sortBy == 'title'} ? (sortDirection == 'asc' ? '▲' : '▼') : ''"></span>
+            </a>
+        </th>
+        <th>
+            <a th:href="@{/contest/phaseOne(page=${currentPage}, size=${size}, sortBy=${'category'}, sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">
+                Category <span th:text="${sortBy == 'category'} ? (sortDirection == 'asc' ? '▲' : '▼') : ''"></span>
+            </a>
+        </th>
+    </tr>
+    </thead>
+</table>
 
 <!-- Основно съдържание -->
 <main>
@@ -46,7 +71,7 @@
                     </div>
                     <div class="row" th:each="contest : ${contests}">
                         <div class="cell post-title">
-                            <a href="#" th:href="@{/contest/{id}/phOne(id=${contest.contestId})}" th:text="${contest.title}">Contest</a>
+                            <a th:href="@{/contest/{id}/phOne(id=${contest.contestId})}" th:text="${contest.title}">Contest</a>
                         </div>
                         <div class="cell post-content" th:text="${contest.category}">Category</div>
                         <div class="cell post-content" th:text="${contest.phase.name}">Phase</div>
@@ -59,6 +84,25 @@
         </div>
     </div>
 </main>
+
+<!-- Пагинация -->
+<div class="pagination">
+    <a th:if="${currentPage > 0}"
+       th:href="@{/contest/phaseOne(page=${currentPage - 1}, size=${size}, sortBy=${sortBy}, sortDirection=${sortDirection})}">
+        Previous
+    </a>
+
+    <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+        <a th:classappend="${i == currentPage} ? 'active'"
+           th:href="@{/contest/phaseOne(page=${i}, size=${size}, sortBy=${sortBy}, sortDirection=${sortDirection})}"
+           th:text="${i + 1}">1</a>
+    </span>
+
+    <a th:if="${currentPage < totalPages - 1}"
+       th:href="@{/contest/phaseOne(page=${currentPage + 1}, size=${size}, sortBy=${sortBy}, sortDirection=${sortDirection})}">
+        Next
+    </a>
+</div>
 
 <!-- Футър -->
 <footer>
