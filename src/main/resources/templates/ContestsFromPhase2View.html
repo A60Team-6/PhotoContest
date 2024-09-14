@@ -26,6 +26,30 @@
     </div>
 </header>
 
+<form method="get" action="/contest/phaseTwo">
+    <input type="text" name="title" placeholder="Title" th:value="${title}" />
+    <input type="text" name="category" placeholder="Category" th:value="${category}" />
+    <button type="submit">Filter</button>
+</form>
+
+<!-- Таблица за сортиране -->
+<table>
+    <thead>
+    <tr>
+        <th>
+            <a th:href="@{/contest/phaseTwo(page=${currentPage}, size=${size}, sortBy=${'title'}, sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">
+                Title <span th:text="${sortBy == 'title'} ? (sortDirection == 'asc' ? '▲' : '▼') : ''"></span>
+            </a>
+        </th>
+        <th>
+            <a th:href="@{/contest/phaseTwo(page=${currentPage}, size=${size}, sortBy=${'category'}, sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">
+                Category <span th:text="${sortBy == 'category'} ? (sortDirection == 'asc' ? '▲' : '▼') : ''"></span>
+            </a>
+        </th>
+    </tr>
+    </thead>
+</table>
+
 <!-- Основно съдържание -->
 <main>
     <div class="body-content">
@@ -60,6 +84,24 @@
     </div>
 </main>
 
+
+<div class="pagination">
+    <a th:if="${currentPage > 0}"
+       th:href="@{/contest/phaseTwo(page=${currentPage - 1}, size=${size}, sortBy=${sortBy}, sortDirection=${sortDirection})}">
+        Previous
+    </a>
+
+    <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+        <a th:classappend="${i == currentPage} ? 'active'"
+           th:href="@{/contest/phaseTwo(page=${i}, size=${size}, sortBy=${sortBy}, sortDirection=${sortDirection})}"
+           th:text="${i + 1}">1</a>
+    </span>
+
+    <a th:if="${currentPage < totalPages - 1}"
+       th:href="@{/contest/phaseTwo(page=${currentPage + 1}, size=${size}, sortBy=${sortBy}, sortDirection=${sortDirection})}">
+        Next
+    </a>
+</div>
 <!-- Футър -->
 <footer>
     <div class="container">

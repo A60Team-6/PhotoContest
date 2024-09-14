@@ -75,11 +75,21 @@ public class ContestServiceImpl implements ContestService {
         return contestRepository.findContestsPhase1ByMultipleFields(titleLike, categoryLike, pageable);
     }
 
-    @Override
-    public List<Contest> getAllActiveContestInPhase2(){
-        List<Contest> contests = contestRepository.findAllByIsActiveTrue();
+//    @Override
+//    public List<Contest> getAllActiveContestInPhase2(){
+//        List<Contest> contests = contestRepository.findAllByIsActiveTrue();
+//
+//        return contests.stream().filter(contest -> contest.getPhase().getName().equals("Phase 2")).toList();
+//    }
 
-        return contests.stream().filter(contest -> contest.getPhase().getName().equals("Phase 2")).toList();
+    @Override
+    public Page<Contest> getAllActiveContestInPhase2(String title, String category, int page, int size, String sortBy, String sortDirection){
+        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        String titleLike = title != null ? "%" + title + "%" : null;
+        String categoryLike = category != null ? "%" + category + "%" : null;
+        return contestRepository.findContestsPhase2ByMultipleFields(titleLike, categoryLike, pageable);
     }
 
     @Override

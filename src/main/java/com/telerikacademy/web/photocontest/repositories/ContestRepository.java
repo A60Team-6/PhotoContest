@@ -34,4 +34,14 @@ public interface ContestRepository extends JpaRepository<Contest, UUID> {
             @Param("category") String category,
             Pageable pageable);
 
+    @Query("SELECT c FROM Contest c " +
+            "WHERE c.isActive = true " +
+            "AND c.phase.name = 'Phase 2' "+
+            "AND (:title IS NULL OR c.title like :title) " +
+            "AND (:category IS NULL OR c.category like :category)")
+    Page<Contest> findContestsPhase2ByMultipleFields(
+            @Param("title") String title,
+            @Param("category") String category,
+            Pageable pageable);
+
 }

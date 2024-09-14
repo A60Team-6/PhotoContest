@@ -20,7 +20,9 @@ public interface ContestService {
 
     Page<Contest> getAllActiveContestInPhase1(String title, String category, int page, int size, String sortBy, String sortDirection);
 
-    List<Contest> getAllActiveContestInPhase2();
+  //  List<Contest> getAllActiveContestInPhase2();
+
+    Page<Contest> getAllActiveContestInPhase2(String title, String category, int page, int size, String sortBy, String sortDirection);
 
     List<ContestOutput> getAllContests();
 
