@@ -2,7 +2,7 @@
 body {
     margin: 0;
     font-family: 'Roboto', sans-serif;
-    background-image: url('../assets/img/home.jpg'); /* Същата фонова снимка */
+    background-image: url('../assets/img/home.jpg');
     background-size: cover;
     background-position: center;
     color: #333;
@@ -13,7 +13,7 @@ body {
 
 /* Header */
 .site-header {
-    background-color: rgba(0, 0, 0, 0.6); /* Лека прозрачност за по-добра видимост на текста */
+    background-color: rgba(0, 0, 0, 0.6);
     color: #fff;
     padding: 20px 0;
     text-align: center;
@@ -57,17 +57,38 @@ main {
 }
 
 .body-content {
-    background-color: rgba(255, 255, 255, 0.9); /* Леко по-плътен фон за по-добър контраст */
+    background-color: rgba(255, 255, 255, 0.9);
     padding: 40px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 60%; /* Ограничава ширината на страницата */
-    max-width: 800px; /* Максимална ширина */
+    width: 50%;
+    max-width: 600px;
+    text-align: center;
 }
 
 /* Стил за полетата на профила */
 .profile-info {
     margin-bottom: 30px;
+}
+
+.profile-photo {
+    margin-bottom: 20px;
+}
+
+.profile-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.user-details {
+    margin: 0 auto;
+    max-width: 300px;
+    text-align: left;
 }
 
 .margin12 {
@@ -78,7 +99,8 @@ main {
 /* Бутони */
 .button-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 20px;
 }
 
 .edit, .delete {

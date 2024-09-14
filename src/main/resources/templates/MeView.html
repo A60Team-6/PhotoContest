@@ -31,10 +31,18 @@
         </div>
 
         <div class="profile-info">
-            <p class="margin12" th:text="#{user.label.username} + ': ' + ${user.username}">Username</p>
-            <p class="margin12" th:text="#{user.label.email} + ': ' + ${user.email}">Email</p>
-            <p class="margin12" th:text="#{user.label.fullName} + ': ' + ${user.firstName + ' ' + user.lastName}">Full
-                Name</p>
+            <div class="profile-photo">
+                <img th:src="${user.profilePhoto}" alt="Profile Picture" class="profile-picture"/>
+            </div>
+            <div class="user-details">
+                <p class="margin12" th:text="#{user.label.username} + ': ' + ${user.username}">Username</p>
+                <p class="margin12" th:text="#{user.label.fullName} + ': ' + ${user.firstName + ' ' + user.lastName}">
+                    Full Name</p>
+                <p class="margin12" th:text="#{user.label.email} + ': ' + ${user.email}">Email</p>
+                <p class="margin12" th:text="#{user.label.role} + ': ' + ${user.role.name}">Role</p>
+                <p class="margin12" th:text="#{user.label.rank} + ': ' + ${user.rank.name}">Rank</p>
+                <p class="margin12" th:text="#{user.label.points} + ': ' + ${user.points}">Points</p>
+            </div>
         </div>
 
         <div class="button-container">
@@ -44,8 +52,7 @@
 
             <form th:action="@{/user/{id}/delete(id=${id})}" method="post">
                 <button type="submit" class="delete"
-                        onclick="return confirm('Are you sure you want to delete this user?')">
-                    Delete User
+                        onclick="return confirm('Are you sure you want to delete this user?')">Delete User
                 </button>
             </form>
         </div>

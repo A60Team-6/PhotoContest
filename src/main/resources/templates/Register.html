@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - Photography Contest</title>
     <link rel="stylesheet" th:href="@{/css/register.css}">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&display=swap"
+          rel="stylesheet">
 </head>
 <body>
 
@@ -24,15 +25,17 @@
 <!-- Контейнер за регистрационната форма -->
 <main>
     <div class="register-container">
-        <form action="#" th:action="@{/auth/register}" th:object="${register}" method="post" enctype="multipart/form-data" class="register-form">
+        <form action="#" th:action="@{/auth/register}" th:object="${register}" method="post"
+              enctype="multipart/form-data" class="register-form">
 
             <!-- Преглед на профилна снимка -->
             <div class="profile-photo-container">
-                <img id="profilePhotoPreview" src="../assets/img/default-avatar.png" alt="Profile Photo" class="profile-photo">
+                <img id="profilePhotoPreview" src="../assets/img/default.jpg" alt="Profile Photo" class="profile-photo">
             </div>
 
             <label class="custom-file-upload">
-                <input type="file" th:field="*{profilePhoto}" accept="image/jpeg" onchange="previewProfilePhoto(event)"/>
+                <input type="file" th:field="*{profilePhoto}" accept="image/jpeg"
+                       onchange="previewProfilePhoto(event)"/>
                 <span>Add profile photo</span>
             </label>
             <label class="error" th:errors="*{profilePhoto}">Profile photo error placeholder</label>
@@ -69,7 +72,8 @@
 <!-- Футър -->
 <footer>
     <div class="container">
-        <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' Photo Contest'}">© 2024 Photo Contest</small>
+        <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' Photo Contest'}">© 2024 Photo
+            Contest</small>
     </div>
 </footer>
 
@@ -78,7 +82,7 @@
         const reader = new FileReader();
         const file = event.target.files[0];
 
-        reader.onload = function() {
+        reader.onload = function () {
             const previewImage = document.getElementById('profilePhotoPreview');
             previewImage.src = reader.result;
         }
