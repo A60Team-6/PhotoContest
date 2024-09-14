@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Controller
@@ -55,6 +56,9 @@ public class ContestMvcController {
             User user = authenticationHelper.tryGetUser(session);
             model.addAttribute("user", user);
             List<FinishedContestAntItsWinner> finishedContestAntItsWinners = contestService.getAllUnActive();
+            finishedContestAntItsWinners.stream().
+                    filter(contest -> contest.getContestOutput().getPhase().getName().equals("Finished")).
+                    collect(Collectors.toList());
             model.addAttribute("contestsWithWinners", finishedContestAntItsWinners);
             return "ContestsWithWinnersView";
         }catch (AuthenticationFailureException e) {
@@ -109,18 +113,6 @@ public class ContestMvcController {
         return "ContestsFromPhase2View";  // Връщаме името на View-то
     }
 
-//    @GetMapping("/phaseTwo")
-//    public String getAllContestsInPhaseTwo(Model model, HttpSession session) {
-//        try {
-//            User user = authenticationHelper.tryGetUser(session);
-//            model.addAttribute("user", user);
-//            List<Contest> contestList = contestService.getAllActiveContestInPhase2();
-//            model.addAttribute("contests", contestList);
-//            return "ContestsFromPhase2View";
-//        } catch (AuthenticationFailureException e) {
-//            return "redirect:/Login";
-//        }
-//    }
 
     @GetMapping("/{id}/phOne")
     public String showSingleContestPhaseOne(@PathVariable UUID id, Model model, HttpSession session) {
