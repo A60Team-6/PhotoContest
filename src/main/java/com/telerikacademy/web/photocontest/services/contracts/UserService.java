@@ -3,6 +3,7 @@ package com.telerikacademy.web.photocontest.services.contracts;
 import com.telerikacademy.web.photocontest.entities.Contest;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.*;
+import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -15,6 +16,8 @@ public interface UserService {
     List<User> getAllUserEntities();
 
     List<UserOutput> getAll();
+
+    Page<User> getUsersWithFilters(String username, String firstName, String email, int page, int size, String sortBy, String sortDirection);
 
     boolean existsByEmail(String email);
 

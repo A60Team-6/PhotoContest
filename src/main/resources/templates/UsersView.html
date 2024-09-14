@@ -11,11 +11,10 @@
 <h1>User List</h1>
 
 <!-- Филтри -->
-<form method="get" action="/users">
-    <input type="text" name="firstName" placeholder="First Name" value="" />
-    <input type="text" name="lastName" placeholder="Last Name" value="" />
-    <input type="text" name="username" placeholder="Username" value="" />
-    <input type="text" name="email" placeholder="Email" value="" />
+<form method="get" action="/user/users">
+    <input type="text" name="username" placeholder="Username" th:value="${username}" />
+    <input type="text" name="firstName" placeholder="First Name" th:value="${firstName}" />
+    <input type="text" name="email" placeholder="Email" th:value="${email}" />
     <button type="submit">Filter</button>
 </form>
 
@@ -23,22 +22,17 @@
     <thead>
     <tr>
         <th>
-            <a th:href="@{|/users?page=${currentPage}&size=${size}&sortBy=firstName&sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'}|}">
-                First Name <span th:text="${sortBy == 'firstName'} ? (sortDirection == 'asc' ? '▲' : '▼') : ''"></span>
-            </a>
-        </th>
-        <th>
-            <a th:href="@{|/users?page=${currentPage}&size=${size}&sortBy=lastName&sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'}|}">
-                Last Name <span th:text="${sortBy == 'lastName'} ? (sortDirection == 'asc' ? '▲' : '▼') : ''"></span>
-            </a>
-        </th>
-        <th>
-            <a th:href="@{|/users?page=${currentPage}&size=${size}&sortBy=username&sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'}|}">
+            <a th:href="@{/user/users(page=${currentPage}, size=${size}, sortBy='username', sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">
                 Username <span th:text="${sortBy == 'username'} ? (sortDirection == 'asc' ? '▲' : '▼') : ''"></span>
             </a>
         </th>
         <th>
-            <a th:href="@{|/users?page=${currentPage}&size=${size}&sortBy=email&sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'}|}">
+            <a th:href="@{/user/users(page=${currentPage}, size=${size}, sortBy='firstName', sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">
+                First Name <span th:text="${sortBy == 'firstName'} ? (sortDirection == 'asc' ? '▲' : '▼') : ''"></span>
+            </a>
+        </th>
+        <th>
+            <a th:href="@{/user/users(page=${currentPage}, size=${size}, sortBy='email', sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">
                 Email <span th:text="${sortBy == 'email'} ? (sortDirection == 'asc' ? '▲' : '▼') : ''"></span>
             </a>
         </th>
@@ -46,9 +40,8 @@
     </thead>
     <tbody>
     <tr th:each="user : ${users}">
-        <td th:text="${user.firstName}">John</td>
-        <td th:text="${user.lastName}">Doe</td>
         <td th:text="${user.username}">johndoe</td>
+        <td th:text="${user.firstName}">John</td>
         <td th:text="${user.email}">john.doe@example.com</td>
     </tr>
     </tbody>
@@ -56,15 +49,21 @@
 
 <!-- Пагинация -->
 <div class="pagination">
-    <a th:if="${currentPage > 0}" th:href="@{/users?page=${currentPage - 1}&size=${size}&sortBy=${sortBy}&sortDirection=${sortDirection}}">Previous</a>
+    <a th:if="${currentPage > 0}"
+       th:href="@{/user/users(page=${currentPage - 1}, size=${size}, sortBy=${sortBy}, sortDirection=${sortDirection})}">
+        Previous
+    </a>
 
     <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
         <a th:classappend="${i == currentPage} ? 'active'"
-           th:href="@{/users?page=${i}&size=${size}&sortBy=${sortBy}&sortDirection=${sortDirection}}"
+           th:href="@{/user/users(page=${i}, size=${size}, sortBy=${sortBy}, sortDirection=${sortDirection})}"
            th:text="${i + 1}">1</a>
     </span>
 
-    <a th:if="${currentPage < totalPages - 1}" th:href="@{/users?page=${currentPage + 1}&size=${size}&sortBy=${sortBy}&sortDirection=${sortDirection}}">Next</a>
+    <a th:if="${currentPage < totalPages - 1}"
+       th:href="@{/user/users(page=${currentPage + 1}, size=${size}, sortBy=${sortBy}, sortDirection=${sortDirection})}">
+        Next
+    </a>
 </div>
 
 </body>

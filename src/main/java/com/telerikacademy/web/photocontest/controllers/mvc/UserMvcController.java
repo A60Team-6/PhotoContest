@@ -1,6 +1,7 @@
 package com.telerikacademy.web.photocontest.controllers.mvc;
 
 
+import com.telerikacademy.web.photocontest.entities.Contest;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.UserOutput;
 import com.telerikacademy.web.photocontest.entities.dtos.UserUpdate;
@@ -15,6 +16,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,6 +43,33 @@ public class UserMvcController {
     public boolean populateIsAuthenticated(HttpSession session) {
         return session.getAttribute("currentUser") != null;
     }
+
+
+    @GetMapping("/users")
+    public String getUsers(Model model,
+                              @RequestParam(value = "username", required = false) String username,
+                              @RequestParam(value = "firstName", required = false) String firstName,
+                              @RequestParam(value = "email", required = false) String email,
+                              @RequestParam(value = "page", defaultValue = "0") int page,
+                              @RequestParam(value = "size", defaultValue = "3") int size,
+                              @RequestParam(value = "sortBy", defaultValue = "username") String sortBy,
+                              @RequestParam(value = "sortDirection", defaultValue = "asc") String sortDirection) {
+
+        Page<User> usersPage = userService.getUsersWithFilters(username, firstName, email, page, size, sortBy, sortDirection);
+
+        model.addAttribute("users", usersPage.getContent());  // Потребителите от текущата страница
+        model.addAttribute("totalPages", usersPage.getTotalPages());  // Общо страници
+        model.addAttribute("currentPage", page);  // Текуща страница
+        model.addAttribute("size", size);
+        model.addAttribute("sortBy", sortBy);  // Поле за сортиране
+        model.addAttribute("sortDirection", sortDirection);  // Посока на сортиране
+        model.addAttribute("username", username);
+        model.addAttribute("firstName", firstName);
+        model.addAttribute("email", email);
+
+        return "UsersView";  // Връщаме името на View-то
+    }
+
 
     @GetMapping("/{id}")
     public String showSingleUser(@PathVariable UUID id, Model model, HttpSession session) {

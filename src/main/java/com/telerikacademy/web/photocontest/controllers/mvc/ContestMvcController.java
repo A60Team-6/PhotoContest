@@ -56,7 +56,7 @@ public class ContestMvcController {
                               @RequestParam(value = "phase", required = false) String phase,
                               @RequestParam(value = "page", defaultValue = "0") int page,
                               @RequestParam(value = "size", defaultValue = "10") int size,
-                              @RequestParam(value = "sortBy", defaultValue = "firstName") String sortBy,
+                              @RequestParam(value = "sortBy", defaultValue = "title") String sortBy,
                               @RequestParam(value = "sortDirection", defaultValue = "asc") String sortDirection) {
 
         Page<Contest> contestsPage = contestService.getContestsWithFilters(title, category, phase, page, size, sortBy, sortDirection);

@@ -51,13 +51,17 @@ public class UserServiceImpl implements UserService {
     }
 
 
-//    @Override
-//    public Page<User> getUsersWithFilters(String firstName, String lastName, String username, String email, int page, int size, String sortBy, String sortDirection) {
-//        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
-//        Pageable pageable = PageRequest.of(page, size, sort);
-//
-//        return userRepository.findUsersByMultipleFields(firstName, lastName, username, email, pageable);
-//    }
+    @Override
+    public Page<User> getUsersWithFilters(String username, String firstName, String email, int page, int size, String sortBy, String sortDirection) {
+        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        String usernameLike = username != null ? "%" + username + "%" : null;
+        String firstNameLike = firstName != null ? "%" + firstName + "%" : null;
+        String emailLike = email != null ? "%" + email + "%" : null;
+
+        return userRepository.findUsersByMultipleFields(usernameLike, firstNameLike, emailLike, pageable);
+    }
 
 
     @Override
