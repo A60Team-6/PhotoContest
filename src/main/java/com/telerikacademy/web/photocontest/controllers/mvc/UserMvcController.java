@@ -70,6 +70,76 @@ public class UserMvcController {
         return "UsersView";  // Връщаме името на View-то
     }
 
+    @PostMapping("/invite/{id}")
+    public String inviteButton(@PathVariable UUID id, Model model, HttpSession session){
+        try{
+            User user = authenticationHelper.tryGetUser(session);
+            User userToInvite = userService.findUserEntityById(id);
+            userService.invite(userToInvite);
+            return "redirect:/user/users";
+        }catch (AuthorizationException e) {
+            model.addAttribute("error", e.getMessage());
+            return "AccessDeniedView";
+        }
+    }
+
+    @GetMapping("/invitation")
+    public String invitation(Model model, HttpSession session){
+        try {
+            User user = authenticationHelper.tryGetUser(session);
+            model.addAttribute("user", user);
+            return "AcceptOrDeclineInvitationView";
+        }catch (EntityNotFoundException e){
+            model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
+            model.addAttribute("error", e.getMessage());
+            return "ErrorView";
+        }catch (AuthorizationException e) {
+            model.addAttribute("error", e.getMessage());
+            return "AccessDeniedView";
+        }
+    }
+
+    @PostMapping("/accept/invitation")
+    public String acceptInvitation(Model model, HttpSession session){
+        User user;
+        try {
+            user = authenticationHelper.tryGetUser(session);
+            model.addAttribute("user", user);
+        }catch (AuthenticationFailureException e) {
+            return "redirect:/Login";
+        }
+
+        try{
+            userService.acceptInvitation(user);
+            return "redirect:/user/me";
+        }catch (AuthorizationException e) {
+            model.addAttribute("error", e.getMessage());
+            return "AccessDeniedView";
+        }
+
+    }
+
+
+    @PostMapping("/decline/invitation")
+    public String declineInvitation(Model model, HttpSession session){
+        User user;
+        try {
+            user = authenticationHelper.tryGetUser(session);
+            model.addAttribute("user", user);
+        }catch (AuthenticationFailureException e) {
+            return "redirect:/Login";
+        }
+
+        try{
+            userService.declineInvitation(user);
+            return "redirect:/user/me";
+        }catch (AuthorizationException e) {
+            model.addAttribute("error", e.getMessage());
+            return "AccessDeniedView";
+        }
+
+    }
+
 
     @GetMapping("/{id}")
     public String showSingleUser(@PathVariable UUID id, Model model, HttpSession session) {

@@ -30,6 +30,7 @@ CREATE TABLE users
     ranking_id    CHAR(36)           NOT NULL,
     created_at    TIMESTAMP,
     is_active     BOOLEAN,
+    is_invited    BOOLEAN,
     FOREIGN KEY (role_id) REFERENCES roles (id),
     FOREIGN KEY (ranking_id) REFERENCES rankings (id)
 );

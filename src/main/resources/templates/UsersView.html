@@ -71,6 +71,11 @@
                     <td th:text="${user.username}">johndoe</td>
                     <td th:text="${user.firstName}">John</td>
                     <td th:text="${user.email}">john.doe@example.com</td>
+                    <td th:text="${user.rank.name}">Rank</td>
+                    <td th:text="${user.role.name}">Role</td>
+                    <form th:if="${user.rank.name == 'Master'} and ${user.role.name != 'Jury'} and ${user.role.name != 'Organizer'} and ${user.isInvited == false}" th:action="@{/user/invite/{id}(id=${user.userId})}" method="post">
+                        <button type="submit" class="rate-button">Invite to Jury</button>
+                    </form>
                 </tr>
                 </tbody>
             </table>

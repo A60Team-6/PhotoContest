@@ -54,6 +54,9 @@ public class User {
     @Column(name = "is_active")
     private Boolean isActive;
 
+    @Column(name = "is_invited")
+    private Boolean isInvited;
+
     @Builder
     public User(String username,
                 String firstName,

@@ -17,6 +17,12 @@ public interface UserService {
 
     List<UserOutput> getAll();
 
+    void invite(User user);
+
+    void acceptInvitation(User user);
+
+    void declineInvitation(User user);
+
     Page<User> getUsersWithFilters(String username, String firstName, String email, int page, int size, String sortBy, String sortDirection);
 
     boolean existsByEmail(String email);

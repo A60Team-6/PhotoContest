@@ -53,6 +53,7 @@ public class AuthenticationController {
             session.setAttribute("currentUser", loginDto.getUsername());
             session.setAttribute("isOrganizer", user.getRole().getName().equals("Organizer"));
             session.setAttribute("isJury", user.getRole().getName().equals("Jury"));
+            session.setAttribute("isInvited", user.getIsInvited().equals(true));
             return "redirect:/";
         } catch (AuthenticationFailureException e) {
             bindingResult.rejectValue("username", "auth_error", e.getMessage());

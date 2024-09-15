@@ -33,6 +33,8 @@
                        th:href="@{/contest/phaseTwo}">Contests In Phase 2</a></li>
                 <li><a th:if="${isAuthenticated} and ${session.isOrganizer}" th:href="@{/contest/new}">Create New Contest</a></li>
                 <li><a th:if="${isAuthenticated} and ${session.isOrganizer}" th:href="@{/user/users}">All Users</a></li>
+                <li><a th:if="${isAuthenticated} and ${session.isInvited}" th:href="@{/user/invitation}">Notifications</a></li>
+
             </ul>
         </nav>
     </div>

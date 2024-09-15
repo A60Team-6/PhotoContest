@@ -50,6 +50,25 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public void invite(User user){
+        user.setIsInvited(true);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void acceptInvitation(User user){
+        user.setIsInvited(false);
+        user.setRole(roleService.getRoleByName("Jury"));
+        userRepository.save(user);
+    }
+
+    @Override
+    public void declineInvitation(User user){
+        user.setIsInvited(false);
+        userRepository.save(user);
+    }
+
 
     @Override
     public Page<User> getUsersWithFilters(String username, String firstName, String email, int page, int size, String sortBy, String sortDirection) {
