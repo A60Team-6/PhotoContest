@@ -2,10 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ratings Of Photo</title>
+    <link rel="stylesheet" th:href="@{/css/photoRatings.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&display=swap" rel="stylesheet">
 </head>
 <body>
 
+<!-- Хедър с навигационно меню -->
 <header class="site-header">
     <div class="container">
         <h1 class="title">Ratings Of Photo</h1>
@@ -21,8 +25,10 @@
     </div>
 </header>
 
+<!-- Основно съдържание -->
 <main>
     <div class="body-content">
+        <h2 class="centered-title">Ratings Of Photo</h2>
 
         <div th:if="${juryPhotoRatingOutputs.isEmpty()}">
             <h2 th:text="#{rating.label.empty}">No Ratings</h2>
@@ -31,13 +37,17 @@
         <div th:unless="${juryPhotoRatingOutputs.isEmpty()}">
             <div class="table-container">
                 <div class="table">
+                    <div class="row header">
+                        <div class="cell">Score</div>
+                        <div class="cell">Comment</div>
+                        <div class="cell">Category Match</div>
+                        <div class="cell">Review Date</div>
+                    </div>
                     <div class="row" th:each="rating : ${juryPhotoRatingOutputs}">
-                        <div th:text="${rating.score}">Score</div>
+                        <div class="cell" th:text="${rating.score}">Score</div>
                         <div class="cell post-content" th:text="${rating.comment}">Comment</div>
-                        <div class="cell post-content" th:text="${rating.categoryMatch}">Category Match</div>
-                        <div class="cell post-content" th:text="${rating.reviewDate}">Review Date</div>
-                        <br>
-                        <br>
+                        <div class="cell post-content" th:text="${rating.categoryMatch ? 'Yes' : 'No'}">Category Match</div>
+                        <div class="cell post-content" th:text="${#dates.format(rating.reviewDate, 'yyyy-MM-dd HH:mm:ss')}">Review Date</div>
                     </div>
                 </div>
             </div>
@@ -45,9 +55,10 @@
     </div>
 </main>
 
+<!-- Футър -->
 <footer>
     <div class="container">
-        <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' Photo Contest'}">© 2024 Photo Contest</small>
+        <small th:text="${'© ' + #dates.year(#dates.createNow()) + ' PhotoContest'}">© 2024 PhotoContest</small>
     </div>
 </footer>
 

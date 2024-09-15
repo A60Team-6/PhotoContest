@@ -166,3 +166,71 @@ footer a {
 footer a:hover {
     text-decoration: underline;
 }
+
+.details {
+    font-size: 0.9em; /* Малко по-малък текст за допълнителните детайли */
+    color: #666; /* По-светъл цвят, за да не доминира основния текст */
+    display: block; /* Принуждава текста да бъде на нов ред */
+    margin-left: 20px; /* Добавя малко отстояние вляво за по-добра визуална организация */
+}
+
+/* Секция за награди и рангове */
+.prizes-info {
+    background-color: #fff;
+    padding: 60px 0;
+    text-align: center;
+}
+
+.prizes-info h2 {
+    font-family: 'Lobster', cursive;
+    font-size: 3em;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+/* Центриране на колони */
+.flex-container {
+    display: flex;
+    justify-content: center; /* Центрира колоните */
+    gap: 50px; /* Разстояние между двете колони */
+}
+
+.flex-item {
+    width: 40%; /* Равномерна ширина на колоните */
+    text-align: left; /* Подравнява текста наляво вътре в колоните */
+}
+
+.prizes-info h3 {
+    font-size: 2em;
+    color: #e74c3c;
+    margin-bottom: 15px;
+}
+
+.prizes-info ul {
+    list-style-type: disc;
+    list-style-position: inside;
+    margin: 0;
+    padding-left: 20px;
+}
+
+.prizes-info ul li {
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    color: #333;
+}
+
+/* За по-малки екрани */
+@media (max-width: 768px) {
+    .flex-container {
+        flex-direction: column; /* Подрежда колоните една под друга на по-малки екрани */
+        align-items: center;
+    }
+
+    .flex-item {
+        width: 100%; /* Ширина 100% за по-малки екрани */
+        text-align: center;
+    }
+}
+
+
+

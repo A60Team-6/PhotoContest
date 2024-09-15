@@ -1,28 +1,137 @@
+/*!* Global Styles *!*/
+/*body {*/
+/*    font-family: 'Roboto', sans-serif;*/
+/*    background-image: url('../assets/img/home.jpg');*/
+/*    background-size: cover;*/
+/*    background-position: center;*/
+/*    margin: 0;*/
+/*    color: #333;*/
+/*}*/
+
+/*.site-header {*/
+/*    background-color: rgba(0, 0, 0, 0.7);*/
+/*    padding: 20px 0;*/
+/*    text-align: center;*/
+/*}*/
+
+/*.site-header .title {*/
+/*    font-family: 'Lobster', cursive;*/
+/*    font-size: 3em;*/
+/*    color: #fff;*/
+/*    margin: 0;*/
+/*}*/
+
+/*.nav-links {*/
+/*    list-style: none;*/
+/*    padding: 0;*/
+/*    margin-top: 10px;*/
+/*}*/
+
+/*.nav-links li {*/
+/*    display: inline;*/
+/*    margin-right: 15px;*/
+/*}*/
+
+/*.nav-links a {*/
+/*    color: #fff;*/
+/*    text-decoration: none;*/
+/*    font-weight: bold;*/
+/*    font-size: 1.1em;*/
+/*}*/
+
+/*.nav-links a:hover {*/
+/*    color: #e74c3c;*/
+/*}*/
+
+/*.body-content {*/
+/*    background-color: rgba(255, 255, 255, 0.9);*/
+/*    padding: 30px;*/
+/*    border-radius: 10px;*/
+/*    max-width: 800px;*/
+/*    margin: 40px auto;*/
+/*    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);*/
+/*}*/
+
+/*!* Contest and Photo Styles *!*/
+/*.centered-title {*/
+/*    text-align: center;*/
+/*    font-family: 'Lobster', cursive;*/
+/*    font-size: 2.5em;*/
+/*    margin-bottom: 20px;*/
+/*}*/
+
+/*.contest-info {*/
+/*    background-color: rgba(240, 240, 240, 0.9);*/
+/*    padding: 20px;*/
+/*    border-radius: 8px;*/
+/*    margin-bottom: 30px;*/
+/*    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);*/
+/*}*/
+
+/*.photos {*/
+/*    display: flex;*/
+/*    flex-wrap: wrap;*/
+/*    gap: 20px;*/
+/*}*/
+
+/*.photo-item {*/
+/*    background-color: rgba(255, 255, 255, 0.9);*/
+/*    padding: 15px;*/
+/*    border-radius: 8px;*/
+/*    width: calc(50% - 10px);*/
+/*    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
+/*}*/
+
+/*.photo-img {*/
+/*    text-align: center;*/
+/*}*/
+
+/*.winning-photo {*/
+/*    max-width: 100%;*/
+/*    border-radius: 8px;*/
+/*}*/
+
+/*!* Footer Styles *!*/
+/*footer {*/
+/*    text-align: center;*/
+/*    padding: 20px 0;*/
+/*    background-color: rgba(0, 0, 0, 0.7);*/
+/*    color: #fff;*/
+/*}*/
+
+/*footer small {*/
+/*    color: #fff;*/
+/*}*/
+
 /* Global Styles */
 body {
+    margin: 0;
     font-family: 'Roboto', sans-serif;
-    background-image: url('../assets/img/home.jpg');
+    background-image: url('../assets/img/home.jpg'); /* Същата фонова снимка */
     background-size: cover;
     background-position: center;
-    margin: 0;
     color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
+/* Header */
 .site-header {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.7); /* Лека прозрачност за по-добра видимост на текста */
+    color: #fff;
     padding: 20px 0;
     text-align: center;
 }
 
 .site-header .title {
     font-family: 'Lobster', cursive;
-    font-size: 3em;
-    color: #fff;
+    font-size: 2.5em;
     margin: 0;
 }
 
 .nav-links {
-    list-style: none;
+    list-style-type: none;
     padding: 0;
     margin-top: 10px;
 }
@@ -43,62 +152,84 @@ body {
     color: #e74c3c;
 }
 
+/* Main Content */
 .body-content {
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.9); /* Леко по-плътен фон за по-добър контраст */
+    padding: 40px;
     border-radius: 10px;
-    max-width: 800px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 70%;
+    max-width: 1200px;
     margin: 40px auto;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Contest and Photo Styles */
+/* Centered Title */
 .centered-title {
-    text-align: center;
     font-family: 'Lobster', cursive;
     font-size: 2.5em;
+    text-align: center;
     margin-bottom: 20px;
 }
 
-.contest-info {
-    background-color: rgba(240, 240, 240, 0.9);
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+/* Contest Table */
+.table {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
 }
 
+.row {
+    display: table-row;
+}
+
+.cell {
+    display: table-cell;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.header .cell {
+    font-weight: bold;
+    background-color: #e74c3c;
+    color: #fff;
+    padding: 15px;
+}
+
+/* Photos Section */
 .photos {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    justify-content: center;
 }
 
 .photo-item {
     background-color: rgba(255, 255, 255, 0.9);
-    padding: 15px;
-    border-radius: 8px;
-    width: calc(50% - 10px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.photo-img {
-    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    width: 250px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .winning-photo {
-    max-width: 100%;
-    border-radius: 8px;
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
 }
 
-/* Footer Styles */
+/* Footer */
 footer {
     text-align: center;
     padding: 20px 0;
     background-color: rgba(0, 0, 0, 0.7);
     color: #fff;
+    margin-top: auto;
 }
 
 footer small {
     color: #fff;
 }
+

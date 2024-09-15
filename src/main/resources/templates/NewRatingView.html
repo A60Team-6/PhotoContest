@@ -38,7 +38,7 @@
 
                 <!-- Падащо меню за резултат от 1 до 10 -->
                 <label th:text="#{rating.score.label}">Score</label>
-                <select id="scoreSelect" th:field="*{score}" required>
+                <label for="scoreSelect"></label><select id="scoreSelect" th:field="*{score}" required>
                     <option value="" disabled selected>Select a score</option>
                     <option th:each="i : ${#numbers.sequence(1, 10)}" th:value="${i}" th:text="${i}"></option>
                 </select>
@@ -46,7 +46,9 @@
 
                 <!-- Поле за коментар -->
                 <label th:text="#{rating.comment.label}">Comment</label>
-                <textarea th:field="*{comment}" placeholder="Write your comment here..." rows="6"></textarea>
+                <label>
+                    <textarea th:field="*{comment}" placeholder="Write your comment here..." rows="6"></textarea>
+                </label>
                 <div th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}" class="error-message"></div>
 
                 <!-- Опции за Match/Unmatch -->

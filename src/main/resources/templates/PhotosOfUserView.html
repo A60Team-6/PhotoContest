@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>My Photos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Photos - Photography Contest</title>
+    <link rel="stylesheet" th:href="@{/css/photos.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&display=swap" rel="stylesheet">
 </head>
 <body>
 
+<!-- Хедър с навигационно меню -->
 <header class="site-header">
     <div class="container">
         <h1 class="title">My Photos</h1>
@@ -21,9 +25,10 @@
     </div>
 </header>
 
+<!-- Основно съдържание -->
 <main>
     <div class="body-content">
-        <h2 class="centered-title" th:text="#{photo.title.label}">Photo Title</h2>
+        <h2 class="centered-title" th:text="#{photo.title.label}">My Photos</h2>
 
         <div th:if="${photosOfUser.isEmpty()}">
             <h2 th:text="#{photo.label.empty}">No Photos</h2>
@@ -32,16 +37,27 @@
         <div th:unless="${photosOfUser.isEmpty()}">
             <div class="table-container">
                 <div class="table">
+                    <div class="row header">
+                        <div class="cell">Title</div>
+                        <div class="cell">Story</div>
+                        <div class="cell">Contest</div>
+                        <div class="cell">Photo</div>
+                        <div class="cell">Created At</div>
+                        <div class="cell">Actions</div>
+                    </div>
                     <div class="row" th:each="photo : ${photosOfUser}">
-                            <div th:text="${photo.title}">Title</div>
+                        <div class="cell post-title" th:text="${photo.title}">Title</div>
                         <div class="cell post-content" th:text="${photo.story}">Story</div>
                         <div class="cell post-content" th:text="${photo.contest.title}">Contest</div>
-                        <div class="cell post-content" th:text="${photo.photoUrl}">Photo</div>
+                        <div class="cell post-content">
+                            <img th:src="${photo.photoUrl}" alt="Photo" class="photo-img" />
+                        </div>
                         <div class="cell post-content" th:text="${photo.createdAt}">Created At</div>
-                        <form th:action="@{/photo/{id}/ratings(id=${photo.id})}" method="get">
-                            <button type="submit" class="edit">See Ratings</button>
-                        </form>
-                        <br>
+                        <div class="cell">
+                            <form th:action="@{/photo/{id}/ratings(id=${photo.id})}" method="get">
+                                <button type="submit" class="edit">See Ratings</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -49,9 +65,10 @@
     </div>
 </main>
 
+<!-- Футър -->
 <footer>
     <div class="container">
-        <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' Photo Contest'}">© 2024 Photo Contest</small>
+        <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' PhotoContest'}">© 2024 Photo Contest</small>
     </div>
 </footer>
 
