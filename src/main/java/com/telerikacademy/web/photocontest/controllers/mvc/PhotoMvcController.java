@@ -145,6 +145,9 @@ public class PhotoMvcController {
         } catch (AuthenticationFailureException e) {
             return "redirect:/Login";
         }
+        if (juryPhotoRating.getCategoryMatch() != null && !juryPhotoRating.getCategoryMatch()) {
+            juryPhotoRating.setScore(0);
+        }
 
         if (bindingResult.hasErrors()) {
             return "NewRatingView";

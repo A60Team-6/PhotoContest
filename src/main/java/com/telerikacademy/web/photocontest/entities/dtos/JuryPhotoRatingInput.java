@@ -24,7 +24,7 @@ public class JuryPhotoRatingInput {
 
     @Min(0)
     @Max(10)
-    private int score;
+    private Integer score;
 
     @NotNull
     private String comment;

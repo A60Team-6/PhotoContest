@@ -31,7 +31,7 @@ public class JuryPhotoRating {
     private User jury;
 
     @Column(name = "score", nullable = false)
-    private int score;
+    private Integer  score;
 
     @Column(name = "comment", nullable = false)
     private String comment;
