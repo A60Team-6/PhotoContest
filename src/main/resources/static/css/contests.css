@@ -128,3 +128,142 @@ footer {
 footer small {
     color: #fff;
 }
+
+/* Стил за колоните с опции за сортиране */
+th a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+th a:hover {
+    color: #e74c3c;
+}
+
+th span {
+    margin-left: 5px; /* Добавяме малко разстояние за стрелките */
+}
+
+/* Пагинация */
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.pagination a, .pagination span {
+    display: inline-block;
+    padding: 10px 15px;
+    margin: 0 5px;
+    border-radius: 50%;
+    background-color: #e74c3c;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.pagination a:hover {
+    background-color: #d62c1a;
+}
+
+.pagination .active {
+    background-color: #333;
+    color: white;
+}
+
+/* Центриране на бутоните за филтриране и сортиране */
+form {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form input[type="text"] {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-right: 10px;
+    font-size: 1em;
+}
+
+form button {
+    background-color: #e74c3c;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #d62c1a;
+}
+
+/*th {*/
+/*    font-weight: bold;*/
+/*    background-color: #e74c3c;*/
+/*    color: #fff;*/
+/*    text-align: center;*/
+/*    padding: 15px;*/
+/*    position: relative;*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*th a {*/
+/*    color: #fff;*/
+/*    text-decoration: none;*/
+/*    font-weight: bold;*/
+/*    display: inline-flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*}*/
+
+/*th a span {*/
+/*    margin-left: 5px;*/
+/*    font-size: 0.8em;*/
+/*    vertical-align: middle; !* Правилно подравняване на стрелките спрямо текста *!*/
+/*}*/
+
+/*th a:hover {*/
+/*    color: #fff;*/
+/*}*/
+
+
+/*!* Стил за колоните Contest и Category *!*/
+/*.table .cell a {*/
+/*    color: #fff; !* Правим текста бял *!*/
+/*    text-decoration: none;*/
+/*    font-weight: bold;*/
+/*}*/
+
+/*.table .cell a:hover {*/
+/*    color: #ffcccb; !* Опция за светлина при задържане на курсора *!*/
+/*}*/
+
+/*!* Стил за активното сортиране *!*/
+/*.table .header .cell a {*/
+/*    color: #fff; !* Правим текста бял за активните сортирания *!*/
+/*}*/
+
+/* Стил само за заглавията на колоните Contest и Category */
+.table .header .cell a {
+    color: #ffcccb; /* Бял цвят за заглавията */
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* Добави цвят за hover на заглавията на колоните, ако е необходимо */
+.table .header .cell a:hover {
+    color: #ffcccb; /* Лек червен оттенък при задържане на мишката */
+}
+
+/* Стил за съдържанието на колоните, за да остане различно от заглавието */
+.table .row .cell a {
+    color: #333; /* Тъмен цвят за имената на контестите */
+}
+
+.table .row .cell a:hover {
+    color: #ffcccb; /* Оранжево при hover на съдържанието */
+}
+

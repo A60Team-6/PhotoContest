@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contests Phase One - Photography Contest</title>
     <link rel="stylesheet" th:href="@{/css/contests.css}">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&display=swap"
+          rel="stylesheet">
     <script src="/js/countdown.js"></script>
 </head>
 <body>
@@ -28,28 +29,11 @@
 
 <!-- Форма за филтриране -->
 <form method="get" action="/contest/phaseOne">
-    <input type="text" name="title" placeholder="Title" th:value="${title}" />
-    <input type="text" name="category" placeholder="Category" th:value="${category}" />
+    <input type="text" name="title" placeholder="Title" th:value="${title}"/>
+    <input type="text" name="category" placeholder="Category" th:value="${category}"/>
     <button type="submit">Filter</button>
 </form>
 
-<!-- Таблица за сортиране -->
-<table>
-    <thead>
-    <tr>
-        <th>
-            <a th:href="@{/contest/phaseOne(page=${currentPage}, size=${size}, sortBy=${'title'}, sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">
-                Title <span th:text="${sortBy == 'title'} ? (sortDirection == 'asc' ? '▲' : '▼') : ''"></span>
-            </a>
-        </th>
-        <th>
-            <a th:href="@{/contest/phaseOne(page=${currentPage}, size=${size}, sortBy=${'category'}, sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">
-                Category <span th:text="${sortBy == 'category'} ? (sortDirection == 'asc' ? '▲' : '▼') : ''"></span>
-            </a>
-        </th>
-    </tr>
-    </thead>
-</table>
 
 <!-- Основно съдържание -->
 <main>
@@ -64,8 +48,16 @@
             <div class="table-container">
                 <div class="table">
                     <div class="row header">
-                        <div class="cell">Contest</div>
-                        <div class="cell">Category</div>
+                        <!--                            <div class="cell">Contest</div>-->
+                        <div class="cell"><a
+                                th:href="@{/contest/phaseOne(page=${currentPage}, size=${size}, sortBy=${'title'}, sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">
+                            <span th:text="${sortDirection == 'asc' ? 'Contest ▲' : 'Contest ▼'}"></span>
+                        </a></div>
+                        <!--                            <div class="cell">Category</div>-->
+                        <div class="cell"><a
+                                th:href="@{/contest/phaseOne(page=${currentPage}, size=${size}, sortBy=${'category'}, sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">
+                            <span th:text="${sortDirection == 'asc' ? 'Category ▲' : 'Category ▼'}"></span>
+                        </a></div>
                         <div class="cell">Phase</div>
                         <div class="cell">Time Remaining</div>
                     </div>
@@ -76,7 +68,8 @@
                         <div class="cell post-content" th:text="${contest.category}">Category</div>
                         <div class="cell post-content" th:text="${contest.phase.name}">Phase</div>
                         <div class="cell">
-                            <span class="timer" th:data-change-phase-time="${contest.changePhaseTime}" id="timer-${contest.contestId}"></span>
+                                <span class="timer" th:data-change-phase-time="${contest.changePhaseTime}"
+                                      id="timer-${contest.contestId}"></span>
                         </div>
                     </div>
                 </div>
@@ -84,6 +77,7 @@
         </div>
     </div>
 </main>
+
 
 <!-- Пагинация -->
 <div class="pagination">
@@ -107,7 +101,8 @@
 <!-- Футър -->
 <footer>
     <div class="container">
-        <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' PhotoContest'}">© 2024 PhotoContest</small>
+        <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' PhotoContest'}">© 2024
+            PhotoContest</small>
     </div>
 </footer>
 

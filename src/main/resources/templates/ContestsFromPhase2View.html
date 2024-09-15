@@ -32,23 +32,7 @@
     <button type="submit">Filter</button>
 </form>
 
-<!-- Таблица за сортиране -->
-<table>
-    <thead>
-    <tr>
-        <th>
-            <a th:href="@{/contest/phaseTwo(page=${currentPage}, size=${size}, sortBy=${'title'}, sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">
-                Title <span th:text="${sortBy == 'title'} ? (sortDirection == 'asc' ? '▲' : '▼') : ''"></span>
-            </a>
-        </th>
-        <th>
-            <a th:href="@{/contest/phaseTwo(page=${currentPage}, size=${size}, sortBy=${'category'}, sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">
-                Category <span th:text="${sortBy == 'category'} ? (sortDirection == 'asc' ? '▲' : '▼') : ''"></span>
-            </a>
-        </th>
-    </tr>
-    </thead>
-</table>
+
 
 <!-- Основно съдържание -->
 <main>
@@ -63,8 +47,12 @@
             <div class="table-container">
                 <div class="table">
                     <div class="row header">
-                        <div class="cell">Contest</div>
-                        <div class="cell">Category</div>
+                        <div class="cell"><a th:href="@{/contest/phaseTwo(page=${currentPage}, size=${size}, sortBy=${'title'}, sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">
+                            Title <span th:text="${sortBy == 'title'} ? (sortDirection == 'asc' ? '▲' : '▼') : ''"></span>
+                        </a></div>
+                        <div class="cell"><a th:href="@{/contest/phaseTwo(page=${currentPage}, size=${size}, sortBy=${'category'}, sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">
+                            Category <span th:text="${sortBy == 'category'} ? (sortDirection == 'asc' ? '▲' : '▼') : ''"></span>
+                        </a></div>
                         <div class="cell">Phase</div>
                         <div class="cell">Time Remaining</div> <!-- Нова колона -->
                     </div>
