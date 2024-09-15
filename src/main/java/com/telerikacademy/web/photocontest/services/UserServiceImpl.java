@@ -203,13 +203,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UploadFileOutput uploadPhoto(String id, MultipartFile file) throws IOException {
+    public UploadFileOutput uploadPhoto(String username, MultipartFile file) throws IOException {
 
-        if (id == null || file == null || file.isEmpty()) {
+        if (username == null || file == null || file.isEmpty()) {
             throw new IllegalArgumentException("Invalid file input");
         }
 
-        User user = findUserEntityById(UUID.fromString(id));
+        User user = findUserEntityByUsername(username);
 
         String photoUrl = cloudinaryService.uploadFile(file);
 

@@ -114,11 +114,11 @@ public class ContestMvcController {
     }
 
 
-    @GetMapping("/{id}/phOne")
-    public String showSingleContestPhaseOne(@PathVariable UUID id, Model model, HttpSession session) {
+    @GetMapping("/phOne/{contestId}")
+    public String showSingleContestPhaseOne(@PathVariable UUID contestId, Model model, HttpSession session) {
         try {
             User user = authenticationHelper.tryGetUser(session);
-            ContestOutput contest = contestService.findContestById(id);
+            ContestOutput contest = contestService.findContestById(contestId);
             model.addAttribute("contest", contest);
             model.addAttribute("user", user);
             int alreadyParticipate = 1;
@@ -130,7 +130,7 @@ public class ContestMvcController {
                 }
             }
             int alreadyUploaded = 1;
-            List<Photo> photosOfContest = photoService.getAllPhotosEntityOfContest(contestService.findContestEntityById(id));
+            List<Photo> photosOfContest = photoService.getAllPhotosEntityOfContest(contestService.findContestEntityById(contestId));
 
 
             for (Photo photo1 : photosOfContest) {
@@ -140,7 +140,7 @@ public class ContestMvcController {
                 }
             }
 
-            model.addAttribute("contestId", id);
+            model.addAttribute("contestId", contestId);
             model.addAttribute("alreadyUploaded", alreadyUploaded);
             model.addAttribute("alreadyParticipate", alreadyParticipate);
             return "ContestViewPhase1";
@@ -242,7 +242,7 @@ public class ContestMvcController {
             model.addAttribute("contest", contestOutput);
             model.addAttribute("user", authUser);
             contestParticipationService.participateInContest(authUser, id);
-            return "ContestViewPhase1";
+            return "redirect:/contest/phOne/" + id;
         } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
@@ -289,7 +289,7 @@ public class ContestMvcController {
             model.addAttribute("contestId", id);
             photoService.uploadPhoto(uploadFileInput);
 
-            return "redirect:/contest/" + id + "/phOne";
+            return "redirect:/contest/phaseOne";
         } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());

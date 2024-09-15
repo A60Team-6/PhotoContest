@@ -63,7 +63,7 @@
                     </div>
                     <div class="row" th:each="contest : ${contests}">
                         <div class="cell post-title">
-                            <a th:href="@{/contest/{id}/phOne(id=${contest.contestId})}" th:text="${contest.title}">Contest</a>
+                            <a th:href="@{/contest/phOne/{contestId}(contestId=${contest.contestId})}" th:text="${contest.title}">Contest</a>
                         </div>
                         <div class="cell post-content" th:text="${contest.category}">Category</div>
                         <div class="cell post-content" th:text="${contest.phase.name}">Phase</div>
