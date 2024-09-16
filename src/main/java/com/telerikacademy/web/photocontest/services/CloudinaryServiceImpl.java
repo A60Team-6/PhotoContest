@@ -20,20 +20,6 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 
     private final Cloudinary cloudinary;
 
-//    @Override
-//    public String uploadFile(MultipartFile file) throws IOException {
-//        System.out.println("Uploading file: " + file.getOriginalFilename());
-//        try {
-//            Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
-//            System.out.println("Upload result: " + uploadResult);
-//            return uploadResult.get("url").toString();
-//        } catch (IOException e) {
-//            System.err.println("Failed to upload file: " + e.getMessage());
-//            e.printStackTrace();
-//            throw new RuntimeException("Failed to upload photo", e);
-//        }
-//    }
-
     @Override
     public String uploadFile(MultipartFile file) throws IOException {
         log.info("Uploading file: {}", file.getOriginalFilename());

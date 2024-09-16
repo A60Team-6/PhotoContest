@@ -39,14 +39,11 @@ class ContestParticipationServiceImplTest {
 
     @Test
     void testGetAll_ShouldReturnListOfActiveContestParticipation() {
-        // Arrange
         ContestParticipation participation = new ContestParticipation();
         when(contestParticipationRepository.findAllByIsActiveTrue()).thenReturn(List.of(participation));
 
-        // Act
         List<ContestParticipation> result = contestParticipationService.getAll();
 
-        // Assert
         assertNotNull(result);
         assertEquals(1, result.size());
         verify(contestParticipationRepository, times(1)).findAllByIsActiveTrue();
@@ -54,7 +51,6 @@ class ContestParticipationServiceImplTest {
 
     @Test
     void testParticipateInContest_ShouldSaveParticipation_WhenContestIsActiveAndInPhase1() {
-        // Arrange
         UUID contestId = UUID.randomUUID();
         User user = new User();
         Phase phase = new Phase();
@@ -66,29 +62,24 @@ class ContestParticipationServiceImplTest {
 
         when(contestRepository.findByContestIdAndIsActiveTrue(contestId)).thenReturn(contest);
 
-        // Act
         contestParticipationService.participateInContest(user, contestId);
 
-        // Assert
         verify(contestParticipationRepository, times(1)).save(any(ContestParticipation.class));
     }
 
     @Test
     void testParticipateInContest_ShouldThrowEntityNotFoundException_WhenContestDoesNotExist() {
-        // Arrange
         UUID contestId = UUID.randomUUID();
         User user = new User();
 
         when(contestRepository.findByContestIdAndIsActiveTrue(contestId)).thenReturn(null);
 
-        // Act & Assert
         assertThrows(EntityNotFoundException.class, () -> contestParticipationService.participateInContest(user, contestId));
         verify(contestParticipationRepository, never()).save(any(ContestParticipation.class));
     }
 
     @Test
     void testParticipateInContest_ShouldThrowUnauthorizedOperationException_WhenContestIsNotInPhase1() {
-        // Arrange
         UUID contestId = UUID.randomUUID();
         User user = new User();
         Phase phase = new Phase();
@@ -100,7 +91,6 @@ class ContestParticipationServiceImplTest {
 
         when(contestRepository.findByContestIdAndIsActiveTrue(contestId)).thenReturn(contest);
 
-        // Act & Assert
         assertThrows(UnauthorizedOperationException.class, () -> contestParticipationService.participateInContest(user, contestId));
         verify(contestParticipationRepository, never()).save(any(ContestParticipation.class));
     }

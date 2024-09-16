@@ -10,7 +10,6 @@ import com.telerikacademy.web.photocontest.repositories.ContestRepository;
 import com.telerikacademy.web.photocontest.repositories.PhotoRepository;
 import com.telerikacademy.web.photocontest.services.PhotoServiceImpl;
 import com.telerikacademy.web.photocontest.services.contracts.CloudinaryService;
-import com.telerikacademy.web.photocontest.services.contracts.ContestParticipationService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,7 +52,6 @@ class PhotoServiceImplTest {
 
     @Test
     void testGetAllPhotosOfUser_ShouldReturnAllPhotosOfUser() {
-        // Arrange
         User user = new User();
         List<Photo> photos = List.of(new Photo(), new Photo());
         photos.forEach(photo -> photo.setUser(user));
@@ -61,34 +59,28 @@ class PhotoServiceImplTest {
         when(photoRepository.findAllByIsActiveTrue()).thenReturn(photos);
         when(conversionService.convert(any(Photo.class), eq(PhotoOutput.class))).thenReturn(new PhotoOutput());
 
-        // Act
         List<PhotoOutput> result = photoService.getAllPhotosOfUser(user);
 
-        // Assert
         assertEquals(photos.size(), result.size());
         verify(photoRepository, times(1)).findAllByIsActiveTrue();
     }
 
     @Test
     void testGetAllPhotosEntityOfUser_ShouldReturnAllPhotosEntityOfUser() {
-        // Arrange
         User user = new User();
         List<Photo> photos = List.of(new Photo(), new Photo());
         photos.forEach(photo -> photo.setUser(user));
 
         when(photoRepository.findAllByIsActiveTrue()).thenReturn(photos);
 
-        // Act
         List<Photo> result = photoService.getAllPhotosEntityOfUser(user);
 
-        // Assert
         assertEquals(photos.size(), result.size());
         verify(photoRepository, times(1)).findAllByIsActiveTrue();
     }
 
     @Test
     void testGetAllPhotosOfContest_ShouldReturnAllPhotosOfContest() {
-        // Arrange
         Contest contest = new Contest();
         List<Photo> photos = List.of(new Photo(), new Photo());
         photos.forEach(photo -> photo.setContest(contest));
@@ -96,36 +88,29 @@ class PhotoServiceImplTest {
         when(photoRepository.findAllByIsActiveTrue()).thenReturn(photos);
         when(conversionService.convert(any(Photo.class), eq(PhotoOutput.class))).thenReturn(new PhotoOutput());
 
-        // Act
         List<PhotoOutput> result = photoService.getAllPhotosOfContest(contest);
 
-        // Assert
         assertEquals(photos.size(), result.size());
         verify(photoRepository, times(1)).findAllByIsActiveTrue();
     }
 
     @Test
     void testSoftDeletePhoto_ShouldMarkPhotoAsInactive() {
-        // Arrange
         UUID photoId = UUID.randomUUID();
         Photo photo = new Photo();
         when(photoRepository.findById(photoId)).thenReturn(Optional.of(photo));
 
-        // Act
         photoService.softDeletePhoto(photoId);
 
-        // Assert
         assertFalse(photo.getIsActive());
         verify(photoRepository, times(1)).save(photo);
     }
 
     @Test
     void testSoftDeletePhoto_ShouldThrowEntityNotFoundException_WhenPhotoNotFound() {
-        // Arrange
         UUID photoId = UUID.randomUUID();
         when(photoRepository.findById(photoId)).thenReturn(Optional.empty());
 
-        // Act & Assert
         assertThrows(EntityNotFoundException.class, () -> photoService.softDeletePhoto(photoId));
         verify(photoRepository, never()).save(any(Photo.class));
     }
@@ -224,7 +209,6 @@ class PhotoServiceImplTest {
 
     @Test
     void testUploadPhoto_ShouldUploadSuccessfully() throws IOException {
-        // Arrange
         UUID photoId = UUID.randomUUID();
         MultipartFile file = mock(MultipartFile.class);
         when(file.isEmpty()).thenReturn(false);
@@ -239,10 +223,8 @@ class PhotoServiceImplTest {
         when(cloudinaryService.uploadFile(file)).thenReturn("http://cloudinary.com/photo.png");
         when(photoRepository.save(any(Photo.class))).thenReturn(photo);
 
-        // Act
         UploadFileOutput result = photoService.uploadPhoto(uploadFileInput);
 
-        // Assert
         assertNotNull(result);
         assertEquals("http://cloudinary.com/photo.png", photo.getPhotoUrl());
         verify(photoRepository, times(1)).save(photo);
@@ -250,7 +232,6 @@ class PhotoServiceImplTest {
 
     @Test
     void testUploadPhoto_ShouldThrowIllegalArgumentException_WhenInvalidInput() {
-        // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> photoService.uploadPhoto(null));
         assertThrows(IllegalArgumentException.class, () -> photoService.uploadPhoto(new UploadFileInput(UUID.randomUUID().toString(), null)));
     }
@@ -288,7 +269,6 @@ class PhotoServiceImplTest {
 
     @Test
     void testCreatePhoto_ShouldThrowDuplicateEntityException_WhenPhotoAlreadyExists() {
-        // Arrange
         PhotoInput photoInput = new PhotoInput("Title", "Story", UUID.randomUUID().toString());
         User user = new User();
         user.setIsActive(true);
@@ -304,7 +284,6 @@ class PhotoServiceImplTest {
         when(contestRepository.findByContestIdAndIsActiveTrue(any(UUID.class))).thenReturn(contest);
         when(photoService.getAllPhotosEntityOfContest(contest)).thenReturn(List.of(existingPhoto));
 
-        // Act & Assert
         assertThrows(DuplicateEntityException.class, () -> photoService.createPhoto(photoInput, user));
         verify(photoRepository, never()).save(any(Photo.class));
     }

@@ -7,7 +7,6 @@ import com.telerikacademy.web.photocontest.repositories.JuryPhotoRatingRepositor
 import com.telerikacademy.web.photocontest.repositories.PhotoRepository;
 import com.telerikacademy.web.photocontest.repositories.UserRepository;
 import com.telerikacademy.web.photocontest.services.JuryPhotoRatingServiceImpl;
-import com.telerikacademy.web.photocontest.services.contracts.ContestService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -164,10 +163,8 @@ class JuryPhotoRatingServiceImplTest {
 
     @Test
     void getAllRatingsEntityForPhoto_shouldReturnAllActiveRatingsForPhoto() {
-        // Arrange
         UUID photoId = UUID.randomUUID();
 
-        // Create mock ratings
         List<JuryPhotoRating> ratings = new ArrayList<>();
         JuryPhotoRating rating1 = new JuryPhotoRating();
         JuryPhotoRating rating2 = new JuryPhotoRating();
@@ -175,16 +172,13 @@ class JuryPhotoRatingServiceImplTest {
         ratings.add(rating1);
         ratings.add(rating2);
 
-        // Mock repository to return the list of ratings
         when(juryPhotoRatingRepository.findByPhotoIdAndIsActiveTrue(photoId)).thenReturn(ratings);
 
-        // Act
         List<JuryPhotoRating> result = juryPhotoRatingService.getAllRatingsEntityForPhoto(photoId);
 
-        // Assert
-        assertEquals(2, result.size());  // We expect 2 ratings in the result
-        assertEquals(rating1, result.get(0));  // The first rating should be rating1
-        assertEquals(rating2, result.get(1));  // The second rating should be rating2
+        assertEquals(2, result.size());
+        assertEquals(rating1, result.get(0));
+        assertEquals(rating2, result.get(1));
     }
 
     @Test

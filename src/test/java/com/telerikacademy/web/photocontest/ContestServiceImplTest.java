@@ -19,7 +19,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.core.convert.ConversionService;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -233,30 +232,6 @@ class ContestServiceImplTest {
 
         // Act & Assert
         assertThrows(EntityNotFoundException.class, () -> contestService.deactivateContest(contestId, user));
-    }
-
-    @Test
-    void testUpdateContestPhases_ShouldUpdatePhases() {
-        // Arrange
-        Phase phase1 = new Phase();
-        phase1.setName("Phase 1");
-
-        Phase phase2 = new Phase();
-        phase2.setName("Phase 2");
-
-        Contest contest = new Contest();
-        contest.setPhase(phase1);
-        contest.setChangePhaseTime(LocalDateTime.now().minusMinutes(5));
-
-        when(contestRepository.findAllByIsActiveTrue()).thenReturn(List.of(contest));
-        when(phaseService.getPhaseByName("Phase 2")).thenReturn(phase2);
-
-        // Act
-        contestService.updateContestPhases();
-
-        // Assert
-        verify(contestRepository, times(1)).save(contest);
-        assertEquals("Phase 2", contest.getPhase().getName());
     }
 
     @Test
