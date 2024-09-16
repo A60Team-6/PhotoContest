@@ -27,7 +27,6 @@ import java.io.IOException;
 @RequestMapping("/auth")
 public class AuthenticationController {
 
-
     private final UserService userService;
     private final AuthenticationHelper authenticationHelper;
     private final ConversionService conversionService;
@@ -78,7 +77,6 @@ public class AuthenticationController {
         return "Register";
     }
 
-
     @PostMapping("/register")
     public String handleRegister(@Valid @ModelAttribute("register") Register registerDto, BindingResult bindingResult,
                                  Model model) {
@@ -90,7 +88,7 @@ public class AuthenticationController {
             bindingResult.rejectValue("email", "email_error", "Email is already in use");
         }
 
-        if(userService.existsByUsername(registerDto.getUsername())){
+        if (userService.existsByUsername(registerDto.getUsername())) {
             bindingResult.rejectValue("username", "username_error", "Username is already in use");
         }
 
@@ -99,7 +97,6 @@ public class AuthenticationController {
         }
 
         try {
-            //User user = modelMapper.fromDto(registerDto);
             User user = conversionService.convert(registerDto, User.class);
             model.addAttribute("user", user);
 
@@ -115,7 +112,5 @@ public class AuthenticationController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
-
 }

@@ -5,7 +5,10 @@ import com.telerikacademy.web.photocontest.entities.ContestParticipation;
 import com.telerikacademy.web.photocontest.entities.Photo;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.*;
-import com.telerikacademy.web.photocontest.exceptions.*;
+import com.telerikacademy.web.photocontest.exceptions.AuthenticationFailureException;
+import com.telerikacademy.web.photocontest.exceptions.AuthorizationException;
+import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
+import com.telerikacademy.web.photocontest.exceptions.EntityNotFoundException;
 import com.telerikacademy.web.photocontest.helpers.AuthenticationHelper;
 import com.telerikacademy.web.photocontest.services.contracts.ContestParticipationService;
 import com.telerikacademy.web.photocontest.services.contracts.ContestService;
@@ -21,7 +24,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -51,44 +53,41 @@ public class ContestMvcController {
     }
 
     @GetMapping("/finished")
-    public String getAllFinishedContestsWithTheirWinnerPhotos(Model model, HttpSession session){
-        try{
-//            User user = authenticationHelper.tryGetUser(session);
-//            model.addAttribute("user", user);
+    public String getAllFinishedContestsWithTheirWinnerPhotos(Model model, HttpSession session) {
+        try {
             List<FinishedContestAntItsWinner> finishedContestAntItsWinners = contestService.getAllUnActive();
             finishedContestAntItsWinners.stream().
                     filter(contest -> contest.getContestOutput().getPhase().getName().equals("Finished")).
                     collect(Collectors.toList());
             model.addAttribute("contestsWithWinners", finishedContestAntItsWinners);
             return "ContestsWithWinnersView";
-        }catch (AuthenticationFailureException e) {
+        } catch (AuthenticationFailureException e) {
             return "redirect:/Login";
         }
     }
 
     @GetMapping("/phaseOne")
     public String getContestsPhaseOne(Model model,
-                           @RequestParam(value = "title", required = false) String title,
-                           @RequestParam(value = "category", required = false) String category,
-                           @RequestParam(value = "page", defaultValue = "0") int page,
-                           @RequestParam(value = "size", defaultValue = "3") int size,
-                           @RequestParam(value = "sortBy", defaultValue = "title") String sortBy,
-                           @RequestParam(value = "sortDirection", defaultValue = "asc") String sortDirection) {
+                                      @RequestParam(value = "title", required = false) String title,
+                                      @RequestParam(value = "category", required = false) String category,
+                                      @RequestParam(value = "page", defaultValue = "0") int page,
+                                      @RequestParam(value = "size", defaultValue = "3") int size,
+                                      @RequestParam(value = "sortBy", defaultValue = "title") String sortBy,
+                                      @RequestParam(value = "sortDirection", defaultValue = "asc") String sortDirection) {
 
         Page<Contest> contestsPage = contestService.getAllActiveContestInPhase1(title, category, page, size, sortBy, sortDirection);
 
-        model.addAttribute("contests", contestsPage.getContent());  // Потребителите от текущата страница
-        model.addAttribute("totalPages", contestsPage.getTotalPages());  // Общо страници
-        model.addAttribute("currentPage", page);  // Текуща страница
+        model.addAttribute("contests", contestsPage.getContent());
+        model.addAttribute("totalPages", contestsPage.getTotalPages());
+        model.addAttribute("currentPage", page);
         model.addAttribute("size", size);
-        model.addAttribute("sortBy", sortBy);  // Поле за сортиране
-        model.addAttribute("sortDirection", sortDirection);  // Посока на сортиране
+        model.addAttribute("sortBy", sortBy);
+        model.addAttribute("sortDirection", sortDirection);
         model.addAttribute("title", title);
         model.addAttribute("category", category);
 
         return "ContestsFromPhase1View";  // Връщаме името на View-то
     }
-
 
     @GetMapping("/phaseTwo")
     public String getContestsPhaseTwo(Model model,
@@ -101,18 +100,17 @@ public class ContestMvcController {
 
         Page<Contest> contestsPage = contestService.getAllActiveContestInPhase2(title, category, page, size, sortBy, sortDirection);
 
-        model.addAttribute("contests", contestsPage.getContent());  // Потребителите от текущата страница
-        model.addAttribute("totalPages", contestsPage.getTotalPages());  // Общо страници
-        model.addAttribute("currentPage", page);  // Текуща страница
+        model.addAttribute("contests", contestsPage.getContent());
+        model.addAttribute("totalPages", contestsPage.getTotalPages());
+        model.addAttribute("currentPage", page);
         model.addAttribute("size", size);
-        model.addAttribute("sortBy", sortBy);  // Поле за сортиране
-        model.addAttribute("sortDirection", sortDirection);  // Посока на сортиране
+        model.addAttribute("sortBy", sortBy);
+        model.addAttribute("sortDirection", sortDirection);
         model.addAttribute("title", title);
         model.addAttribute("category", category);
 
-        return "ContestsFromPhase2View";  // Връщаме името на View-то
+        return "ContestsFromPhase2View";
     }
-
 
     @GetMapping("/phOne/{contestId}")
     public String showSingleContestPhaseOne(@PathVariable UUID contestId, Model model, HttpSession session) {
@@ -131,7 +129,6 @@ public class ContestMvcController {
             }
             int alreadyUploaded = 1;
             List<Photo> photosOfContest = photoService.getAllPhotosEntityOfContest(contestService.findContestEntityById(contestId));
-
 
             for (Photo photo1 : photosOfContest) {
                 if (photo1.getUser().equals(user)) {
@@ -180,7 +177,6 @@ public class ContestMvcController {
         model.addAttribute("contest", new ContestInput());
         return "ContestCreateView";
     }
-
 
     @PostMapping("/new")
     public String createContest(@Valid @ModelAttribute("contest") ContestInput contestInput,
@@ -263,7 +259,6 @@ public class ContestMvcController {
             return "redirect:/auth/login";
         }
     }
-
 
     @PostMapping("/{id}/upload/photo")
     public String createAndUploadPhoto(@PathVariable UUID id, @Valid @ModelAttribute("combinedInput") CombinedPhotoInput combinedInput, BindingResult bindingResult, Model model, HttpSession session) {

@@ -17,5 +17,4 @@ public class PhotoOutput {
     private String username;
     private String photo;
     private String uploadDate;
-
 }

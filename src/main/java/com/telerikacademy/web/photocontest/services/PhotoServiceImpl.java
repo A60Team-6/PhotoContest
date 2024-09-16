@@ -10,7 +10,9 @@ import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import com.telerikacademy.web.photocontest.helpers.PermissionHelper;
 import com.telerikacademy.web.photocontest.repositories.ContestRepository;
 import com.telerikacademy.web.photocontest.repositories.PhotoRepository;
-import com.telerikacademy.web.photocontest.services.contracts.*;
+import com.telerikacademy.web.photocontest.services.contracts.CloudinaryService;
+import com.telerikacademy.web.photocontest.services.contracts.ContestParticipationService;
+import com.telerikacademy.web.photocontest.services.contracts.PhotoService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
@@ -32,7 +34,6 @@ public class PhotoServiceImpl implements PhotoService {
     private final PhotoRepository photoRepository;
     private final ConversionService conversionService;
     private final CloudinaryService cloudinaryService;
-    //private final ContestService contestService;
     private final ContestRepository contestRepository;
     private final ContestParticipationService contestParticipationService;
 
@@ -56,7 +57,6 @@ public class PhotoServiceImpl implements PhotoService {
                 .map(photo -> conversionService.convert(photo, PhotoOutput.class))
                 .collect(Collectors.toList());
     }
-
 
     @Override
     public List<Photo> getAllPhotosEntityOfUser(User user) {
@@ -138,13 +138,6 @@ public class PhotoServiceImpl implements PhotoService {
                 throw new DuplicateEntityException("Duplicate photo: A photo with this title already exists in this content .");
             }
         }
-//
-//        if (photoRepository.existsByTitleAndIsActiveTrue(photoInput.getTitle())) {
-//            throw new IllegalArgumentException("A photo with the same title already exists.");
-//        }
-
-        // Contest contest = contestService.findContestEntityById(UUID.fromString(photoInput.getContestId()));
-//        Contest contest = contestRepository.findByContestIdAndIsActiveTrue(UUID.fromString(photoInput.getContestId()));
 
         if (!contest.getPhase().getName().equals("Phase 1")) {
             throw new IllegalArgumentException("You can not upload photo after Phase 1!");
@@ -209,9 +202,7 @@ public class PhotoServiceImpl implements PhotoService {
             throw new IllegalArgumentException("Invalid file input");
         }
 
-        // Генериране на SHA-256 хеша на файла
         String hash = generateSHA256Hash(uploadFileInput.getFile());
-
 
         Photo photo = findPhotoEntityById(UUID.fromString(uploadFileInput.getPhotoId()));
         Contest contest = photo.getContest();
@@ -221,10 +212,6 @@ public class PhotoServiceImpl implements PhotoService {
                 throw new DuplicateEntityException("Duplicate photo: A photo already exists in this content .");
             }
         }
-//        // Проверка дали снимката с този хеш вече съществува в базата данни
-//        if (photoRepository.existsByHash(hash) && photo.getContest().getContestId() == contest.getContestId()) { // Да проверим дали снимката участава в конкретния конкурс с метода getAllPhotosOfContest
-//            throw new DuplicateEntityException("Duplicate photo: A photo with this content already exists.");
-//        }
 
         String photoUrl = cloudinaryService.uploadFile(uploadFileInput.getFile());
 
@@ -233,7 +220,7 @@ public class PhotoServiceImpl implements PhotoService {
         }
 
         photo.setPhotoUrl(photoUrl);
-        photo.setHash(hash); // Записване на хеша в базата данни
+        photo.setHash(hash);
 
         photoRepository.save(photo);
 
@@ -260,11 +247,9 @@ public class PhotoServiceImpl implements PhotoService {
         return hexString.toString();
     }
 
-
     @Override
     public Photo findPhotoEntityById(UUID id) {
         return photoRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Photo not found"));
     }
-
 }

@@ -10,7 +10,6 @@
 </head>
 <body>
 
-<!-- Хедър с навигационно меню -->
 <header class="site-header">
     <div class="container">
         <h1 class="title">New Rating</h1>
@@ -26,7 +25,6 @@
     </div>
 </header>
 
-<!-- Основно съдържание -->
 <main>
     <div class="body-content">
         <header class="header">
@@ -36,58 +34,54 @@
         <div class="post-form">
             <form th:action="@{/photo/{id}/set/score(id=${photoId})}" th:object="${juryPhotoRating}" method="post">
 
-                <!-- Падащо меню за резултат от 1 до 10 -->
                 <label th:text="#{rating.score.label}">Score</label>
                 <label for="scoreSelect"></label><select id="scoreSelect" th:field="*{score}" required>
-                    <option value="" disabled selected>Select a score</option>
-                    <option th:each="i : ${#numbers.sequence(1, 10)}" th:value="${i}" th:text="${i}"></option>
-                </select>
+                <option value="" disabled selected>Select a score</option>
+                <option th:each="i : ${#numbers.sequence(1, 10)}" th:value="${i}" th:text="${i}"></option>
+            </select>
                 <div th:if="${#fields.hasErrors('score')}" th:errors="*{score}" class="error-message"></div>
 
-                <!-- Поле за коментар -->
                 <label th:text="#{rating.comment.label}">Comment</label>
                 <label>
                     <textarea th:field="*{comment}" placeholder="Write your comment here..." rows="6"></textarea>
                 </label>
                 <div th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}" class="error-message"></div>
 
-                <!-- Опции за Match/Unmatch -->
                 <div class="radio-group">
                     <label>
-                        <input type="radio" name="categoryMatch" th:field="*{categoryMatch}" value="true" onclick="toggleScore(true)" required /> Match
+                        <input type="radio" name="categoryMatch" th:field="*{categoryMatch}" value="true"
+                               onclick="toggleScore(true)" required/> Match
                     </label>
                     <label>
-                        <input type="radio" name="categoryMatch" th:field="*{categoryMatch}" value="false" onclick="toggleScore(false)" /> Unmatch
+                        <input type="radio" name="categoryMatch" th:field="*{categoryMatch}" value="false"
+                               onclick="toggleScore(false)"/> Unmatch
                     </label>
                 </div>
 
-                <!-- Бутон за записване -->
                 <input type="submit" value="Save" class="save-button"/>
             </form>
         </div>
     </div>
 </main>
 
-<!-- Футър -->
 <footer>
     <div class="container">
-        <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' PhotoContest'}">© 2024 PhotoContest</small>
+        <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' PhotoContest'}">© 2024
+            PhotoContest</small>
     </div>
 </footer>
 
-<!-- Скрипт за задаване на стойност 0 при Unmatch -->
 <script>
     function toggleScore(isMatch) {
         const scoreSelect = document.getElementById('scoreSelect');
         if (isMatch) {
             scoreSelect.disabled = false;
-            scoreSelect.value = "";  // Изчисти стойността, ако е избрано "Match"
+            scoreSelect.value = "";
         } else {
             scoreSelect.disabled = true;
-            scoreSelect.value = "0"; // Задай стойност 0, ако е избрано "Unmatch"
+            scoreSelect.value = "0";
         }
     }
 </script>
-
 </body>
 </html>

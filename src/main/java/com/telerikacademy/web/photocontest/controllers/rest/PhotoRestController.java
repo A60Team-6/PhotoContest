@@ -87,5 +87,4 @@ public class PhotoRestController {
 
         return new ResponseEntity<>("Photo was updated succsesfully!", HttpStatus.OK);
     }
-
 }

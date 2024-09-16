@@ -12,21 +12,16 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ContestService {
+
     List<ContestOutput> getAllActive();
 
     List<FinishedContestAntItsWinner> getAllUnActive();
 
-   // List<Contest> getAllActiveContestInPhase1();
-
     Page<Contest> getAllActiveContestInPhase1(String title, String category, int page, int size, String sortBy, String sortDirection);
-
-  //  List<Contest> getAllActiveContestInPhase2();
 
     Page<Contest> getAllActiveContestInPhase2(String title, String category, int page, int size, String sortBy, String sortDirection);
 
     List<ContestOutput> getAllContests();
-
- //   Page<Contest> getContestsWithFilters(String title, String category, String phase, int page, int size, String sortBy, String sortDirection);
 
     ContestOutput findContestById(UUID contestId);
 

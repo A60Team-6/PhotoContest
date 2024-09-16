@@ -4,7 +4,8 @@ import com.telerikacademy.web.photocontest.entities.Contest;
 import com.telerikacademy.web.photocontest.entities.ContestParticipation;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.exceptions.UnauthorizedOperationException;
-import com.telerikacademy.web.photocontest.repositories.*;
+import com.telerikacademy.web.photocontest.repositories.ContestParticipationRepository;
+import com.telerikacademy.web.photocontest.repositories.ContestRepository;
 import com.telerikacademy.web.photocontest.services.contracts.ContestParticipationService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.Builder;
@@ -20,9 +21,7 @@ import java.util.UUID;
 @Builder
 public class ContestParticipationServiceImpl implements ContestParticipationService {
 
-
     private final ContestParticipationRepository repository;
-    //private final ContestService contestService;
     private final ContestRepository contestRepository;
 
     @Override
@@ -32,13 +31,11 @@ public class ContestParticipationServiceImpl implements ContestParticipationServ
 
     @Override
     public void participateInContest(User user, UUID id) {
-        //    Contest contest = contestService.findContestEntityById(id);
         Contest contest = contestRepository.findByContestIdAndIsActiveTrue(id);
 
         if (contest == null) {
             throw new EntityNotFoundException("Contest not found");
         }
-
 
         if (!contest.getPhase().getName().equals("Phase 1")) {
             throw new UnauthorizedOperationException("Time to participate in contest has expired!");

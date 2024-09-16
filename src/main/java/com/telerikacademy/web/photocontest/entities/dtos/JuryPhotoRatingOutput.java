@@ -14,7 +14,6 @@ import java.util.UUID;
 @Builder
 public class JuryPhotoRatingOutput {
 
-
     private UUID photoId;
     private UUID userId;
     private int score;

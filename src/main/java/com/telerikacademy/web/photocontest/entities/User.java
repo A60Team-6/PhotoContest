@@ -1,17 +1,17 @@
 package com.telerikacademy.web.photocontest.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 import java.util.UUID;
 
 @Entity
 @Table(name = "users")
-@Data // Генерира автоматично getters, setters, equals, hashCode, toString
-@NoArgsConstructor // Генерира празен конструктор
+@Data
+@NoArgsConstructor
 public class User {
 
     @Id

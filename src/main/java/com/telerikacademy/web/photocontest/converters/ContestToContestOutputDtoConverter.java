@@ -10,10 +10,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class ContestToContestOutputDtoConverter implements Converter<Contest, ContestOutput> {
 
-
     @Override
     public ContestOutput convert(Contest contest) {
-
         return ContestOutput.builder()
                 .title(contest.getTitle())
                 .category(contest.getCategory())

@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update User - Photography Contest</title>
     <link rel="stylesheet" th:href="@{/css/update-user.css}">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&display=swap"
+          rel="stylesheet">
 </head>
 <body>
 
-<!-- Хедър с навигационно меню -->
 <header class="site-header">
     <div class="container">
         <h1 class="title">Update User</h1>
@@ -25,26 +25,33 @@
     </div>
 </header>
 
-<!-- Основно съдържание -->
 <main>
     <div class="content-container">
         <div class="form-container">
             <form action="#" th:action="@{/user/{id}/update(id=${id})}" th:object="${user}" method="post">
 
                 <label th:text="#{user.label.firstName}">First Name</label>
-                <input type="text" th:field="*{firstName}"/>
+                <label>
+                    <input type="text" th:field="*{firstName}"/>
+                </label>
                 <label class="error" th:errors="*{firstName}">First name error placeholder</label>
 
                 <label th:text="#{user.label.lastName}">Last Name</label>
-                <input type="text" th:field="*{lastName}"/>
+                <label>
+                    <input type="text" th:field="*{lastName}"/>
+                </label>
                 <label class="error" th:errors="*{lastName}">Last name error placeholder</label>
 
                 <label th:text="#{user.label.email}">Email</label>
-                <input type="text" th:field="*{email}"/>
+                <label>
+                    <input type="text" th:field="*{email}"/>
+                </label>
                 <label class="error" th:errors="*{email}">Email error placeholder</label>
 
                 <label th:text="#{user.label.password}">Password</label>
-                <input type="password" th:field="*{password}"/>
+                <label>
+                    <input type="password" th:field="*{password}"/>
+                </label>
                 <label class="error" th:errors="*{password}">Password error placeholder</label>
 
                 <input type="submit" value="Save User" class="submit-button"/>
@@ -53,12 +60,11 @@
     </div>
 </main>
 
-<!-- Футър -->
 <footer>
     <div class="container">
-        <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' PhotoContest'}">© 2024 PhotoContest</small>
+        <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' PhotoContest'}">© 2024
+            PhotoContest</small>
     </div>
 </footer>
-
 </body>
 </html>

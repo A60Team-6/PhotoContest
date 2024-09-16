@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UploadFileInput {
+
     private String photoId;
     private MultipartFile file;
 }

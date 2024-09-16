@@ -23,7 +23,6 @@ public class ContestParticipation {
     @Column(name = "id", nullable = false, unique = true)
     private UUID id;
 
-
     @ManyToOne
     @JoinColumn(name = "contest_id", nullable = false)
     private Contest contest;

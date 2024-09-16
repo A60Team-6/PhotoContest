@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UserOutput {
 
-
     private String username;
 
     private String firstName;

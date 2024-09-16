@@ -12,7 +12,6 @@ public class ContestToContestOutputIdDtoConverter implements Converter<Contest, 
 
     @Override
     public ContestOutputId convert(Contest contest) {
-
         return ContestOutputId.builder()
                 .contestId(contest.getContestId().toString()).build();
     }

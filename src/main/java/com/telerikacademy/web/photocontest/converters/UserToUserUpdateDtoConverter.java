@@ -12,7 +12,6 @@ public class UserToUserUpdateDtoConverter implements Converter<User, UserUpdate>
 
     @Override
     public UserUpdate convert(User user) {
-
         return UserUpdate.builder()
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())

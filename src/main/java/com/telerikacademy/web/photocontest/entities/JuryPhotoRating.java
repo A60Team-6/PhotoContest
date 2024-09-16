@@ -31,7 +31,7 @@ public class JuryPhotoRating {
     private User jury;
 
     @Column(name = "score", nullable = false)
-    private Integer  score;
+    private Integer score;
 
     @Column(name = "comment", nullable = false)
     private String comment;
@@ -44,5 +44,4 @@ public class JuryPhotoRating {
 
     @Column(name = "is_active")
     private Boolean isActive;
-
 }

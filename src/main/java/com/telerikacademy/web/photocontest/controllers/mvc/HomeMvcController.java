@@ -1,6 +1,5 @@
 package com.telerikacademy.web.photocontest.controllers.mvc;
 
-
 import com.telerikacademy.web.photocontest.helpers.AuthenticationHelper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -26,7 +25,6 @@ public class HomeMvcController {
     public boolean populateIsAuthenticated(HttpSession session) {
         return session.getAttribute("currentUser") != null;
     }
-
 
     @GetMapping
     public String showHomePage() {

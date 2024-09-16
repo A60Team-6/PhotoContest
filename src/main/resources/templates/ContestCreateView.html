@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Contest - Photography Contest</title>
     <link rel="stylesheet" th:href="@{/css/new-contest.css}">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&display=swap"
+          rel="stylesheet">
 </head>
 <body>
 
-<!-- Хедър с навигационно меню -->
 <header class="site-header">
     <div class="container">
         <h1 class="title">Create a New Contest</h1>
@@ -25,7 +25,6 @@
     </div>
 </header>
 
-<!-- Основно съдържание -->
 <main>
     <div class="body-content">
         <header class="header">
@@ -35,14 +34,12 @@
         <div class="form-container">
             <form action="#" th:action="@{/contest/new}" th:object="${contest}" method="post">
 
-                <!-- Заглавие на конкурса -->
                 <label th:text="#{contest.label.title}">Contest</label>
                 <label>
-                    <input type="text" th:field="*{title}" placeholder="Enter contest title" />
+                    <input type="text" th:field="*{title}" placeholder="Enter contest title"/>
                 </label>
                 <label class="error" th:errors="*{title}">Title error placeholder</label>
 
-                <!-- Категория на конкурса -->
                 <label th:text="#{contest.label.category}">Category</label>
                 <label>
                     <select th:field="*{category}">
@@ -66,24 +63,23 @@
                 </label>
                 <label class="error" th:errors="*{category}">Category error placeholder</label>
 
-                <!-- Време за смяна на фаза (в часове/дни) -->
                 <label th:text="#{contest.label.changePhase}">Change Phase Interval</label>
                 <label>
-                    <input type="number" th:field="*{changePhaseTime}" min="1" placeholder="Duration of phase in hours" />
+                    <input type="number" th:field="*{changePhaseTime}" min="1"
+                           placeholder="Duration of phase in hours"/>
                 </label>
                 <label class="error" th:errors="*{changePhaseTime}">Change Phase Time error placeholder</label>
 
-                <!-- Бутон за запазване -->
-                <input type="submit" value="Save Contest" class="submit-button" />
+                <input type="submit" value="Save Contest" class="submit-button"/>
             </form>
         </div>
     </div>
 </main>
 
-<!-- Футър -->
 <footer>
     <div class="container">
-        <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' Photo Contest'}">© 2024 Photo Contest</small>
+        <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' Photo Contest'}">© 2024 Photo
+            Contest</small>
     </div>
 </footer>
 

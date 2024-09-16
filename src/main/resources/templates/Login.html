@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Photography Contest</title>
     <link rel="stylesheet" th:href="@{/css/login.css}">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&display=swap"
+          rel="stylesheet">
 </head>
 <body>
 
-<!-- Хедър с навигационно меню -->
 <header class="site-header">
     <div class="container">
         <h1 class="title">Login to Photo Contest</h1>
@@ -22,7 +22,6 @@
     </div>
 </header>
 
-<!-- Контейнер за логин формата -->
 <main>
     <div class="login-container">
         <form action="#" th:action="@{/auth/login}" th:object="${login}" method="post" class="login-form">
@@ -39,12 +38,11 @@
     </div>
 </main>
 
-<!-- Футър -->
 <footer>
     <div class="container">
-        <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' Photo Contest'}">© 2024 Photo Contest</small>
+        <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' Photo Contest'}">© 2024 Photo
+            Contest</small>
     </div>
 </footer>
-
 </body>
 </html>

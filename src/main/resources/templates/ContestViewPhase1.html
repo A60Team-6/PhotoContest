@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contest Details - Photography Contest</title>
     <link rel="stylesheet" th:href="@{/css/contestPh1.css}">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&display=swap"
+          rel="stylesheet">
 </head>
 <body>
 
-<!-- Навигационно меню -->
 <header class="site-header">
     <div class="container">
         <nav>
@@ -26,7 +26,6 @@
     </div>
 </header>
 
-<!-- Основно съдържание -->
 <main>
     <div class="body-content">
         <header class="header">
@@ -41,22 +40,23 @@
         </div>
 
         <div class="actions">
-            <form th:if="${alreadyParticipate == 1}" th:action="@{/contest/{id}/participate(id=${contestId})}" method="post">
+            <form th:if="${alreadyParticipate == 1}" th:action="@{/contest/{id}/participate(id=${contestId})}"
+                  method="post">
                 <button type="submit" class="btn btn-participate">Participate</button>
             </form>
-            <form th:if="${alreadyUploaded == 1} and ${alreadyParticipate == 0}" th:action="@{/contest/{id}/upload/photo(id=${contestId})}" method="get">
+            <form th:if="${alreadyUploaded == 1} and ${alreadyParticipate == 0}"
+                  th:action="@{/contest/{id}/upload/photo(id=${contestId})}" method="get">
                 <button type="submit" class="btn btn-participate">Upload Photo</button>
             </form>
         </div>
     </div>
 </main>
 
-<!-- Футър -->
 <footer>
     <div class="container">
-        <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' PhotoContest'}">© 2024 PhotoContest</small>
+        <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' PhotoContest'}">© 2024
+            PhotoContest</small>
     </div>
 </footer>
-
 </body>
 </html>

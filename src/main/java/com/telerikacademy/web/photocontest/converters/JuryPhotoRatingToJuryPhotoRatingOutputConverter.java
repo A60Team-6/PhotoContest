@@ -3,7 +3,6 @@ package com.telerikacademy.web.photocontest.converters;
 import com.telerikacademy.web.photocontest.entities.JuryPhotoRating;
 import com.telerikacademy.web.photocontest.entities.dtos.JuryPhotoRatingOutput;
 import org.springframework.core.convert.converter.Converter;
-
 import org.springframework.stereotype.Component;
 
 @Component

@@ -26,5 +26,4 @@ public class ContestInputDtoToContestConverter implements Converter<ContestInput
                 .isActive(true)
                 .build();
     }
-
 }

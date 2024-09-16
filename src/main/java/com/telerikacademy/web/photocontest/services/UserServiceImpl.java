@@ -1,10 +1,10 @@
 package com.telerikacademy.web.photocontest.services;
 
+import com.telerikacademy.web.photocontest.entities.Photo;
+import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.*;
 import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import com.telerikacademy.web.photocontest.helpers.PermissionHelper;
-import com.telerikacademy.web.photocontest.entities.Photo;
-import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.repositories.UserRepository;
 import com.telerikacademy.web.photocontest.services.contracts.*;
 import jakarta.persistence.EntityNotFoundException;
@@ -42,7 +42,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
-
     @Override
     public List<UserOutput> getAll() {
         List<User> users = userRepository.findAllByIsActiveTrue();
@@ -51,24 +50,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void invite(User user){
+    public void invite(User user) {
         user.setIsInvited(true);
         userRepository.save(user);
     }
 
     @Override
-    public void acceptInvitation(User user){
+    public void acceptInvitation(User user) {
         user.setIsInvited(false);
         user.setRole(roleService.getRoleByName("Jury"));
         userRepository.save(user);
     }
 
     @Override
-    public void declineInvitation(User user){
+    public void declineInvitation(User user) {
         user.setIsInvited(false);
         userRepository.save(user);
     }
-
 
     @Override
     public Page<User> getUsersWithFilters(String username, String firstName, String email, int page, int size, String sortBy, String sortDirection) {
@@ -82,7 +80,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.findUsersByMultipleFields(usernameLike, firstNameLike, emailLike, pageable);
     }
 
-
     @Override
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
@@ -92,7 +89,6 @@ public class UserServiceImpl implements UserService {
     public boolean existsByUsername(String username) {
         return userRepository.existsByUsername(username);
     }
-
 
     @Override
     public List<User> getAllUsersWithJuryRights() {
@@ -105,7 +101,6 @@ public class UserServiceImpl implements UserService {
         }
         return jurors;
     }
-
 
     @Override
     public UserOutput findUserById(UUID userId, User authenticatedUser) {
@@ -174,7 +169,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserUpdate editUser(User user, UserUpdate userUpdate) {
-
 
         if (!passwordEncoder.matches(userUpdate.getPassword(), user.getPassword())) {
             String hashedPassword = passwordEncoder.encode(userUpdate.getPassword());

@@ -12,7 +12,6 @@ public class UserToUserIdDtoConverter implements Converter<User, UserOutputId> {
 
     @Override
     public UserOutputId convert(User user) {
-
         return UserOutputId.builder()
                 .userId(user.getUserId().toString()).build();
     }

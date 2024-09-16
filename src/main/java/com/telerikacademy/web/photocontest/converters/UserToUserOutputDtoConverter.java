@@ -12,7 +12,6 @@ public class UserToUserOutputDtoConverter implements Converter<User, UserOutput>
 
     @Override
     public UserOutput convert(User user) {
-
         return UserOutput.builder()
                 .username(user.getUsername())
                 .firstName(user.getFirstName())

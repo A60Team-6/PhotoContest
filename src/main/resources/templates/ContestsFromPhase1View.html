@@ -11,7 +11,6 @@
 </head>
 <body>
 
-<!-- Хедър с навигационно меню -->
 <header class="site-header">
     <div class="container">
         <h1 class="title">Contests - Phase One</h1>
@@ -27,15 +26,16 @@
     </div>
 </header>
 
-<!-- Форма за филтриране -->
 <form method="get" action="/contest/phaseOne">
-    <input type="text" name="title" placeholder="Title" th:value="${title}"/>
-    <input type="text" name="category" placeholder="Category" th:value="${category}"/>
+    <label>
+        <input type="text" name="title" placeholder="Title" th:value="${title}"/>
+    </label>
+    <label>
+        <input type="text" name="category" placeholder="Category" th:value="${category}"/>
+    </label>
     <button type="submit">Filter</button>
 </form>
 
-
-<!-- Основно съдържание -->
 <main>
     <div class="body-content">
         <h2 class="centered-title" th:text="#{contests.title.label}">Contests</h2>
@@ -48,12 +48,10 @@
             <div class="table-container">
                 <div class="table">
                     <div class="row header">
-                        <!--                            <div class="cell">Contest</div>-->
                         <div class="cell"><a
                                 th:href="@{/contest/phaseOne(page=${currentPage}, size=${size}, sortBy=${'title'}, sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">
                             <span th:text="${sortDirection == 'asc' ? 'Contest ▲' : 'Contest ▼'}"></span>
                         </a></div>
-                        <!--                            <div class="cell">Category</div>-->
                         <div class="cell"><a
                                 th:href="@{/contest/phaseOne(page=${currentPage}, size=${size}, sortBy=${'category'}, sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">
                             <span th:text="${sortDirection == 'asc' ? 'Category ▲' : 'Category ▼'}"></span>
@@ -63,7 +61,8 @@
                     </div>
                     <div class="row" th:each="contest : ${contests}">
                         <div class="cell post-title">
-                            <a th:href="@{/contest/phOne/{contestId}(contestId=${contest.contestId})}" th:text="${contest.title}">Contest</a>
+                            <a th:href="@{/contest/phOne/{contestId}(contestId=${contest.contestId})}"
+                               th:text="${contest.title}">Contest</a>
                         </div>
                         <div class="cell post-content" th:text="${contest.category}">Category</div>
                         <div class="cell post-content" th:text="${contest.phase.name}">Phase</div>
@@ -78,8 +77,6 @@
     </div>
 </main>
 
-
-<!-- Пагинация -->
 <div class="pagination">
     <a th:if="${currentPage > 0}"
        th:href="@{/contest/phaseOne(page=${currentPage - 1}, size=${size}, sortBy=${sortBy}, sortDirection=${sortDirection})}">
@@ -98,7 +95,6 @@
     </a>
 </div>
 
-<!-- Футър -->
 <footer>
     <div class="container">
         <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' PhotoContest'}">© 2024

@@ -1,6 +1,5 @@
 package com.telerikacademy.web.photocontest.services.contracts;
 
-import com.telerikacademy.web.photocontest.entities.Contest;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.*;
 import org.springframework.data.domain.Page;
@@ -11,7 +10,6 @@ import java.util.List;
 import java.util.UUID;
 
 public interface UserService {
-
 
     List<User> getAllUserEntities();
 
@@ -41,15 +39,11 @@ public interface UserService {
 
     User findUserByUsernameAuth(String username);
 
-  //  UserOutputId createUser(UserInput user);
-
     UserOutputId createUser(Register register);
 
     UserUpdate editUser(User user, UserUpdate userToEdit);
 
     void deactivateUser(UUID userId, User user);
-
-//    void uploadPhoto(UploadFileInput uploadFileInput);
 
     UploadFileOutput uploadPhoto(String id, MultipartFile file) throws IOException;
 }

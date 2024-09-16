@@ -33,12 +33,16 @@
             <form action="#" th:action="@{/contest/{id}/upload/photo(id=${contestId})}" th:object="${combinedInput}"
                   method="post" enctype="multipart/form-data">
                 <label th:text="#{photo.title.label}">Photo Title</label>
-                <input type="text" th:field="*{photoInput.title}" placeholder="Enter photo title"/>
+                <label>
+                    <input type="text" th:field="*{photoInput.title}" placeholder="Enter photo title"/>
+                </label>
                 <div th:if="${#fields.hasErrors('photoInput.title')}" th:errors="*{photoInput.title}"
                      class="error-message"></div>
 
                 <label th:text="#{photo.story.label}">Photo Story</label>
-                <textarea th:field="*{photoInput.story}" placeholder="Write your story here..." rows="6"></textarea>
+                <label>
+                    <textarea th:field="*{photoInput.story}" placeholder="Write your story here..." rows="6"></textarea>
+                </label>
                 <div th:if="${#fields.hasErrors('photoInput.story')}" th:errors="*{photoInput.story}"
                      class="error-message"></div>
 

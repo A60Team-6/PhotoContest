@@ -10,7 +10,6 @@
 </head>
 <body>
 
-<!-- Хедър с навигационно меню -->
 <header class="site-header">
     <div class="container">
         <h1 class="title">User List</h1>
@@ -26,14 +25,12 @@
     </div>
 </header>
 
-<!-- Основно съдържание -->
 <main>
     <div class="body-content">
         <header class="header">
             <h2 class="page-title">User List</h2>
         </header>
 
-        <!-- Филтри -->
         <form method="get" action="/user/users" class="filter-form">
             <label>
                 <input type="text" name="username" placeholder="Username" th:value="${username}"/>
@@ -47,7 +44,6 @@
             <button type="submit" class="filter-btn">Filter</button>
         </form>
 
-        <!-- Таблица за потребители -->
         <div class="table-container">
             <table>
                 <thead>
@@ -106,7 +102,6 @@
             </table>
         </div>
 
-        <!-- Пагинация -->
         <div class="pagination">
             <a th:if="${currentPage > 0}"
                th:href="@{/user/users(page=${currentPage - 1}, size=${size}, sortBy=${sortBy}, sortDirection=${sortDirection})}">
@@ -118,7 +113,6 @@
            th:href="@{/user/users(page=${i}, size=${size}, sortBy=${sortBy}, sortDirection=${sortDirection})}"
            th:text="${i + 1}">1</a>
     </span>
-
             <a th:if="${currentPage < totalPages - 1}"
                th:href="@{/user/users(page=${currentPage + 1}, size=${size}, sortBy=${sortBy}, sortDirection=${sortDirection})}">
                 Next
@@ -127,13 +121,11 @@
     </div>
 </main>
 
-<!-- Футър -->
 <footer>
     <div class="container">
         <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' PhotoContest'}">© 2024
             PhotoContest</small>
     </div>
 </footer>
-
 </body>
 </html>

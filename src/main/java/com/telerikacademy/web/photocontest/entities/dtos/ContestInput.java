@@ -1,6 +1,5 @@
 package com.telerikacademy.web.photocontest.entities.dtos;
 
-
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;

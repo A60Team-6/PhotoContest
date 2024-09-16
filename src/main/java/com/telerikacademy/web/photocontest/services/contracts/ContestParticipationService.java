@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ContestParticipationService {
+
     List<ContestParticipation> getAll();
 
     void participateInContest(User user, UUID id);

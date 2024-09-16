@@ -48,12 +48,9 @@ public class JuryPhotoRatingRestController {
         return ResponseEntity.ok(ratings);
     }
 
-
     @GetMapping("/photo/{photoId}/average-score")
     public ResponseEntity<Double> getAverageScoreForPhoto(@PathVariable UUID photoId) {
         double averageScore = juryPhotoRatingService.getAverageScoreForPhoto(photoId);
         return ResponseEntity.ok(averageScore);
     }
-
-
 }

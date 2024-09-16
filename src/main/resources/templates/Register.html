@@ -10,7 +10,6 @@
 </head>
 <body>
 
-<!-- Хедър с навигационно меню -->
 <header class="site-header">
     <div class="container">
         <h1 class="title">Register for Photo Contest</h1>
@@ -22,13 +21,11 @@
     </div>
 </header>
 
-<!-- Контейнер за регистрационната форма -->
 <main>
     <div class="register-container">
         <form action="#" th:action="@{/auth/register}" th:object="${register}" method="post"
               enctype="multipart/form-data" class="register-form">
 
-            <!-- Преглед на профилна снимка -->
             <div class="profile-photo-container">
                 <img id="profilePhotoPreview" src="../assets/img/default.jpg" alt="Profile Photo" class="profile-photo">
             </div>
@@ -41,27 +38,39 @@
             <label class="error" th:errors="*{profilePhoto}">Profile photo error placeholder</label>
 
             <label th:text="#{user.label.username}">Username</label>
-            <input type="text" th:field="*{username}" placeholder="Enter your username"/>
+            <label>
+                <input type="text" th:field="*{username}" placeholder="Enter your username"/>
+            </label>
             <label class="error" th:errors="*{username}">Username error placeholder</label>
 
             <label th:text="#{user.label.password}">Password</label>
-            <input type="password" th:field="*{password}" placeholder="Enter your password"/>
+            <label>
+                <input type="password" th:field="*{password}" placeholder="Enter your password"/>
+            </label>
             <label class="error" th:errors="*{password}">Password error placeholder</label>
 
             <label th:text="#{user.label.passwordConfirm}">Confirm Password</label>
-            <input type="password" th:field="*{passwordConfirm}" placeholder="Confirm your password"/>
+            <label>
+                <input type="password" th:field="*{passwordConfirm}" placeholder="Confirm your password"/>
+            </label>
             <label class="error" th:errors="*{passwordConfirm}">Confirm Password error placeholder</label>
 
             <label th:text="#{user.label.firstName}">First Name</label>
-            <input type="text" th:field="*{firstName}" placeholder="Enter your first name"/>
+            <label>
+                <input type="text" th:field="*{firstName}" placeholder="Enter your first name"/>
+            </label>
             <label class="error" th:errors="*{firstName}">First Name error placeholder</label>
 
             <label th:text="#{user.label.lastName}">Last Name</label>
-            <input type="text" th:field="*{lastName}" placeholder="Enter your last name"/>
+            <label>
+                <input type="text" th:field="*{lastName}" placeholder="Enter your last name"/>
+            </label>
             <label class="error" th:errors="*{lastName}">Last Name error placeholder</label>
 
             <label th:text="#{user.label.email}">Email</label>
-            <input type="email" th:field="*{email}" placeholder="Enter your email"/>
+            <label>
+                <input type="email" th:field="*{email}" placeholder="Enter your email"/>
+            </label>
             <label class="error" th:errors="*{email}">Email error placeholder</label>
 
             <input type="submit" value="Register" class="register-btn"/>
@@ -69,7 +78,6 @@
     </div>
 </main>
 
-<!-- Футър -->
 <footer>
     <div class="container">
         <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' Photo Contest'}">© 2024 Photo
@@ -92,6 +100,5 @@
         }
     }
 </script>
-
 </body>
 </html>

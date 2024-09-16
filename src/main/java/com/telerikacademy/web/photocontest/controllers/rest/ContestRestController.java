@@ -1,17 +1,16 @@
 package com.telerikacademy.web.photocontest.controllers.rest;
 
 import com.telerikacademy.web.photocontest.entities.Contest;
-import com.telerikacademy.web.photocontest.entities.dtos.ContestOutputId;
-import com.telerikacademy.web.photocontest.entities.dtos.PhotoOutput;
-import com.telerikacademy.web.photocontest.helpers.AuthenticationHelper;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.ContestInput;
 import com.telerikacademy.web.photocontest.entities.dtos.ContestOutput;
+import com.telerikacademy.web.photocontest.entities.dtos.ContestOutputId;
+import com.telerikacademy.web.photocontest.entities.dtos.PhotoOutput;
+import com.telerikacademy.web.photocontest.helpers.AuthenticationHelper;
 import com.telerikacademy.web.photocontest.services.contracts.ContestService;
 import com.telerikacademy.web.photocontest.services.contracts.PhotoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,19 +38,6 @@ public class ContestRestController {
         return ResponseEntity.ok(photoService.getAllPhotosOfContest(contest));
     }
 
-//    @GetMapping("/filtered")
-//    public ResponseEntity<Page<Contest>> getContests(
-//            @RequestParam(required = false) String title,
-//            @RequestParam(required = false) String category,
-//            @RequestParam(required = false) String phase,
-//            @RequestParam(defaultValue = "0") int page,
-//            @RequestParam(defaultValue = "10") int size,
-//            @RequestParam(defaultValue = "id") String sortBy,
-//            @RequestParam(defaultValue = "asc") String sortDirection) {
-//        Page<Contest> contests = contestService.getContestsWithFilters(title, category, phase, page, size, sortBy, sortDirection);
-//        return ResponseEntity.ok(contests);
-//    }
-
     @GetMapping("/{id}")
     public ResponseEntity<ContestOutput> getContestById(@PathVariable UUID id) {
         return ResponseEntity.ok(contestService.findContestById(id));
@@ -64,14 +50,14 @@ public class ContestRestController {
 
     @PostMapping
     public ResponseEntity<ContestOutputId> createContest(@RequestHeader HttpHeaders headers, @Valid @RequestBody ContestInput contestInput) {
-            User user = authenticationHelper.tryGetUser(headers);
-            return ResponseEntity.ok(contestService.createContest(contestInput, user));
+        User user = authenticationHelper.tryGetUser(headers);
+        return ResponseEntity.ok(contestService.createContest(contestInput, user));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteContest(@PathVariable UUID id, @RequestHeader HttpHeaders headers) {
-            User user = authenticationHelper.tryGetUser(headers);
-            contestService.deactivateContest(id, user);
-            return ResponseEntity.ok("Deleted contest successfully");
+        User user = authenticationHelper.tryGetUser(headers);
+        contestService.deactivateContest(id, user);
+        return ResponseEntity.ok("Deleted contest successfully");
     }
 }

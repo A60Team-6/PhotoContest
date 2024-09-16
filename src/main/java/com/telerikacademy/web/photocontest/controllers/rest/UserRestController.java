@@ -65,7 +65,6 @@ public class UserRestController {
     public ResponseEntity<UserUpdate> editUser(@RequestHeader HttpHeaders headers, @Valid @RequestBody UserUpdate userUpdate) {
         User user = authenticationHelper.tryGetUser(headers);
         return ResponseEntity.ok(userService.editUser(user, userUpdate));
-
     }
 
     @DeleteMapping("/{id}")

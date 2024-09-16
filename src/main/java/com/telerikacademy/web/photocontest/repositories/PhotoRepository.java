@@ -21,8 +21,6 @@ public interface PhotoRepository extends JpaRepository<Photo, UUID> {
 
     boolean existsByTitleAndIsActiveTrue(String title);
 
-    boolean existsByHash(String hash);
-
     List<Photo> findAllByContestAndIsActiveTrue(Contest contest);
 }
 

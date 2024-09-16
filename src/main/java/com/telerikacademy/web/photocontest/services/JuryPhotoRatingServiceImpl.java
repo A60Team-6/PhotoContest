@@ -1,16 +1,15 @@
 package com.telerikacademy.web.photocontest.services;
 
 import com.telerikacademy.web.photocontest.entities.Contest;
-import com.telerikacademy.web.photocontest.entities.dtos.JuryPhotoRatingOutput;
 import com.telerikacademy.web.photocontest.entities.JuryPhotoRating;
 import com.telerikacademy.web.photocontest.entities.Photo;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.JuryPhotoRatingInput;
+import com.telerikacademy.web.photocontest.entities.dtos.JuryPhotoRatingOutput;
 import com.telerikacademy.web.photocontest.repositories.JuryPhotoRatingRepository;
 import com.telerikacademy.web.photocontest.repositories.PhotoRepository;
 import com.telerikacademy.web.photocontest.repositories.UserRepository;
 import com.telerikacademy.web.photocontest.services.contracts.JuryPhotoRatingService;
-import com.telerikacademy.web.photocontest.services.contracts.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
@@ -25,9 +24,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class JuryPhotoRatingServiceImpl implements JuryPhotoRatingService {
     private final JuryPhotoRatingRepository juryPhotoRatingRepository;
-    //private final PhotoService photoService;
     private final PhotoRepository photoRepository;
-    //private final UserService userService;
     private final UserRepository userRepository;
     private final ConversionService conversionService;
 
@@ -53,7 +50,6 @@ public class JuryPhotoRatingServiceImpl implements JuryPhotoRatingService {
 
     @Override
     public JuryPhotoRatingOutput createRating(JuryPhotoRatingInput input) {
-        //Photo photo = photoService.findPhotoEntityById(input.getPhotoId());
         Photo photo = photoRepository.findByIdAndIsActiveTrue(input.getPhotoId());
 
         if (photo == null) {
@@ -66,7 +62,6 @@ public class JuryPhotoRatingServiceImpl implements JuryPhotoRatingService {
             throw new IllegalArgumentException("You can rate a photo only in Phase 2");
         }
 
-        //User user = userService.findUserEntityById(input.getUserId());
         User user = userRepository.findByUserIdAndIsActiveTrue(input.getUserId());
 
         if ("User".equals(user.getRole().getName())) {
@@ -83,7 +78,6 @@ public class JuryPhotoRatingServiceImpl implements JuryPhotoRatingService {
                 .isActive(true)
                 .build();
 
-        //photo.setTotal_score(getAverageScoreForPhoto(photo.getId()));
         rating = juryPhotoRatingRepository.save(rating);
 
         double averageScore = getAverageScoreForPhoto(photo.getId());
@@ -119,7 +113,6 @@ public class JuryPhotoRatingServiceImpl implements JuryPhotoRatingService {
 
     @Override
     public List<JuryPhotoRatingOutput> getRatingsByUser(UUID userId) {
-        //User user = userService.findUserEntityById(userId);
         User user = userRepository.findByUserIdAndIsActiveTrue(userId);
         return juryPhotoRatingRepository.findRatingsByJury(user).stream()
                 .map(rating -> conversionService.convert(rating, JuryPhotoRatingOutput.class))

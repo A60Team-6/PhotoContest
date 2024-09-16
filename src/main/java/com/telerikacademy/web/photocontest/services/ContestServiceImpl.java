@@ -1,6 +1,5 @@
 package com.telerikacademy.web.photocontest.services;
 
-
 import com.telerikacademy.web.photocontest.entities.*;
 import com.telerikacademy.web.photocontest.entities.dtos.*;
 import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
@@ -22,13 +21,14 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class ContestServiceImpl implements ContestService {
-
 
     private final ConversionService conversionService;
     private final ContestRepository contestRepository;
@@ -52,7 +52,7 @@ public class ContestServiceImpl implements ContestService {
     public List<FinishedContestAntItsWinner> getAllUnActive() {
         List<Contest> contests = contestRepository.findAllByIsActiveFalse();
         List<FinishedContestAntItsWinner> finishedContestAntItsWinners = new ArrayList<>();
-        for(Contest contest : contests){
+        for (Contest contest : contests) {
             List<PhotoOutput> photosOnFirstPlace = findPhotosOnFirstPlace(contest);
             ContestOutput contestOutput = conversionService.convert(contest, ContestOutput.class);
             finishedContestAntItsWinners.add(FinishedContestAntItsWinner.builder()
@@ -60,30 +60,21 @@ public class ContestServiceImpl implements ContestService {
                     .photoOutputList(photosOnFirstPlace)
                     .build());
         }
-
-
         return finishedContestAntItsWinners;
     }
 
     @Override
-    public Page<Contest> getAllActiveContestInPhase1(String title, String category, int page, int size, String sortBy, String sortDirection){
-       Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
-       Pageable pageable = PageRequest.of(page, size, sort);
+    public Page<Contest> getAllActiveContestInPhase1(String title, String category, int page, int size, String sortBy, String sortDirection) {
+        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);
 
         String titleLike = title != null ? "%" + title + "%" : null;
         String categoryLike = category != null ? "%" + category + "%" : null;
         return contestRepository.findContestsPhase1ByMultipleFields(titleLike, categoryLike, pageable);
     }
 
-//    @Override
-//    public List<Contest> getAllActiveContestInPhase2(){
-//        List<Contest> contests = contestRepository.findAllByIsActiveTrue();
-//
-//        return contests.stream().filter(contest -> contest.getPhase().getName().equals("Phase 2")).toList();
-//    }
-
     @Override
-    public Page<Contest> getAllActiveContestInPhase2(String title, String category, int page, int size, String sortBy, String sortDirection){
+    public Page<Contest> getAllActiveContestInPhase2(String title, String category, int page, int size, String sortBy, String sortDirection) {
         Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
         Pageable pageable = PageRequest.of(page, size, sort);
 
@@ -124,7 +115,6 @@ public class ContestServiceImpl implements ContestService {
 
     @Override
     public ContestOutputId createContest(ContestInput contestInput, User user) {
-        // Contest contest = conversionService.convert(contestInput, Contest.class);
         Contest contest = Contest.builder()
                 .title(contestInput.getTitle())
                 .category(contestInput.getCategory())
@@ -175,7 +165,7 @@ public class ContestServiceImpl implements ContestService {
             if (now.isAfter(contest.getChangePhaseTime())) {
                 System.out.println("Changing phase for contest: " + contest.getTitle());
                 changePhase(contest);
-                activeContests = contestRepository.findAllByIsActiveTrue();
+                contestRepository.findAllByIsActiveTrue();
             }
         }
     }
@@ -184,7 +174,6 @@ public class ContestServiceImpl implements ContestService {
         String currentPhase = contest.getPhase().getName();
         LocalDateTime now = LocalDateTime.now();
         Phase phase2 = phaseService.getPhaseByName("Phase 2");
-
 
         if ("Phase 1".equals(currentPhase)) {
             contest.setPhase(phase2);
@@ -197,7 +186,6 @@ public class ContestServiceImpl implements ContestService {
             System.out.println("Contest finished");
         }
 
-//        contest.setChangePhaseTime(now);
         contestRepository.save(contest);
         if ("Finished".equals(contest.getPhase().getName())) {
 
@@ -211,7 +199,6 @@ public class ContestServiceImpl implements ContestService {
                         if (rating.getJury().equals(jury)) {
                             isThere = true;
                         }
-
                     }
                     if (!isThere) {
                         JuryPhotoRating defaultRating = JuryPhotoRating.builder()
@@ -225,7 +212,6 @@ public class ContestServiceImpl implements ContestService {
                                 .build();
                         juryPhotoRatingRepository.save(defaultRating);
 
-
                         double averageScore = juryPhotoRatingService.getAverageScoreForPhoto(photo.getId());
                         photo.setTotal_score(averageScore);
                         photoRepository.save(photo);
@@ -233,16 +219,12 @@ public class ContestServiceImpl implements ContestService {
                 }
             }
 
-
             decideTop3PlacesAndSetPointsToUsers(contest);
             photos.forEach(photo -> changeRanking(photo.getUser()));
             contest.setIsActive(false);
             contestRepository.save(contest);
-
-
         }
     }
-
     public void decideTop3PlacesAndSetPointsToUsers(Contest contest) {
 
         List<Photo> photos = photoRepository.findAllByContestAndIsActiveTrue(contest);
@@ -263,7 +245,6 @@ public class ContestServiceImpl implements ContestService {
 
         List<Photo> secondPlacePhotos = filterPhotosByScore(photos, secondMaxScore);
         assignPointsToPhotos(secondPlacePhotos, 35, 25);
-
 
         double thirdMaxScore = findOtherScore(photos, secondMaxScore);
         List<Photo> thirdPlacePhotos = filterPhotosByScore(photos, thirdMaxScore);
@@ -318,13 +299,13 @@ public class ContestServiceImpl implements ContestService {
         }
     }
 
-    public List<PhotoOutput> findPhotosOnFirstPlace(Contest contest){
+    public List<PhotoOutput> findPhotosOnFirstPlace(Contest contest) {
         List<Photo> list = photoService.getAllPhotosEntityOfContest(contest);
         double maxScore = findMaxScore(list);
         List<Photo> listOfPhotosOnFirstPlace = new ArrayList<>();
 
-        for(Photo photo : list){
-            if(photo.getTotal_score() == maxScore){
+        for (Photo photo : list) {
+            if (photo.getTotal_score() == maxScore) {
                 listOfPhotosOnFirstPlace.add(photo);
             }
         }

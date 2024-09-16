@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class Register extends Login{
+public class Register extends Login {
 
     private MultipartFile profilePhoto;
 

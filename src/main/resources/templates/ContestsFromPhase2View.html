@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contests Phase Two - Photography Contest</title>
     <link rel="stylesheet" th:href="@{/css/contests.css}">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&display=swap"
+          rel="stylesheet">
     <script src="/js/countdown.js"></script>
 </head>
 <body>
 
-<!-- Хедър с навигационно меню -->
 <header class="site-header">
     <div class="container">
         <h1 class="title">Contests - Phase Two</h1>
@@ -28,17 +28,14 @@
 
 <form method="get" action="/contest/phaseTwo">
     <label>
-        <input type="text" name="title" placeholder="Title" th:value="${title}" />
+        <input type="text" name="title" placeholder="Title" th:value="${title}"/>
     </label>
     <label>
-        <input type="text" name="category" placeholder="Category" th:value="${category}" />
+        <input type="text" name="category" placeholder="Category" th:value="${category}"/>
     </label>
     <button type="submit">Filter</button>
 </form>
 
-
-
-<!-- Основно съдържание -->
 <main>
     <div class="body-content">
         <h2 class="centered-title" th:text="#{contests.title.label}">Contests Phase 2</h2>
@@ -51,23 +48,29 @@
             <div class="table-container">
                 <div class="table">
                     <div class="row header">
-                        <div class="cell"><a th:href="@{/contest/phaseTwo(page=${currentPage}, size=${size}, sortBy=${'title'}, sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">
-                            Title <span th:text="${sortBy == 'title'} ? (sortDirection == 'asc' ? '▲' : '▼') : ''"></span>
+                        <div class="cell"><a
+                                th:href="@{/contest/phaseTwo(page=${currentPage}, size=${size}, sortBy=${'title'}, sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">
+                            Title <span
+                                th:text="${sortBy == 'title'} ? (sortDirection == 'asc' ? '▲' : '▼') : ''"></span>
                         </a></div>
-                        <div class="cell"><a th:href="@{/contest/phaseTwo(page=${currentPage}, size=${size}, sortBy=${'category'}, sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">
-                            Category <span th:text="${sortBy == 'category'} ? (sortDirection == 'asc' ? '▲' : '▼') : ''"></span>
+                        <div class="cell"><a
+                                th:href="@{/contest/phaseTwo(page=${currentPage}, size=${size}, sortBy=${'category'}, sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">
+                            Category <span
+                                th:text="${sortBy == 'category'} ? (sortDirection == 'asc' ? '▲' : '▼') : ''"></span>
                         </a></div>
                         <div class="cell">Phase</div>
                         <div class="cell">Time Remaining</div> <!-- Нова колона -->
                     </div>
                     <div class="row" th:each="contest : ${contests}">
                         <div class="cell post-title">
-                            <a href="#" th:href="@{/contest/{id}/phTwo(id=${contest.contestId})}" th:text="${contest.title}">Contest</a>
+                            <a href="#" th:href="@{/contest/{id}/phTwo(id=${contest.contestId})}"
+                               th:text="${contest.title}">Contest</a>
                         </div>
                         <div class="cell post-content" th:text="${contest.category}">Category</div>
                         <div class="cell post-content" th:text="${contest.phase.name}">Phase</div>
                         <div class="cell">
-                            <span class="timer" th:data-change-phase-time="${contest.changePhaseTime}" id="timer-${contest.contestId}"></span>
+                            <span class="timer" th:data-change-phase-time="${contest.changePhaseTime}"
+                                  id="timer-${contest.contestId}"></span>
                         </div>
                     </div>
                 </div>
@@ -75,7 +78,6 @@
         </div>
     </div>
 </main>
-
 
 <div class="pagination">
     <a th:if="${currentPage > 0}"
@@ -94,12 +96,11 @@
         Next
     </a>
 </div>
-<!-- Футър -->
 <footer>
     <div class="container">
-        <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' PhotoContest'}">© 2024 PhotoContest</small>
+        <small th:text="${'© Copyright ' + #dates.year(#dates.createNow()) + ' PhotoContest'}">© 2024
+            PhotoContest</small>
     </div>
 </footer>
-
 </body>
 </html>

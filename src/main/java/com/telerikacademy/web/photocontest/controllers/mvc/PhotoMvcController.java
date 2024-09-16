@@ -30,12 +30,9 @@ import java.util.UUID;
 @RequestMapping("/photo")
 public class PhotoMvcController {
 
-
-
     private final PhotoService photoService;
     private final AuthenticationHelper authenticationHelper;
     private final JuryPhotoRatingService juryPhotoRatingService;
-
 
     @ModelAttribute("requestURI")
     public String requestURI(final HttpServletRequest request) {
@@ -83,7 +80,6 @@ public class PhotoMvcController {
         }
     }
 
-
     @GetMapping("/{id}")
     public String showSinglePhoto(@PathVariable UUID id, Model model, HttpSession session) {
         try {
@@ -109,7 +105,6 @@ public class PhotoMvcController {
             return "AccessDeniedView";
         }
     }
-
 
     @GetMapping("/{id}/set/score")
     public String giveScoreToPhoto(@PathVariable UUID id, Model model, HttpSession session) {

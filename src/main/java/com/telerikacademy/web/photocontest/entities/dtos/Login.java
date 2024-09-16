@@ -14,6 +14,4 @@ public class Login {
     @Size(min = 8, max = 32, message = "Password should be between 8 and 32 symbols!")
     @NotNull(message = "Password can not be empty!")
     private String password;
-
-
 }
