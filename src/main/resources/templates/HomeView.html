@@ -31,16 +31,31 @@
                 <li><a href="#"
                        th:if="(${isAuthenticated}) and (${session.isOrganizer} or ${session.isJury})"
                        th:href="@{/contest/phaseTwo}">Contests In Phase 2</a></li>
-                <li><a th:if="${isAuthenticated} and ${session.isOrganizer}" th:href="@{/contest/new}">Create New Contest</a></li>
+                <li><a th:if="${isAuthenticated} and ${session.isOrganizer}" th:href="@{/contest/new}">Create New
+                    Contest</a></li>
                 <li><a th:if="${isAuthenticated} and ${session.isOrganizer}" th:href="@{/user/users}">All Users</a></li>
-                <li><a th:if="${isAuthenticated} and ${session.isInvited}" th:href="@{/user/invitation}">Notifications</a></li>
-
             </ul>
         </nav>
     </div>
 </header>
 
 <main>
+    <section th:if="${isAuthenticated} and ${session.isInvited}" class="invitation-section">
+        <div class="container">
+            <h2>You have a new invitation to become a Jury member!</h2>
+            <p>We believe you are qualified to join our Jury team and help us rate the photos in our contests.</p>
+
+            <div class="button-container">
+                <form th:action="@{/user/accept/invitation}" method="post">
+                    <button type="submit" class="accept-button">Accept Invitation</button>
+                </form>
+
+                <form th:action="@{/user/decline/invitation}" method="post">
+                    <button type="submit" class="decline-button">Decline Invitation</button>
+                </form>
+            </div>
+        </div>
+    </section>
     <section class="intro">
         <div class="container">
             <h2 class="tagline">Capture the Beauty of Nature</h2>
@@ -50,7 +65,6 @@
             <a th:unless="${isAuthenticated}" th:href="@{/auth/login}" class="cta-button">Submit Your Photo</a>
         </div>
     </section>
-
     <section id="categories" class="featured-categories">
         <div class="container">
             <h2>Contest Categories</h2>
@@ -168,7 +182,8 @@
     <section class="prizes-info">
         <div class="container">
             <h2>Prizes and Ranks</h2>
-            <p>As part of our Photography Contest, participants have the chance to win amazing prizes and earn ranks based on their performance. Here's how the ranking and scoring system works:</p>
+            <p>As part of our Photography Contest, participants have the chance to win amazing prizes and earn ranks
+                based on their performance. Here's how the ranking and scoring system works:</p>
 
             <div class="flex-container">
                 <div class="flex-item">
@@ -179,7 +194,8 @@
                         <li>3rd place: 20 points (10 points if tied)</li>
                         <li>2nd place: 35 points (25 points if tied)</li>
                         <li>1st place: 50 points (40 points if tied)</li>
-                        <li>Double score victory: 75 points <br><span class="details">(if the 1st place score is double the 2nd place score)</span></li>
+                        <li>Double score victory: 75 points <br><span class="details">(if the 1st place score is double the 2nd place score)</span>
+                        </li>
 
                     </ul>
                 </div>
@@ -188,14 +204,18 @@
                     <ul>
                         <li>Junkie: 0-50 points</li>
                         <li>Enthusiast: 51-150 points</li>
-                        <li>Master: 151-1000 points <br><span class="details">(eligible to be invited as a jury member)</span></li>
-                        <li>Wise and Benevolent Photo Dictator: 1001+ points <br><span class="details">(still eligible to be a jury member)</span></li>
+                        <li>Master: 151-1000 points <br><span
+                                class="details">(eligible to be invited as a jury member)</span></li>
+                        <li>Wise and Benevolent Photo Dictator: 1001+ points <br><span class="details">(still eligible to be a jury member)</span>
+                        </li>
                     </ul>
                 </div>
             </div>
 
             <h3>Prizes</h3>
-            <p>Participants with the highest scores will win exclusive prizes, including photography gear, sponsored trips, and feature articles in top photography magazines. The higher your rank, the more prestigious the rewards!</p>
+            <p>Participants with the highest scores will win exclusive prizes, including photography gear, sponsored
+                trips, and feature articles in top photography magazines. The higher your rank, the more prestigious the
+                rewards!</p>
         </div>
     </section>
 </main>

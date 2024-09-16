@@ -111,6 +111,7 @@ public class UserMvcController {
 
         try{
             userService.acceptInvitation(user);
+            session.setAttribute("isInvited", false);
             return "redirect:/user/me";
         }catch (AuthorizationException e) {
             model.addAttribute("error", e.getMessage());
@@ -132,6 +133,7 @@ public class UserMvcController {
 
         try{
             userService.declineInvitation(user);
+            session.setAttribute("isInvited", false);
             return "redirect:/user/me";
         }catch (AuthorizationException e) {
             model.addAttribute("error", e.getMessage());
