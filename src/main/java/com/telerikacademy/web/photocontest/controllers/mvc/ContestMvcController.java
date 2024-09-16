@@ -53,8 +53,8 @@ public class ContestMvcController {
     @GetMapping("/finished")
     public String getAllFinishedContestsWithTheirWinnerPhotos(Model model, HttpSession session){
         try{
-            User user = authenticationHelper.tryGetUser(session);
-            model.addAttribute("user", user);
+//            User user = authenticationHelper.tryGetUser(session);
+//            model.addAttribute("user", user);
             List<FinishedContestAntItsWinner> finishedContestAntItsWinners = contestService.getAllUnActive();
             finishedContestAntItsWinners.stream().
                     filter(contest -> contest.getContestOutput().getPhase().getName().equals("Finished")).

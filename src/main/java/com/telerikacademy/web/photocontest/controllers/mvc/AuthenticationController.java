@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.io.IOException;
+
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/auth")
@@ -102,10 +104,16 @@ public class AuthenticationController {
             model.addAttribute("user", user);
 
             userService.createUser(registerDto);
+            if (!registerDto.getProfilePhoto().isEmpty()) {
+                assert user != null;
+                userService.uploadPhoto(user.getUsername(), registerDto.getProfilePhoto());
+            }
             return "redirect:/auth/login";
         } catch (DuplicateEntityException e) {
             bindingResult.rejectValue("username", "username_error", e.getMessage());
             return "Register";
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
     }

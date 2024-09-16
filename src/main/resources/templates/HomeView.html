@@ -15,25 +15,23 @@
         <h1 class="title">Welcome to the Photography Contest</h1>
         <nav>
             <ul class="nav-links">
-                <li><a th:href="@{/prizes}">Prizes</a></li>
-                <li><a th:href="@{/submit-photo}">Submit Your Photo</a></li>
-
                 <li><a href="#" th:href="@{/}" th:text="#{navigation.home}">Home</a></li>
                 <li><a href="#categories">Categories</a></li>
+                <li><a href="#prizes">Prizes</a></li>
                 <li><a href="#" th:unless="${isAuthenticated}" th:href="@{/auth/login}">Login</a></li>
                 <li><a href="#" th:unless="${isAuthenticated}" th:href="@{/auth/register}">Register</a></li>
-                <li><a href="#" th:if="${isAuthenticated}" th:href="@{/auth/logout}">Logout</a></li>
-                <li><a href="#" th:if="${isAuthenticated}" th:href="@{/user/me}">My Profile</a></li>
                 <li><a href="#" th:if="${isAuthenticated}" th:href="@{/contest/phaseOne}">Contests In Phase
                     1</a></li>
-                <li><a href="#" th:if="${isAuthenticated}" th:href="@{/photo/photos/of/user}">My Photos</a></li>
-                <li><a href="#" th:if="${isAuthenticated}" th:href="@{/contest/finished}">Winners</a></li>
                 <li><a href="#"
                        th:if="(${isAuthenticated}) and (${session.isOrganizer} or ${session.isJury})"
                        th:href="@{/contest/phaseTwo}">Contests In Phase 2</a></li>
                 <li><a th:if="${isAuthenticated} and ${session.isOrganizer}" th:href="@{/contest/new}">Create New
                     Contest</a></li>
+                <li><a th:href="@{/contest/finished}">Winners</a></li>
+                <li><a href="#" th:if="${isAuthenticated}" th:href="@{/user/me}">My Profile</a></li>
+                <li><a href="#" th:if="${isAuthenticated}" th:href="@{/photo/photos/of/user}">My Photos</a></li>
                 <li><a th:if="${isAuthenticated} and ${session.isOrganizer}" th:href="@{/user/users}">All Users</a></li>
+                <li><a href="#" th:if="${isAuthenticated}" th:href="@{/auth/logout}">Logout</a></li>
             </ul>
         </nav>
     </div>
@@ -179,7 +177,7 @@
         </div>
     </section>
 
-    <section class="prizes-info">
+    <section id="prizes" class="prizes-info">
         <div class="container">
             <h2>Prizes and Ranks</h2>
             <p>As part of our Photography Contest, participants have the chance to win amazing prizes and earn ranks

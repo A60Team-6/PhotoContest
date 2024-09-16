@@ -75,5 +75,6 @@ public class User {
         this.role = role;
         this.rank = rank;
         this.isActive = true;
+        this.isInvited = false;
     }
 }

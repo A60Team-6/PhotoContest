@@ -200,52 +200,6 @@ form button:hover {
     background-color: #d62c1a;
 }
 
-/*th {*/
-/*    font-weight: bold;*/
-/*    background-color: #e74c3c;*/
-/*    color: #fff;*/
-/*    text-align: center;*/
-/*    padding: 15px;*/
-/*    position: relative;*/
-/*    cursor: pointer;*/
-/*}*/
-
-/*th a {*/
-/*    color: #fff;*/
-/*    text-decoration: none;*/
-/*    font-weight: bold;*/
-/*    display: inline-flex;*/
-/*    align-items: center;*/
-/*    justify-content: center;*/
-/*}*/
-
-/*th a span {*/
-/*    margin-left: 5px;*/
-/*    font-size: 0.8em;*/
-/*    vertical-align: middle; !* Правилно подравняване на стрелките спрямо текста *!*/
-/*}*/
-
-/*th a:hover {*/
-/*    color: #fff;*/
-/*}*/
-
-
-/*!* Стил за колоните Contest и Category *!*/
-/*.table .cell a {*/
-/*    color: #fff; !* Правим текста бял *!*/
-/*    text-decoration: none;*/
-/*    font-weight: bold;*/
-/*}*/
-
-/*.table .cell a:hover {*/
-/*    color: #ffcccb; !* Опция за светлина при задържане на курсора *!*/
-/*}*/
-
-/*!* Стил за активното сортиране *!*/
-/*.table .header .cell a {*/
-/*    color: #fff; !* Правим текста бял за активните сортирания *!*/
-/*}*/
-
 /* Стил само за заглавията на колоните Contest и Category */
 .table .header .cell a {
     color: #ffcccb; /* Бял цвят за заглавията */

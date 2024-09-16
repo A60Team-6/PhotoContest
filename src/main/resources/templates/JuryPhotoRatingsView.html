@@ -31,7 +31,7 @@
         <h2 class="centered-title">Ratings Of Photo</h2>
 
         <div th:if="${juryPhotoRatingOutputs.isEmpty()}">
-            <h2 th:text="#{rating.label.empty}">No Ratings</h2>
+            <h2 th:text="#{rating.label.empty}">No Ratings Yet</h2>
         </div>
 
         <div th:unless="${juryPhotoRatingOutputs.isEmpty()}">
