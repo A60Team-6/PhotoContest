@@ -30,8 +30,14 @@
 
         <div class="profile-info">
             <div class="profile-photo">
-                <img th:src="${user.profilePhoto}" alt="Profile Picture" class="profile-picture"/>
+                <img id="profilePhotoPreview" th:src="${user.profilePhoto}" src="../assets/img/default.jpg" alt="Profile Picture" class="profile-picture"/>
             </div>
+
+            <form th:action="@{/user/upload-photo}" method="post" enctype="multipart/form-data">
+                <label for="file" class="custom-file-upload">Choose Profile Photo</label>
+                <input type="file" name="file" id="file" accept="image/jpeg" onchange="previewProfilePhoto(event)" />
+                <button type="submit" class="edit">Upload Profile Photo</button>
+            </form>
             <div class="user-details">
                 <p class="margin12" th:text="#{user.label.username} + ': ' + ${user.username}">Username</p>
                 <p class="margin12" th:text="#{user.label.fullName} + ': ' + ${user.firstName + ' ' + user.lastName}">
@@ -63,5 +69,22 @@
             PhotoContest</small>
     </div>
 </footer>
+
+<script>
+    function previewProfilePhoto(event) {
+        const reader = new FileReader();
+        const file = event.target.files[0];
+
+        reader.onload = function () {
+            const previewImage = document.getElementById('profilePhotoPreview');
+            previewImage.src = reader.result;
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
+
 </body>
 </html>

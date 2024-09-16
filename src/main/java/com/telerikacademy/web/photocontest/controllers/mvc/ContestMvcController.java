@@ -71,7 +71,7 @@ public class ContestMvcController {
                                       @RequestParam(value = "title", required = false) String title,
                                       @RequestParam(value = "category", required = false) String category,
                                       @RequestParam(value = "page", defaultValue = "0") int page,
-                                      @RequestParam(value = "size", defaultValue = "3") int size,
+                                      @RequestParam(value = "size", defaultValue = "5") int size,
                                       @RequestParam(value = "sortBy", defaultValue = "title") String sortBy,
                                       @RequestParam(value = "sortDirection", defaultValue = "asc") String sortDirection) {
 
@@ -94,7 +94,7 @@ public class ContestMvcController {
                                       @RequestParam(value = "title", required = false) String title,
                                       @RequestParam(value = "category", required = false) String category,
                                       @RequestParam(value = "page", defaultValue = "0") int page,
-                                      @RequestParam(value = "size", defaultValue = "3") int size,
+                                      @RequestParam(value = "size", defaultValue = "5") int size,
                                       @RequestParam(value = "sortBy", defaultValue = "title") String sortBy,
                                       @RequestParam(value = "sortDirection", defaultValue = "asc") String sortDirection) {
 
@@ -203,7 +203,7 @@ public class ContestMvcController {
             model.addAttribute("error", e.getMessage());
             return "ErrorView";
         } catch (DuplicateEntityException e) {
-            bindingResult.rejectValue("name", "duplicate_contest", e.getMessage());
+            bindingResult.rejectValue("title", "duplicate_contest", e.getMessage());
             return "ContestCreateView";
         }
     }

@@ -26,17 +26,6 @@
         <form action="#" th:action="@{/auth/register}" th:object="${register}" method="post"
               enctype="multipart/form-data" class="register-form">
 
-            <div class="profile-photo-container">
-                <img id="profilePhotoPreview" src="../assets/img/default.jpg" alt="Profile Photo" class="profile-photo">
-            </div>
-
-            <label class="custom-file-upload">
-                <input type="file" th:field="*{profilePhoto}" accept="image/jpeg"
-                       onchange="previewProfilePhoto(event)"/>
-                <span>Add profile photo</span>
-            </label>
-            <label class="error" th:errors="*{profilePhoto}">Profile photo error placeholder</label>
-
             <label th:text="#{user.label.username}">Username</label>
             <label>
                 <input type="text" th:field="*{username}" placeholder="Enter your username"/>
@@ -85,20 +74,7 @@
     </div>
 </footer>
 
-<script>
-    function previewProfilePhoto(event) {
-        const reader = new FileReader();
-        const file = event.target.files[0];
 
-        reader.onload = function () {
-            const previewImage = document.getElementById('profilePhotoPreview');
-            previewImage.src = reader.result;
-        }
 
-        if (file) {
-            reader.readAsDataURL(file);
-        }
-    }
-</script>
 </body>
 </html>

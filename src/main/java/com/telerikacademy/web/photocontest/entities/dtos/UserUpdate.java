@@ -7,12 +7,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class UserUpdate {
+
+    private MultipartFile profilePhoto;
 
     @NotNull(message = "First name can not be empty!")
     @Size(min = 3, max = 32, message = "First name should be between 3 and 32 symbols!")

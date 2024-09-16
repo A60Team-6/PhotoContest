@@ -1,6 +1,7 @@
 package com.telerikacademy.web.photocontest.controllers.mvc;
 
 import com.telerikacademy.web.photocontest.entities.User;
+import com.telerikacademy.web.photocontest.entities.dtos.UploadFileOutput;
 import com.telerikacademy.web.photocontest.entities.dtos.UserOutput;
 import com.telerikacademy.web.photocontest.entities.dtos.UserUpdate;
 import com.telerikacademy.web.photocontest.exceptions.AuthenticationFailureException;
@@ -20,7 +21,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -48,7 +51,7 @@ public class UserMvcController {
                            @RequestParam(value = "firstName", required = false) String firstName,
                            @RequestParam(value = "email", required = false) String email,
                            @RequestParam(value = "page", defaultValue = "0") int page,
-                           @RequestParam(value = "size", defaultValue = "3") int size,
+                           @RequestParam(value = "size", defaultValue = "5") int size,
                            @RequestParam(value = "sortBy", defaultValue = "username") String sortBy,
                            @RequestParam(value = "sortDirection", defaultValue = "asc") String sortDirection) {
 
@@ -233,6 +236,24 @@ public class UserMvcController {
         } catch (AuthorizationException e) {
             model.addAttribute("error", e.getMessage());
             return "AccessDeniedView";
+        }
+    }
+
+    @PostMapping("/upload-photo")
+    public String uploadUserPhoto(@RequestParam("file") MultipartFile file, Model model, HttpSession session) {
+        try {
+            User user = authenticationHelper.tryGetUser(session);
+            UploadFileOutput result = userService.uploadPhoto(user.getUsername(), file);
+            model.addAttribute("photoUrl", result);
+            return "redirect:/user/me";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("statusCode", HttpStatus.BAD_REQUEST.getReasonPhrase());
+            model.addAttribute("error", e.getMessage());
+            return "ErrorView";
+        } catch (IOException e) {
+            model.addAttribute("statusCode", HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
+            model.addAttribute("error", e.getMessage());
+            return "ErrorView";
         }
     }
 

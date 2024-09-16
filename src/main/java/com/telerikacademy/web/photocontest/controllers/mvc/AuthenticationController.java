@@ -3,6 +3,7 @@ package com.telerikacademy.web.photocontest.controllers.mvc;
 import com.telerikacademy.web.photocontest.entities.User;
 import com.telerikacademy.web.photocontest.entities.dtos.Login;
 import com.telerikacademy.web.photocontest.entities.dtos.Register;
+import com.telerikacademy.web.photocontest.entities.dtos.UserOutputId;
 import com.telerikacademy.web.photocontest.exceptions.AuthenticationFailureException;
 import com.telerikacademy.web.photocontest.exceptions.DuplicateEntityException;
 import com.telerikacademy.web.photocontest.exceptions.EntityNotFoundException;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.IOException;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Controller
@@ -97,20 +99,13 @@ public class AuthenticationController {
         }
 
         try {
-            User user = conversionService.convert(registerDto, User.class);
+           UserOutputId userOutputId = userService.createUser(registerDto);
+           User user = userService.findUserEntityById(UUID.fromString(userOutputId.getUserId()));
             model.addAttribute("user", user);
-
-            userService.createUser(registerDto);
-            if (!registerDto.getProfilePhoto().isEmpty()) {
-                assert user != null;
-                userService.uploadPhoto(user.getUsername(), registerDto.getProfilePhoto());
-            }
             return "redirect:/auth/login";
         } catch (DuplicateEntityException e) {
             bindingResult.rejectValue("username", "username_error", e.getMessage());
             return "Register";
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 }

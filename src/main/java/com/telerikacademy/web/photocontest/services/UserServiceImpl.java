@@ -147,7 +147,7 @@ public class UserServiceImpl implements UserService {
                 .lastName(register.getLastName())
                 .email(register.getEmail())
                 .password(hashedPassword)
-                .role(roleService.getRoleByName("User"))
+                .role(roleService.getRoleByName("Junkie"))
                 .rank(rankService.getRankByName("Junkie"))
                 .build();
 
