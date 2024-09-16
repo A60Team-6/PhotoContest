@@ -57,7 +57,7 @@ main {
 }
 
 .body-content {
-    background-color: rgba(255, 255, 255, 0.9); /* Леко по-плътен фон за по-добър контраст */
+    background-color: rgba(255, 255, 255, 0.7); /* Леко по-плътен фон за по-добър контраст */
     padding: 40px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

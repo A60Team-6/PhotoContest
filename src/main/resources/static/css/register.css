@@ -57,7 +57,7 @@ main {
 }
 
 .register-container {
-    background-color: rgba(255, 255, 255, 0.8); /* Леко прозрачен бял фон за формата */
+    background-color: rgba(255, 255, 255, 0.7); /* Леко прозрачен бял фон за формата */
     padding: 40px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

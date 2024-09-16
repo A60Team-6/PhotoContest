@@ -16,6 +16,9 @@
         <nav>
             <ul class="nav-links">
                 <li><a th:href="@{/}">Home</a></li>
+                <li><a href="#"
+                       th:if="(${isAuthenticated}) and (${session.isOrganizer} or ${session.isJury})"
+                       th:href="@{/contest/phaseTwo}">Contests In Phase 2</a></li>
                 <li><a th:href="@{/user/me}">My Profile</a></li>
                 <li><a th:href="@{/auth/logout}">Logout</a></li>
             </ul>

@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -86,5 +88,11 @@ public class GlobalExceptionHandler {
         );
 
         return new ResponseEntity<>(apiException, httpStatus);
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public String handleMaxSizeException(MaxUploadSizeExceededException exc, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("message", "File size exceeds the limit!");
+        return "redirect:/uploadError";
     }
 }

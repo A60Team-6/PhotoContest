@@ -201,7 +201,7 @@ public class ContestMvcController {
 
         try {
             contestService.createContest(contestInput, user);
-            return "redirect:/";
+            return "redirect:/contest/phaseOne";
         } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());

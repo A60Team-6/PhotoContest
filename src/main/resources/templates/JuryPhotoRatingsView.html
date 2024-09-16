@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ratings Of Photo</title>
     <link rel="stylesheet" th:href="@{/css/photoRatings.css}">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lobster&display=swap"
+          rel="stylesheet">
 </head>
 <body>
 
@@ -19,6 +20,7 @@
                 <li><a href="#" th:unless="${isAuthenticated}" th:href="@{/auth/login}">Login</a></li>
                 <li><a href="#" th:unless="${isAuthenticated}" th:href="@{/auth/register}">Register</a></li>
                 <li><a href="#" th:if="${isAuthenticated}" th:href="@{/user/me}">My Profile</a></li>
+                <li><a href="#" th:if="${isAuthenticated}" th:href="@{/photo/photos/of/user}">My Photos</a></li>
                 <li><a href="#" th:if="${isAuthenticated}" th:href="@{/auth/logout}">Logout</a></li>
             </ul>
         </nav>
@@ -46,7 +48,8 @@
                     <div class="row" th:each="rating : ${juryPhotoRatingOutputs}">
                         <div class="cell" th:text="${rating.score}">Score</div>
                         <div class="cell post-content" th:text="${rating.comment}">Comment</div>
-                        <div class="cell post-content" th:text="${rating.categoryMatch ? 'Yes' : 'No'}">Category Match</div>
+                        <div class="cell post-content" th:text="${rating.categoryMatch ? 'Yes' : 'No'}">Category Match
+                        </div>
                         <div th:text="${#temporals.format(rating.reviewDate, 'yyyy-MM-dd HH:mm:ss')}">Review Date</div>
                     </div>
                 </div>
