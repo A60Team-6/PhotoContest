@@ -35,9 +35,15 @@
 
         <!-- Филтри -->
         <form method="get" action="/user/users" class="filter-form">
-            <input type="text" name="username" placeholder="Username" th:value="${username}"/>
-            <input type="text" name="firstName" placeholder="First Name" th:value="${firstName}"/>
-            <input type="text" name="email" placeholder="Email" th:value="${email}"/>
+            <label>
+                <input type="text" name="username" placeholder="Username" th:value="${username}"/>
+            </label>
+            <label>
+                <input type="text" name="firstName" placeholder="First Name" th:value="${firstName}"/>
+            </label>
+            <label>
+                <input type="text" name="email" placeholder="Email" th:value="${email}"/>
+            </label>
             <button type="submit" class="filter-btn">Filter</button>
         </form>
 
@@ -64,6 +70,21 @@
                                 th:text="${sortBy == 'email'} ? (sortDirection == 'asc' ? '▲' : '▼') : ''"></span>
                         </a>
                     </th>
+                    <th>
+                        <a th:href="@{/user/users(page=${currentPage}, size=${size}, sortBy='rank', sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">
+                            Rank <span
+                                th:text="${sortBy == 'email'} ? (sortDirection == 'asc' ? '▲' : '▼') : ''"></span>
+                        </a>
+                    </th>
+                    <th>
+                        <a th:href="@{/user/users(page=${currentPage}, size=${size}, sortBy='role', sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">
+                            Role <span
+                                th:text="${sortBy == 'email'} ? (sortDirection == 'asc' ? '▲' : '▼') : ''"></span>
+                        </a>
+                    </th>
+                    <th>
+                        <a>Invite</a>
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -73,9 +94,13 @@
                     <td th:text="${user.email}">john.doe@example.com</td>
                     <td th:text="${user.rank.name}">Rank</td>
                     <td th:text="${user.role.name}">Role</td>
-                    <form th:if="${user.rank.name == 'Master'} and ${user.role.name != 'Jury'} and ${user.role.name != 'Organizer'} and ${user.isInvited == false}" th:action="@{/user/invite/{id}(id=${user.userId})}" method="post">
-                        <button type="submit" class="rate-button">Invite to Jury</button>
-                    </form>
+                    <td>
+                        <form th:if="${user.rank.name == 'Master'} and ${user.role.name != 'Jury'} and ${user.role.name != 'Organizer'} and ${user.isInvited == false}"
+                              th:action="@{/user/invite/{id}(id=${user.userId})}" method="post">
+                            <button type="submit" class="rate-button">Invite to Jury</button>
+                        </form>
+                        <span th:if="${user.rank.name != 'Master'}"></span>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -112,75 +137,3 @@
 
 </body>
 </html>
-
-
-<!--<!DOCTYPE html>-->
-<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-<!--    <title>User List</title>-->
-
-<!--</head>-->
-<!--<body>-->
-
-<!--<h1>User List</h1>-->
-
-<!--&lt;!&ndash; Филтри &ndash;&gt;-->
-<!--<form method="get" action="/user/users">-->
-<!--    <input type="text" name="username" placeholder="Username" th:value="${username}" />-->
-<!--    <input type="text" name="firstName" placeholder="First Name" th:value="${firstName}" />-->
-<!--    <input type="text" name="email" placeholder="Email" th:value="${email}" />-->
-<!--    <button type="submit">Filter</button>-->
-<!--</form>-->
-
-<!--<table>-->
-<!--    <thead>-->
-<!--    <tr>-->
-<!--        <th>-->
-<!--            <a th:href="@{/user/users(page=${currentPage}, size=${size}, sortBy='username', sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">-->
-<!--                Username <span th:text="${sortBy == 'username'} ? (sortDirection == 'asc' ? '▲' : '▼') : ''"></span>-->
-<!--            </a>-->
-<!--        </th>-->
-<!--        <th>-->
-<!--            <a th:href="@{/user/users(page=${currentPage}, size=${size}, sortBy='firstName', sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">-->
-<!--                First Name <span th:text="${sortBy == 'firstName'} ? (sortDirection == 'asc' ? '▲' : '▼') : ''"></span>-->
-<!--            </a>-->
-<!--        </th>-->
-<!--        <th>-->
-<!--            <a th:href="@{/user/users(page=${currentPage}, size=${size}, sortBy='email', sortDirection=${sortDirection == 'asc' ? 'desc' : 'asc'})}">-->
-<!--                Email <span th:text="${sortBy == 'email'} ? (sortDirection == 'asc' ? '▲' : '▼') : ''"></span>-->
-<!--            </a>-->
-<!--        </th>-->
-<!--    </tr>-->
-<!--    </thead>-->
-<!--    <tbody>-->
-<!--    <tr th:each="user : ${users}">-->
-<!--        <td th:text="${user.username}">johndoe</td>-->
-<!--        <td th:text="${user.firstName}">John</td>-->
-<!--        <td th:text="${user.email}">john.doe@example.com</td>-->
-<!--    </tr>-->
-<!--    </tbody>-->
-<!--</table>-->
-
-<!--&lt;!&ndash; Пагинация &ndash;&gt;-->
-<!--<div class="pagination">-->
-<!--    <a th:if="${currentPage > 0}"-->
-<!--       th:href="@{/user/users(page=${currentPage - 1}, size=${size}, sortBy=${sortBy}, sortDirection=${sortDirection})}">-->
-<!--        Previous-->
-<!--    </a>-->
-
-<!--    <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">-->
-<!--        <a th:classappend="${i == currentPage} ? 'active'"-->
-<!--           th:href="@{/user/users(page=${i}, size=${size}, sortBy=${sortBy}, sortDirection=${sortDirection})}"-->
-<!--           th:text="${i + 1}">1</a>-->
-<!--    </span>-->
-
-<!--    <a th:if="${currentPage < totalPages - 1}"-->
-<!--       th:href="@{/user/users(page=${currentPage + 1}, size=${size}, sortBy=${sortBy}, sortDirection=${sortDirection})}">-->
-<!--        Next-->
-<!--    </a>-->
-<!--</div>-->
-
-<!--</body>-->
-<!--</html>-->

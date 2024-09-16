@@ -173,3 +173,15 @@ table td {
     border-radius: 50%;
 }
 
+.rate-button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.rate-button:hover {
+    background-color: #c0392b;
+}
