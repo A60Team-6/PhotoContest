@@ -27,8 +27,12 @@
 </header>
 
 <form method="get" action="/contest/phaseTwo">
-    <input type="text" name="title" placeholder="Title" th:value="${title}" />
-    <input type="text" name="category" placeholder="Category" th:value="${category}" />
+    <label>
+        <input type="text" name="title" placeholder="Title" th:value="${title}" />
+    </label>
+    <label>
+        <input type="text" name="category" placeholder="Category" th:value="${category}" />
+    </label>
     <button type="submit">Filter</button>
 </form>
 

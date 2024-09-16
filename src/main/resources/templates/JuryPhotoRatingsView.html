@@ -47,7 +47,7 @@
                         <div class="cell" th:text="${rating.score}">Score</div>
                         <div class="cell post-content" th:text="${rating.comment}">Comment</div>
                         <div class="cell post-content" th:text="${rating.categoryMatch ? 'Yes' : 'No'}">Category Match</div>
-                        <div class="cell post-content" th:text="${#dates.format(rating.reviewDate, 'yyyy-MM-dd HH:mm:ss')}">Review Date</div>
+                        <div th:text="${#temporals.format(rating.reviewDate, 'yyyy-MM-dd HH:mm:ss')}">Review Date</div>
                     </div>
                 </div>
             </div>
