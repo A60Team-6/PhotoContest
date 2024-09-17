@@ -14,6 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class User {
 
+    private static final String PROFILE_PHOTO = "http://res.cloudinary.com/deeelijg4/image/upload/v1726549662/l7sezn77rx37ihlmwbsg.jpg";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false, unique = true)
@@ -70,7 +71,7 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.profilePhoto = null;
+        this.profilePhoto = PROFILE_PHOTO;
         this.points = 0;
         this.role = role;
         this.rank = rank;
