@@ -77,6 +77,8 @@ main {
 
 /* Информация за конкурса */
 .post-info .meta-info {
+    font-family: 'Lobster', cursive;
+    text-align: center;
     font-size: 1.2em;
     color: #555;
     margin-bottom: 30px;
